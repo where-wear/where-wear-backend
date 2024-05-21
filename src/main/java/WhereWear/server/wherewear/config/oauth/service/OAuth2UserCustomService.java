@@ -30,14 +30,18 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
     private User saveOrUpdate(OAuth2User oAuth2User) {
         Map<String, Object> attributes = oAuth2User.getAttributes();
 
-        String email = (String) attributes.get("email");
-        String name = (String) attributes.get("name");
+        // Kakao OAuth 사용자 정보에서 필요한 정보 추출
+        Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
+        Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
+
+        String email = (String) kakaoAccount.get("email");
+        String nickname = (String) profile.get("nickname");
 
         User user = userRepository.findByEmail(email)
-                .map(entity -> entity.updateNickName(name))
+                .map(entity -> entity.updateNickName(nickname))
                 .orElse(User.builder()
                         .email(email)
-                        .nickname(name)
+                        .nickname(nickname)
                         .build());
 
         return userRepository.save(user);

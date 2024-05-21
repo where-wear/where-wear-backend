@@ -19,6 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Component
@@ -39,7 +40,14 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
 
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-        User user = userService.findByEmail((String) oAuth2User.getAttributes().get("email"));
+        Map<String, Object> attributes = oAuth2User.getAttributes();
+
+        // Kakao OAuth 사용자 정보에서 이메일을 추출
+        Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
+        String email = (String) kakaoAccount.get("email");
+
+        // 사용자 이메일로 사용자 정보를 조회합니다.
+        User user = userService.findByEmail(email);
 
         String refreshToken = tokenProvider.generateToken(user, REFRESH_TOKEN_DURATION);
         saveRefreshToken(user, refreshToken);
@@ -53,6 +61,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
 
     }
+
     @Transactional
     private void saveRefreshToken(User user, String newRefreshToken) {
         RefreshToken refreshToken = refreshTokenRepository.findByUser(user)
