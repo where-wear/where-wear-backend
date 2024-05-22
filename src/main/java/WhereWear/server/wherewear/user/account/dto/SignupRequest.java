@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class SignupRequest {
 
+    private String nickname;
     private String image;
     private int height;
     private int weight;

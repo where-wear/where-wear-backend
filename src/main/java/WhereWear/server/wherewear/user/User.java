@@ -84,6 +84,7 @@ public class User implements UserDetails {
     }
 
     public User updateProfile(SignupRequest signupRequest) {
+        this.nickname = signupRequest.getNickname();
         this.image = signupRequest.getImage();
         this.height = signupRequest.getHeight();
         this.weight = signupRequest.getWeight();

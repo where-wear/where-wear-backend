@@ -11,15 +11,11 @@ import org.springframework.stereotype.Service;
 public class AccountService {
     private final UserRepository userRepository;
 
-    public User nicknameUpdate(User user, String nickname) {
-        if(!existNickname(nickname)){
-            User existingUser = userRepository.findByEmail(user.getEmail()).
-                    orElseThrow(() -> new IllegalArgumentException("User not found: " + user.getEmail()));
-            User updatedUser = existingUser.updateNickName(nickname);
-            userRepository.save(updatedUser);
-            return updatedUser;
-        }else{
+    public String existNickname(String nickname) {
+        if(userRepository.findByNickname(nickname).isPresent()){
             throw new IllegalArgumentException("계정명이 중복되었습니다.");
+        }else{
+            return nickname;
         }
     }
 
@@ -30,9 +26,5 @@ public class AccountService {
         User updatedUser = existingUser.updateProfile(signupRequest);
         userRepository.save(updatedUser);
         return updatedUser;
-    }
-
-    public boolean existNickname(String nickname) {
-        return userRepository.findByNickname(nickname).isPresent();
     }
 }
