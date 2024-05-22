@@ -1,6 +1,7 @@
 package WhereWear.server.wherewear.user;
 
 import WhereWear.server.wherewear.refreshToken.RefreshToken;
+import WhereWear.server.wherewear.user.account.dto.SignupRequest;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,6 +17,7 @@ import java.util.List;
 @Setter
 @Entity
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", updatable = false)
@@ -27,6 +29,7 @@ public class User implements UserDetails {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
+    @Column(name = "username")
     private String username;
 
     @Column(name = "password")
@@ -36,22 +39,64 @@ public class User implements UserDetails {
     @JoinColumn(name = "refresh_token_id")
     private RefreshToken refreshToken;
 
+    @Column(name = "image")
+    private String image;
+
+    @Column(name = "height")
+    private int height;
+
+    @Column(name = "weight")
+    private int weight;
+
+    @Column(name = "footSize")
+    private int footSize;
+
+    @Column(name = "job")
+    private String job;
+
+    @Column(name = "introduction")
+    private String introduction;
+
     @Builder
-    public User(String nickname, String email, String password) {
+    public User(String email, String nickname, String password, String username) {
         this.email = email;
         this.nickname = nickname;
         this.password = password;
+        this.username = username;
+    }
+
+    @Builder
+    public User(String nickname, String email, String password, String image, Integer height, Integer weight, Integer footSize, String job, String introduction) {
+        this.nickname = nickname;
+        this.email = email;
+        this.password = password;
+        this.image = image;
+        this.height = height;
+        this.weight = weight;
+        this.footSize = footSize;
+        this.job = job;
+        this.introduction = introduction;
     }
 
     public User updateNickName(String nickname) {
         this.nickname = nickname;
+        return this;
+    }
 
+    public User updateProfile(SignupRequest signupRequest) {
+        this.nickname = signupRequest.getNickname();
+        this.image = signupRequest.getImage();
+        this.height = signupRequest.getHeight();
+        this.weight = signupRequest.getWeight();
+        this.footSize = signupRequest.getFootSize();
+        this.job = signupRequest.getJob();
+        this.introduction = signupRequest.getIntroduction();
         return this;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("user"));
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
