@@ -1,0 +1,33 @@
+package WhereWear.server.wherewear.log;
+
+import WhereWear.server.wherewear.user.User;
+import WhereWear.server.wherewear.user.UserService;
+import WhereWear.server.wherewear.user.account.dto.NicknameCheckResponse;
+import WhereWear.server.wherewear.util.ApiUtils;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.io.IOException;
+
+import static WhereWear.server.wherewear.util.ApiUtils.success;
+
+@RequiredArgsConstructor
+@Controller
+@RequestMapping("/api/log")
+public class LogController {
+    private final UserService userService;
+    private final LogService logService;
+    @PostMapping("/start")
+    public ResponseEntity<ApiUtils.ApiResult<LogResponse>> startLog(@RequestHeader("Authorization") String token){
+        User user = userService.findByAccessToken(token);
+        Log log = logService.startLog(user.getEmail());
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(success(new LogResponse(log)));
+    }
+}

@@ -1,5 +1,6 @@
 package WhereWear.server.wherewear.user;
 
+import WhereWear.server.wherewear.log.Log;
 import WhereWear.server.wherewear.refreshToken.RefreshToken;
 import WhereWear.server.wherewear.user.account.dto.SignupRequest;
 import jakarta.persistence.*;
@@ -8,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -34,6 +36,8 @@ public class User implements UserDetails {
 
     @Column(name = "password")
     private String password;
+    @OneToMany(mappedBy = "user")
+    private List<Log> logs = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.PERSIST)//User를 저장할 때 관련된 RefreshToken도 함께 저장
     @JoinColumn(name = "refresh_token_id")
@@ -81,6 +85,11 @@ public class User implements UserDetails {
     public User updateNickName(String nickname) {
         this.nickname = nickname;
         return this;
+    }
+
+    public void addLog(Log log){
+        logs.add(log);
+        log.setUser(this);
     }
 
     public User updateProfile(SignupRequest signupRequest) {
