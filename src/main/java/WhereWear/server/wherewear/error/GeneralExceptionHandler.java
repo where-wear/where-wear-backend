@@ -33,6 +33,12 @@ public class GeneralExceptionHandler {
 
     // 필요한 경우 적절한 예외타입을 선언하고 newResponse 메소드를 통해 응답을 생성하도록 합니다.
 
+    @ExceptionHandler({Exception.class, RuntimeException.class})
+    public ResponseEntity<?> handleException(Exception e) {
+        log.error("Unexpected exception occurred: {}", e.getMessage(), e);
+        return newResponse(e, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @ExceptionHandler({
             NoHandlerFoundException.class,
             NotFoundException.class
@@ -71,12 +77,6 @@ public class GeneralExceptionHandler {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<?> handleMethodNotAllowedException(Exception e) {
         return newResponse(e, HttpStatus.METHOD_NOT_ALLOWED);
-    }
-
-    @ExceptionHandler({Exception.class, RuntimeException.class})
-    public ResponseEntity<?> handleException(Exception e) {
-        log.error("Unexpected exception occurred: {}", e.getMessage(), e);
-        return newResponse(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

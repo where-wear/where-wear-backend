@@ -47,7 +47,7 @@ public class WebOAuthSecurityConfig {
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeRequests()
-                .requestMatchers("/api/token").permitAll()
+                .requestMatchers("/api/token","/api/accounts/signUp").permitAll()
                 .requestMatchers("/api/**").authenticated()
                 .anyRequest().permitAll();
 

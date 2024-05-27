@@ -27,30 +27,20 @@ public class AccountController {
     private final AccountService accountService;
     private final UserService userService;
 
-
     @PostMapping("/nicknameCheck")
-    public ResponseEntity<ApiUtils.ApiResult<NicknameCheckResponse>> nicknameCheck(@RequestHeader("Authorization") String token, @RequestParam String nickname) throws IOException {
+    public ApiUtils.ApiResult<NicknameCheckResponse> nicknameCheck(@RequestHeader("Authorization") String token, @RequestParam String nickname) throws IOException {
 
-        try{
-            String checkedNickname = accountService.existNickname(nickname);
-            return ResponseEntity.status(HttpStatus.CREATED).body(success(new NicknameCheckResponse(token, checkedNickname)));
-        }catch (NotFoundException e) {
-            throw new NotFoundException(e.getMessage(), e);
-        }
-
+        String checkedNickname = accountService.existNickname(nickname);
+        return success(new NicknameCheckResponse(token, checkedNickname));
     }
 
     @PostMapping("/signUp")
-    public ResponseEntity<ApiUtils.ApiResult<UserInfoResponse>> signUp(
+    public ApiUtils.ApiResult<UserInfoResponse> signUp(
             @RequestHeader("Authorization") String token, @RequestBody SignupRequest signupRequest) throws IOException {
 
-        try{
-            User user = userService.findByAccessToken(token);
-            User updatedUser = accountService.signUp(user,signupRequest);
-            return ResponseEntity.status(HttpStatus.CREATED).body(success(new UserInfoResponse(token, updatedUser)));
-        }catch (NotFoundException e) {
-            throw new NotFoundException(e.getMessage(), e);
-        }
+        User user = userService.findByAccessToken(token);
+        User updatedUser = accountService.signUp(user,signupRequest);
+        return success(new UserInfoResponse(token, updatedUser));
 
     }
 }

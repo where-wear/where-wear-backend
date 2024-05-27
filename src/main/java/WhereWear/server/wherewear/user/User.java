@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Table(name = "users")
+@Table(name = "user")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
@@ -48,7 +48,7 @@ public class User implements UserDetails {
     @Column(name = "weight")
     private int weight;
 
-    @Column(name = "footSize")
+    @Column(name = "foot_size")
     private int footSize;
 
     @Column(name = "job")
