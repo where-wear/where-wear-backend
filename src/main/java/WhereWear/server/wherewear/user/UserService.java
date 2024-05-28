@@ -4,6 +4,7 @@ import WhereWear.server.wherewear.config.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -25,6 +26,10 @@ public class UserService {
         Authentication authentication = tokenProvider.getAuthentication(token);
         return (User) authentication.getPrincipal();
 
+    }
+    @Transactional
+    public User saveUser(User user) {
+        return userRepository.save(user);
     }
 
     public User findByEmail(String email) {

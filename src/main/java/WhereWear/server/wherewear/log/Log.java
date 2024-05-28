@@ -1,5 +1,6 @@
 package WhereWear.server.wherewear.log;
 
+import WhereWear.server.wherewear.fashion.fashionItem.FashionItem;
 import WhereWear.server.wherewear.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -31,6 +32,12 @@ public class Log {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="fashion_item_id")
+    private FashionItem fashionItem;
+
     @CreatedDate
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -50,6 +57,13 @@ public class Log {
         this.user = user;
         user.getLogs().add(this);
     }
+
+    public void setFashionItem(FashionItem fashionItem) {
+        this.fashionItem = fashionItem;
+        fashionItem.getLogs().add(this);
+    }
+
+
     public void setStatus(String status) {
         this.status = status;
     }
