@@ -45,8 +45,5 @@ public class Category {
     @OneToMany(mappedBy = "parentCategory")
     private List<Category> subCategories = new ArrayList<>();
 
-    public void addFashionItem(FashionItem fashionItem){
-        fashionItems.add(fashionItem);
-        fashionItem.setCategory(this);
-    }
+
 }

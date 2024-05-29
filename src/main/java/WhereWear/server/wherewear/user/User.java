@@ -87,11 +87,6 @@ public class User implements UserDetails {
         return this;
     }
 
-    public void addLog(Log log){
-        logs.add(log);
-        log.setUser(this);
-    }
-
     public User updateProfile(SignupRequest signupRequest) {
         this.nickname = signupRequest.getNickname();
         this.image = signupRequest.getImage();

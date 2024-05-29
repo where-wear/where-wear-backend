@@ -55,6 +55,7 @@ public class Log {
 
     public void setUser(User user) {
         this.user = user;
+        user.getLogs().add(this);
     }
 
     public void setFashionItem(FashionItem fashionItem) {

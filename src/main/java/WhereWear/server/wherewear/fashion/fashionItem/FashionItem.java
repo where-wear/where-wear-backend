@@ -44,7 +44,4 @@ public class FashionItem {
         category.getFashionItems().add(this);
     }
 
-    public void addLog(Log log){
-        logs.add(log);
-    }
 }
