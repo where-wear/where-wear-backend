@@ -36,4 +36,11 @@ public class LogController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(new LogResponse(log)));
     }
+
+    @PutMapping("/{logId}/fashionItem/delete")
+    public ResponseEntity<ApiUtils.ApiResult<LogResponse>> deleteFashionItemToLog(@PathVariable("logId") Long logId){
+        Log log = logService.deleteFashionItemToLog(logId);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(success(new LogResponse(log)));
+    }
 }

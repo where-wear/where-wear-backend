@@ -37,6 +37,21 @@ public class LogService {
         return savedLog;
     }
 
+    public Log deleteFashionItemToLog(Long id) {
+        Log log = findByLogId(id);
+        if (log == null) {
+            throw new IllegalArgumentException("Log not found for id: " + id);
+        }
+        FashionItem fashionItem = log.getFashionItem();
+        if (fashionItem != null) {
+            log.removeFashionItem(fashionItem);
+            fashionItem.getLogs().remove(log);
+            fashionItemService.saveFashionItem(fashionItem);
+        }
+        Log savedLog = saveLog(log);
+        return savedLog;
+    }
+
     public Log saveLog(Log log){
         return logRepository.save(log);
     }

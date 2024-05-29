@@ -23,6 +23,10 @@ public class FashionItemService {
         return fashionItemRepository.save(fashionItem);
     }
 
+    public void deleteItem(Long itemId){
+        fashionItemRepository.delete(itemId);
+    }
+
     public FashionItem saveFashionItem(FashionItem fashionItem) {
         return fashionItemRepository.save(fashionItem);
     }

@@ -55,12 +55,18 @@ public class Log {
 
     public void setUser(User user) {
         this.user = user;
-        user.getLogs().add(this);
     }
 
     public void setFashionItem(FashionItem fashionItem) {
         this.fashionItem = fashionItem;
         fashionItem.getLogs().add(this);
+    }
+
+    public void removeFashionItem(FashionItem fashionItem) {
+        if (this.fashionItem != null && this.fashionItem.equals(fashionItem)) {
+            fashionItem.getLogs().remove(this);
+            this.fashionItem = null;
+        }
     }
 
 

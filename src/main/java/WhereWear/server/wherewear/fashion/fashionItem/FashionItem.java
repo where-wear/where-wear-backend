@@ -46,6 +46,5 @@ public class FashionItem {
 
     public void addLog(Log log){
         logs.add(log);
-        log.setFashionItem(this);
     }
 }
