@@ -10,6 +10,7 @@ import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,12 @@ import java.util.Optional;
 public class CategoryRespository {
     @PersistenceContext
     private final EntityManager em;
+
+    @Transactional
+    public Category save(Category category) {
+        em.persist(category);
+        return category;
+    }
 
     public Optional<Category> findById(Long categoryId){
         try {
@@ -47,5 +54,7 @@ public class CategoryRespository {
             return Optional.empty();
         }
     }
+
+
 
 }

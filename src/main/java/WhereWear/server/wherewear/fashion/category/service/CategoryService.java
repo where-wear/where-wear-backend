@@ -21,4 +21,8 @@ public class CategoryService {
         return categoryRespository.findByName(categoryName)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected category"));
     }
+
+    public void saveCategory(Category category) {
+        categoryRespository.save(category);
+    }
 }
