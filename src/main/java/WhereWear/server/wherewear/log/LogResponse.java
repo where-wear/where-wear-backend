@@ -1,6 +1,8 @@
 package WhereWear.server.wherewear.log;
 
 import WhereWear.server.wherewear.fashion.fashionItem.FashionItemDto;
+import WhereWear.server.wherewear.log.place.PlaceDto;
+import WhereWear.server.wherewear.place.Place;
 import WhereWear.server.wherewear.user.UserDto;
 import lombok.Getter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -15,6 +17,7 @@ public class LogResponse {
     private String text;
     private UserDto user;  // 새로운 UserResponse DTO 사용
     private FashionItemDto fashionItem;
+    private PlaceDto place;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -25,6 +28,9 @@ public class LogResponse {
         this.user = new UserDto(log.getUser());  // User 엔티티를 UserResponse DTO로 변환
         if (log.getFashionItem() != null) {
             this.fashionItem = new FashionItemDto(log.getFashionItem());
+        }
+        if (log.getPlace() != null) {
+            this.place = new PlaceDto(log.getPlace());
         }
         this.createdAt = log.getCreatedAt();
         this.updatedAt = log.getUpdatedAt();
@@ -37,6 +43,7 @@ public class LogResponse {
                 .append("status", status)
                 .append("text", text)
                 .append("user", user)
+                .append("place", place)
                 .append("createdAt", createdAt)
                 .append("updatedAt", updatedAt)
                 .toString();
