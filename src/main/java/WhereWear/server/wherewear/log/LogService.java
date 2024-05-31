@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class LogService {
     private final LogRepository logRepository;
     private final UserService userService;
-    private final FashionItemService fashionItemService;
     public Log startLog(String userEmail) {
         User user = userService.findByEmail(userEmail);
 
@@ -24,28 +23,6 @@ public class LogService {
         log.setUser(user);
 
         userService.saveUser(user);
-        return saveLog(log);
-    }
-
-    public Log addFashionItemToLog(Long id, Long categoryId, String itemName) {
-        Log log = findByLogId(id);
-        FashionItem fashionItem = fashionItemService.addItem(categoryId, itemName);
-
-        log.setFashionItem(fashionItem);
-
-        fashionItemService.saveFashionItem(fashionItem);
-        return saveLog(log);
-    }
-
-    public Log deleteFashionItemToLog(Long id) {
-        Log log = findByLogId(id);
-        FashionItem fashionItem = log.getFashionItem();
-
-        if (fashionItem != null) {
-            log.removeFashionItem(fashionItem);
-            fashionItemService.saveFashionItem(fashionItem);
-        }
-
         return saveLog(log);
     }
 

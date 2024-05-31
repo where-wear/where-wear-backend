@@ -27,20 +27,4 @@ public class LogController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(new LogResponse(log)));
     }
-
-    @PostMapping("/{logId}/fashionItem/create")
-    public ResponseEntity<ApiUtils.ApiResult<LogResponse>> addFashionItemToLog(@PathVariable("logId") Long id,
-                                                                               @RequestParam Long categoryId,
-                                                                               @RequestParam String itemName){
-        Log log = logService.addFashionItemToLog(id,categoryId,itemName);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(success(new LogResponse(log)));
-    }
-
-    @PutMapping("/{logId}/fashionItem/delete")
-    public ResponseEntity<ApiUtils.ApiResult<LogResponse>> deleteFashionItemToLog(@PathVariable("logId") Long logId){
-        Log log = logService.deleteFashionItemToLog(logId);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(success(new LogResponse(log)));
-    }
 }
