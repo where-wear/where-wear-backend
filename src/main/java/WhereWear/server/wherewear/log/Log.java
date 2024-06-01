@@ -1,7 +1,9 @@
 package WhereWear.server.wherewear.log;
 
 import WhereWear.server.wherewear.fashion.fashionItem.FashionItem;
+import WhereWear.server.wherewear.log.tag.LogTag;
 import WhereWear.server.wherewear.place.Place;
+import WhereWear.server.wherewear.tag.Tag;
 import WhereWear.server.wherewear.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -14,6 +16,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @EntityListeners(AuditingEntityListener.class)
 @Getter
@@ -43,6 +47,10 @@ public class Log {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="place_id")
     private Place place;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "log")
+    private List<LogTag> logTags = new ArrayList<>();
 
     @CreatedDate
     @Column(name = "created_at")
