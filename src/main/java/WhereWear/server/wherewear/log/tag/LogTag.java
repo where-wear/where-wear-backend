@@ -7,6 +7,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Entity
 @Table(name = "log_tag")
@@ -25,4 +28,13 @@ public class LogTag {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="tag_id")
     private Tag tag;
+
+    //==연관관계 메서드==//
+    public void setLog(Log log){
+        this.log = log;
+    }
+
+    public void setTag(Tag tag){
+        this.tag = tag;
+    }
 }
