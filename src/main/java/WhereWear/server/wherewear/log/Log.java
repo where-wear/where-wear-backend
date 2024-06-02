@@ -1,6 +1,9 @@
 package WhereWear.server.wherewear.log;
 
 import WhereWear.server.wherewear.fashion.fashionItem.FashionItem;
+import WhereWear.server.wherewear.log.likedLog.LikedLog;
+import WhereWear.server.wherewear.log.logImage.LogImage;
+import WhereWear.server.wherewear.log.savedLog.SavedLog;
 import WhereWear.server.wherewear.log.tag.LogTag;
 import WhereWear.server.wherewear.place.Place;
 import WhereWear.server.wherewear.tag.Tag;
@@ -51,6 +54,18 @@ public class Log {
     @JsonIgnore
     @OneToMany(mappedBy = "log")
     private List<LogTag> logTags = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "log")
+    private List<LikedLog> likedLogs = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "log")
+    private List<SavedLog> savedLogs = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "log")
+    private List<LogImage> logImages = new ArrayList<>();
 
     @CreatedDate
     @Column(name = "created_at")
