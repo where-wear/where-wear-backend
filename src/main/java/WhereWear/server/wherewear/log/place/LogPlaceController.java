@@ -28,6 +28,7 @@ public class LogPlaceController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(new LogResponse(log)));
     }
+
     @PutMapping("/{logId}/place/delete")
     public ResponseEntity<ApiUtils.ApiResult<LogResponse>> deleteFashionItemToLog(@PathVariable("logId") Long logId){
         Log log = logPlaceService.deletePlaceToLog(logId);

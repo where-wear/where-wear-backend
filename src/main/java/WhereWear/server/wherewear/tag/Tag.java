@@ -5,6 +5,7 @@ import WhereWear.server.wherewear.log.tag.LogTag;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,4 +28,9 @@ public class Tag {
     @JsonIgnore
     @OneToMany(mappedBy = "tag")
     private List<LogTag> logTags = new ArrayList<>();
+
+    @Builder
+    public Tag(String tagName) {
+        this.tagName = tagName;
+    }
 }
