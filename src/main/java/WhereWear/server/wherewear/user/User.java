@@ -1,8 +1,11 @@
 package WhereWear.server.wherewear.user;
 
 import WhereWear.server.wherewear.log.Log;
+import WhereWear.server.wherewear.log.likedLog.LikedLog;
+import WhereWear.server.wherewear.log.savedLog.SavedLog;
 import WhereWear.server.wherewear.refreshToken.RefreshToken;
 import WhereWear.server.wherewear.user.account.dto.SignupRequest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,6 +41,14 @@ public class User implements UserDetails {
     private String password;
     @OneToMany(mappedBy = "user")
     private List<Log> logs = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<LikedLog> likedLogs = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<SavedLog> savedLogs = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.PERSIST)//User를 저장할 때 관련된 RefreshToken도 함께 저장
     @JoinColumn(name = "refresh_token_id")
