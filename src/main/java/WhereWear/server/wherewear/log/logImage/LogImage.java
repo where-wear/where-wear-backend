@@ -5,6 +5,7 @@ import WhereWear.server.wherewear.place.Place;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -27,4 +28,21 @@ public class LogImage {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="log_id")
     private Log log;
+
+    @Builder
+    public LogImage(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void removeImageFromLog(Log log) {
+        if (this.log != null && this.log.equals(log)) {
+            log.getLogImages().remove(this);
+            this.log = null;
+        }
+    }
+
+    public void setLog(Log log){
+        this.log = log;
+        this.log.getLogImages().add(this);
+    }
 }
