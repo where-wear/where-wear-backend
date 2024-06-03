@@ -82,6 +82,10 @@ public class Log {
         this.updatedAt = updatedAt;
     }
 
+    public void updateText(String text){
+        this.text = text;
+    }
+
     public void setUser(User user) {
         this.user = user;
         user.getLogs().add(this);
