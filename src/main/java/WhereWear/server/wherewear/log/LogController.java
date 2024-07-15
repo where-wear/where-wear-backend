@@ -19,12 +19,20 @@ import static WhereWear.server.wherewear.util.ApiUtils.success;
 @RequestMapping("/api/log")
 public class LogController {
     private final UserService userService;
+    private final CreateLogService createLogService;
     private final LogService logService;
-    @PostMapping("/start")
-    public ResponseEntity<ApiUtils.ApiResult<LogResponse>> startLog(@RequestHeader("Authorization") String token){
+    @PostMapping("/createLog")
+    public ResponseEntity<ApiUtils.ApiResult<LogResponse>> create(@RequestHeader("Authorization") String token, @RequestBody LogRequest request){
         User user = userService.findByAccessToken(token);
-        Log log = logService.startLog(user.getEmail());
+        Log log = createLogService.create(user.getEmail(), request);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(new LogResponse(log)));
+    }
+
+    @DeleteMapping("/{logId}/delete")
+    public ResponseEntity<ApiUtils.ApiResult<LogResponse>> deleteLog(@PathVariable("logId") Long logId){
+        logService.deleteLog(logId);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(success(null));
     }
 }

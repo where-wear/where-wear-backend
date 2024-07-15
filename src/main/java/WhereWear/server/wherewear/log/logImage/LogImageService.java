@@ -12,9 +12,9 @@ public class LogImageService {
     private final LogService logService;
     private final LogImageRepository logImageRepository;
 
-    public Log addImageToLog(Long logId, String imageUrl) {
+    public Log addImageToLog(Long logId, String imageData, String imageName) {
         Log log = logService.findByLogId(logId);
-        LogImage logImage = createImage(imageUrl);
+        LogImage logImage = createImage(imageData, imageName);
 
         logImage.setLog(log);
 
@@ -33,8 +33,8 @@ public class LogImageService {
         return logService.saveLog(log);
     }
 
-    public LogImage createImage(String imageUrl){
-        LogImage logImage = new LogImage(imageUrl);
+    public LogImage createImage(String imageData, String imageName){
+        LogImage logImage = new LogImage(imageData, imageName);
         return save(logImage);
     }
 

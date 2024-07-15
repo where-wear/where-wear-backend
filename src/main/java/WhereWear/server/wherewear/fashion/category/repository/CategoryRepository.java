@@ -1,14 +1,11 @@
 package WhereWear.server.wherewear.fashion.category.repository;
 
 import WhereWear.server.wherewear.fashion.category.entity.Category;
-import WhereWear.server.wherewear.refreshToken.RefreshToken;
-import WhereWear.server.wherewear.user.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.NonUniqueResultException;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
-public class CategoryRespository {
+public class CategoryRepository {
     @PersistenceContext
     private final EntityManager em;
 

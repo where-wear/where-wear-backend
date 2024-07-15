@@ -21,8 +21,11 @@ public class LogImage {
     @Column(name = "log_image_id", updatable = false)
     private Long id;
 
-    @Column(name = "image_url")
-    private String imageUrl;
+    @Column(name = "image_data")
+    private String imageData;
+
+    @Column(name = "image_name")
+    private String imageName;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
@@ -30,8 +33,9 @@ public class LogImage {
     private Log log;
 
     @Builder
-    public LogImage(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public LogImage(String imageData, String imageName) {
+        this.imageData = imageData;
+        this.imageName = imageName;
     }
 
     public void removeImageFromLog(Log log) {

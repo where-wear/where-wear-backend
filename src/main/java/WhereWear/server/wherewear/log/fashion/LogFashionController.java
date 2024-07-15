@@ -26,10 +26,10 @@ public class LogFashionController {
                 .body(success(new LogResponse(log)));
     }
 
-    @PutMapping("/{logId}/fashionItem/delete")
+    /*@PutMapping("/{logId}/fashionItem/delete")
     public ResponseEntity<ApiUtils.ApiResult<LogResponse>> deleteFashionItemToLog(@PathVariable("logId") Long logId){
         Log log = logFashionService.deleteFashionItemToLog(logId);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(new LogResponse(log)));
-    }
+    }*/
 }

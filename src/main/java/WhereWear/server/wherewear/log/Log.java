@@ -1,6 +1,7 @@
 package WhereWear.server.wherewear.log;
 
 import WhereWear.server.wherewear.fashion.fashionItem.FashionItem;
+import WhereWear.server.wherewear.log.fashion.LogFashion;
 import WhereWear.server.wherewear.log.likedLog.LikedLog;
 import WhereWear.server.wherewear.log.logImage.LogImage;
 import WhereWear.server.wherewear.log.savedLog.SavedLog;
@@ -26,14 +27,11 @@ import java.util.List;
 @Getter
 @Entity
 @Table(name = "log")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Log {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "log_id", updatable = false)
     private Long id;
-    @Column(name = "status")
-    private String status;
     @Column(name = "text")
     private String text;
     @JsonIgnore
@@ -43,13 +41,15 @@ public class Log {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="fashion_item_id")
-    private FashionItem fashionItem;
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="place_id")
     private Place place;
+
+    @Column(name = "is_show")
+    private Boolean isShow;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "log")
+    private List<LogFashion> logFashions = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "log")
@@ -68,19 +68,12 @@ public class Log {
     private List<LogImage> logImages = new ArrayList<>();
 
     @CreatedDate
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-    @Builder
-    public Log(String status, User user, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.status = status;
-        this.user = user;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
 
     public void updateText(String text){
         this.text = text;
@@ -91,21 +84,9 @@ public class Log {
         user.getLogs().add(this);
     }
 
-    public void setFashionItem(FashionItem fashionItem) {
-        this.fashionItem = fashionItem;
-        fashionItem.getLogs().add(this);
-    }
-
     public void setPlace(Place place) {
         this.place = place;
         place.getLogs().add(this);
-    }
-
-    public void removeFashionItem(FashionItem fashionItem) {
-        if (this.fashionItem != null && this.fashionItem.equals(fashionItem)) {
-            fashionItem.getLogs().remove(this);
-            this.fashionItem = null;
-        }
     }
 
     public void removePlace(Place place) {
@@ -114,8 +95,7 @@ public class Log {
             this.place = null;
         }
     }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setIsShow(Boolean isShow) {
+        this.isShow = isShow;
     }
 }
