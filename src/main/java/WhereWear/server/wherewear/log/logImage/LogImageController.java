@@ -19,8 +19,8 @@ public class LogImageController {
     private final LogImageService logImageService;
     @PostMapping("/{logId}/image/create")
     public ResponseEntity<ApiUtils.ApiResult<LogResponse>> addImageToLog(@PathVariable("logId") Long logId,
-                                                                               @RequestParam String imageUrl){
-        Log log = logImageService.addImageToLog(logId,imageUrl);
+                                                                               @RequestParam LogImageRequest request){
+        Log log = logImageService.addImageToLog(logId,request.getImageData(),request.getItemName());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(new LogResponse(log)));
     }

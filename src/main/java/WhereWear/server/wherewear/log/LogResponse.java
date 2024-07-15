@@ -1,6 +1,7 @@
 package WhereWear.server.wherewear.log;
 
 import WhereWear.server.wherewear.fashion.fashionItem.FashionItemDto;
+import WhereWear.server.wherewear.log.fashion.LogFashion;
 import WhereWear.server.wherewear.log.logImage.LogImage;
 import WhereWear.server.wherewear.log.logImage.LogImageDto;
 import WhereWear.server.wherewear.log.place.PlaceDto;
@@ -18,11 +19,11 @@ import java.util.List;
 @Getter
 public class LogResponse {
     private Long id;
-    private String status;
+    private Boolean isShow;
     private String text;
-    private UserDto user;  // 새로운 UserResponse DTO 사용
-    private FashionItemDto fashionItem;
+    private UserDto user;
     private PlaceDto place;
+    private List<FashionItemDto> fashionItems = new ArrayList<>();
     private List<LogTagDto> tags = new ArrayList<>();
     private List<LogImageDto> logImages = new ArrayList<>();
     private LocalDateTime createdAt;
@@ -30,16 +31,19 @@ public class LogResponse {
 
     public LogResponse(Log log) {
         this.id = log.getId();
-        this.status = log.getStatus();
+        this.isShow = log.getIsShow();
         this.text = log.getText();
         this.user = new UserDto(log.getUser());  // User 엔티티를 UserResponse DTO로 변환
-        if (log.getFashionItem() != null) {
-            this.fashionItem = new FashionItemDto(log.getFashionItem());
-        }
         if (log.getPlace() != null) {
             this.place = new PlaceDto(log.getPlace());
         }
+        if (log.getLogFashions() != null) {
+            for(LogFashion logFashion : log.getLogFashions()) {
+                this.fashionItems.add(new FashionItemDto(logFashion));
+            }
+        }
         if (log.getLogTags() != null){
+            System.out.println(log.getLogTags().size());
             for(LogTag logTag : log.getLogTags()) {
                 this.tags.add(new LogTagDto(logTag));
             }
@@ -57,12 +61,13 @@ public class LogResponse {
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
-                .append("status", status)
                 .append("text", text)
+                .append("imageUrls",logImages)
+                .append("items",fashionItems)
+                .append("isShow",isShow)
                 .append("user", user)
                 .append("place", place)
-                .append("tags",tags)
-                .append("logImages",logImages)
+                .append("tag",tags)
                 .append("createdAt", createdAt)
                 .append("updatedAt", updatedAt)
                 .toString();

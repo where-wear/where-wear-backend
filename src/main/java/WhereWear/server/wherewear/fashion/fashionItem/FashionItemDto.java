@@ -2,6 +2,7 @@ package WhereWear.server.wherewear.fashion.fashionItem;
 
 import WhereWear.server.wherewear.fashion.category.dto.CategoryDto;
 import WhereWear.server.wherewear.fashion.category.entity.Category;
+import WhereWear.server.wherewear.log.fashion.LogFashion;
 import WhereWear.server.wherewear.user.User;
 import WhereWear.server.wherewear.user.UserDto;
 import lombok.Getter;
@@ -18,10 +19,10 @@ public class FashionItemDto {
     private String itemName;
     private CategoryDto category;
 
-    public FashionItemDto(FashionItem fashionItem) {
-        this.id = fashionItem.getId();
-        this.itemName = fashionItem.getItemName();
-        this.category = new CategoryDto(fashionItem.getCategory());
+    public FashionItemDto(LogFashion logFashion) {
+        this.id = logFashion.getFashionItem().getId();
+        this.itemName = logFashion.getFashionItem().getItemName();
+        this.category = new CategoryDto(logFashion.getFashionItem().getCategory());
     }
 
     @Override

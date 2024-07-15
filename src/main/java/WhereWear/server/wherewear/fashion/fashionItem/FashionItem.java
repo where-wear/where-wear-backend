@@ -2,10 +2,13 @@ package WhereWear.server.wherewear.fashion.fashionItem;
 
 import WhereWear.server.wherewear.fashion.category.entity.Category;
 import WhereWear.server.wherewear.log.Log;
+import WhereWear.server.wherewear.log.fashion.LogFashion;
+import WhereWear.server.wherewear.log.tag.LogTag;
 import WhereWear.server.wherewear.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -32,7 +35,12 @@ public class FashionItem {
 
     @JsonIgnore
     @OneToMany(mappedBy = "fashionItem")
-    private List<Log> logs = new ArrayList<>();
+    private List<LogFashion> logFashions = new ArrayList<>();
+    @Builder
+    public FashionItem(String itemName,Category category){
+        this.itemName = itemName;
+        this.category = category;
+    }
 
     public FashionItem updateItemName(String itemName) {
         this.itemName = itemName;

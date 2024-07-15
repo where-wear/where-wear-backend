@@ -1,8 +1,8 @@
 package WhereWear.server.wherewear.fashion.fashionItem;
 
 import WhereWear.server.wherewear.fashion.category.entity.Category;
-import WhereWear.server.wherewear.fashion.category.repository.CategoryRespository;
 import WhereWear.server.wherewear.fashion.category.service.CategoryService;
+import WhereWear.server.wherewear.tag.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +22,10 @@ public class FashionItemService {
 
         categoryService.saveCategory(category);
         return fashionItemRepository.save(fashionItem);
+    }
+
+    public FashionItem findFashionItemById(Long fashionItemId){
+        return fashionItemRepository.findById(fashionItemId).orElseThrow(() -> new IllegalArgumentException("Unexpected fashionItem"));
     }
 
     public void deleteItem(Long itemId){
