@@ -27,6 +27,7 @@ public class UserService {
         return (User) authentication.getPrincipal();
 
     }
+
     @Transactional
     public User saveUser(User user) {
         return userRepository.save(user);
