@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 public class LogUserService {
     private final UserService userService;
     private final LogService logService;
-    public Log addUserToLog(Long logId, String email) {
+    public Log addUserToLog(Long logId, String nickName) {
         Log log = logService.findByLogId(logId);
-        User user = userService.findByEmail(email);
+        User user = userService.findByNickname(nickName);
         log.setUser(user);
 
         userService.saveUser(user);

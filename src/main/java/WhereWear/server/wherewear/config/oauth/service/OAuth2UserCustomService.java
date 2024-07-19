@@ -32,15 +32,12 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
 
         // Kakao OAuth 사용자 정보에서 필요한 정보 추출
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
-        Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
 
-        String email = (String) kakaoAccount.get("email");
-        String nickname = (String) profile.get("nickname");
+        String nickname = (String) kakaoAccount.get("email");
 
-        User user = userRepository.findByEmail(email)
+        User user = userRepository.findByNickname(nickname)
                 .map(entity -> entity.updateNickName(nickname))
                 .orElse(User.builder()
-                        .email(email)
                         .nickname(nickname)
                         .build());
 

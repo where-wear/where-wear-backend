@@ -33,8 +33,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email)
+    public User findByNickname(String nickName) {
+        return userRepository.findByNickname(nickName)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
     }
 }
