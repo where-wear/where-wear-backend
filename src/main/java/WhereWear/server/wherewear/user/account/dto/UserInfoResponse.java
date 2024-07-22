@@ -7,19 +7,16 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 @Getter
 public class UserInfoResponse {
-    private final String token;
 
     private final UserDto user;
 
-    public UserInfoResponse(String token, User user) {
-        this.token = token;
+    public UserInfoResponse(User user) {
         this.user = new UserDto(user);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("token", token)
                 .append("user", user)
                 .toString();
     }

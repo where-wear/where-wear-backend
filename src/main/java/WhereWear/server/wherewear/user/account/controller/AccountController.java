@@ -33,22 +33,24 @@ public class AccountController {
     }
 
     @PostMapping("/signUp")
-    public ApiUtils.ApiResult<UserInfoResponse> signUp(
+    public ResponseEntity<ApiUtils.ApiResult<UserInfoResponse>> signUp(
             @RequestHeader("Authorization") String token, @RequestBody SignupRequest signupRequest) throws IOException {
 
         User user = userService.findByAccessToken(token);
         User updatedUser = accountService.signUp(user, signupRequest);
-        return success(new UserInfoResponse(token, updatedUser));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(success(new UserInfoResponse(updatedUser)));
 
     }
 
     @PostMapping("/update")
-    public ApiUtils.ApiResult<UserInfoResponse> update(
+    public ResponseEntity<ApiUtils.ApiResult<UserInfoResponse>> update(
             @RequestHeader("Authorization") String token, @RequestBody UpdateRequest updateRequest) throws IOException {
 
         User user = userService.findByAccessToken(token);
         User updatedUser = accountService.updateUserInfo(user, updateRequest);
-        return success(new UserInfoResponse(token, updatedUser));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(success(new UserInfoResponse(updatedUser)));
 
     }
 }
