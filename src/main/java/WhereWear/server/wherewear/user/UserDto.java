@@ -13,7 +13,6 @@ import static org.springframework.beans.BeanUtils.copyProperties;
 public class UserDto {
     private Long id;
     private String nickname;
-    private String email;
     private String image;
     private int height;
     private int weight;
@@ -38,7 +37,6 @@ public class UserDto {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
                 .append("nickname", nickname)
-                .append("email", email)
                 .append("image", image)
                 .append("height", height)
                 .append("weight", weight)

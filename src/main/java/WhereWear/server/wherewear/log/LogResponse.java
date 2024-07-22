@@ -43,7 +43,6 @@ public class LogResponse {
             }
         }
         if (log.getLogTags() != null){
-            System.out.println(log.getLogTags().size());
             for(LogTag logTag : log.getLogTags()) {
                 this.tags.add(new LogTagDto(logTag));
             }

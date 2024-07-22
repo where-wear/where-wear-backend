@@ -21,11 +21,11 @@ public class CreateLogService {
     private final LogTextService logTextService;
     private final LogImageService logImageService;
     private final LogTagService logTagService;
-    public Log create(String userEmail, LogRequest request) {
+    public Log create(String nickName, LogRequest request) {
 
         Log log = logService.startLog();
 
-        logUserService.addUserToLog(log.getId(), userEmail);
+        logUserService.addUserToLog(log.getId(), nickName);
 
         for (FashionItemRequest item : request.getItems()){
             logFashionService.addFashionItemToLog(log.getId(), item.getCategoryId(), item.getItemName());

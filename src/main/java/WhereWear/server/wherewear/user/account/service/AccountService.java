@@ -3,6 +3,7 @@ package WhereWear.server.wherewear.user.account.service;
 import WhereWear.server.wherewear.user.account.dto.SignupRequest;
 import WhereWear.server.wherewear.user.User;
 import WhereWear.server.wherewear.user.UserRepository;
+import WhereWear.server.wherewear.user.account.dto.UpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +21,19 @@ public class AccountService {
     }
 
     public User signUp(User user, SignupRequest signupRequest) {
-        User existingUser = userRepository.findByEmail(user.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("User not found: " + user.getEmail()));
+        User existingUser = userRepository.findByNickname(user.getNickname())
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + user.getNickname()));
 
-        User updatedUser = existingUser.updateProfile(signupRequest);
+        User updatedUser = existingUser.signUp(signupRequest);
+        userRepository.save(updatedUser);
+        return updatedUser;
+    }
+
+    public User updateUserInfo(User user, UpdateRequest updateRequest) {
+        User existingUser = userRepository.findByNickname(user.getNickname())
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + user.getNickname()));
+
+        User updatedUser = existingUser.updateProfile(updateRequest);
         userRepository.save(updatedUser);
         return updatedUser;
     }

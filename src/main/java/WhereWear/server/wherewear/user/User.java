@@ -5,6 +5,7 @@ import WhereWear.server.wherewear.log.likedLog.LikedLog;
 import WhereWear.server.wherewear.log.savedLog.SavedLog;
 import WhereWear.server.wherewear.refreshToken.RefreshToken;
 import WhereWear.server.wherewear.user.account.dto.SignupRequest;
+import WhereWear.server.wherewear.user.account.dto.UpdateRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,11 +29,8 @@ public class User implements UserDetails {
     @Column(name = "user_id", updatable = false)
     private Long id;
 
-    @Column(name = "nickname")
+    @Column(name = "nickname", nullable = false, unique = true)
     private String nickname;
-
-    @Column(name = "email", nullable = false, unique = true)
-    private String email;
 
     @Column(name = "username")
     private String username;
@@ -73,17 +71,15 @@ public class User implements UserDetails {
     private String introduction;
 
     @Builder
-    public User(String email, String nickname, String password, String username) {
-        this.email = email;
+    public User(String nickname, String password, String username) {
         this.nickname = nickname;
         this.password = password;
         this.username = username;
     }
 
     @Builder
-    public User(String nickname, String email, String password, String image, Integer height, Integer weight, Integer footSize, String job, String introduction) {
+    public User(String nickname, String password, String image, Integer height, Integer weight, Integer footSize, String job, String introduction) {
         this.nickname = nickname;
-        this.email = email;
         this.password = password;
         this.image = image;
         this.height = height;
@@ -98,7 +94,17 @@ public class User implements UserDetails {
         return this;
     }
 
-    public User updateProfile(SignupRequest signupRequest) {
+    public User updateProfile(UpdateRequest updateRequest) {
+        this.image = updateRequest.getImage();
+        this.height = updateRequest.getHeight();
+        this.weight = updateRequest.getWeight();
+        this.footSize = updateRequest.getFootSize();
+        this.job = updateRequest.getJob();
+        this.introduction = updateRequest.getIntroduction();
+        return this;
+    }
+
+    public User signUp(SignupRequest signupRequest) {
         this.nickname = signupRequest.getNickname();
         this.image = signupRequest.getImage();
         this.height = signupRequest.getHeight();
@@ -108,6 +114,7 @@ public class User implements UserDetails {
         this.introduction = signupRequest.getIntroduction();
         return this;
     }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
