@@ -37,4 +37,11 @@ public class AccountService {
         userRepository.save(updatedUser);
         return updatedUser;
     }
+
+    public User getMyInfo(User user) {
+        User existingUser = userRepository.findById(user.getId())
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + user.getNickname()));
+
+        return existingUser;
+    }
 }
