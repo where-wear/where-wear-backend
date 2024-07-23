@@ -53,4 +53,15 @@ public class AccountController {
                 .body(success(new UserInfoResponse(updatedUser)));
 
     }
+
+    @GetMapping("/userDetail")
+    public ResponseEntity<ApiUtils.ApiResult<UserInfoResponse>> myInfo(
+            @RequestHeader("Authorization") String token) throws IOException {
+
+        User user = userService.findByAccessToken(token);
+        User userInfo = accountService.getMyInfo(user);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(success(new UserInfoResponse(userInfo)));
+
+    }
 }
