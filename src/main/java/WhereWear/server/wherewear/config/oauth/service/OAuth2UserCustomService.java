@@ -8,6 +8,7 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -26,6 +27,7 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
         return user;
     }
 
+
     // ❷ 유저가 있으면 업데이트, 없으면 유저 생성
     private User saveOrUpdate(OAuth2User oAuth2User) {
         Map<String, Object> attributes = oAuth2User.getAttributes();
@@ -33,12 +35,12 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
         // Kakao OAuth 사용자 정보에서 필요한 정보 추출
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
 
-        String nickname = (String) kakaoAccount.get("email");
+        String email = (String) kakaoAccount.get("email");
 
-        User user = userRepository.findByNickname(nickname)
-                .map(entity -> entity.updateNickName(nickname))
+        User user = userRepository.findByEmail(email)
+                .map(entity -> entity.updateEmail(email))
                 .orElse(User.builder()
-                        .nickname(nickname)
+                        .email(email)
                         .build());
 
         return userRepository.save(user);

@@ -29,6 +29,10 @@ public class User implements UserDetails {
     @Column(name = "user_id", updatable = false)
     private Long id;
 
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
+
     @Column(name = "nickname", nullable = false, unique = true)
     private String nickname;
 
@@ -71,14 +75,16 @@ public class User implements UserDetails {
     private String introduction;
 
     @Builder
-    public User(String nickname, String password, String username) {
+    public User(String email, String nickname, String password, String username) {
+        this.email = email;
         this.nickname = nickname;
         this.password = password;
         this.username = username;
     }
 
     @Builder
-    public User(String nickname, String password, String image, Integer height, Integer weight, Integer footSize, String job, String introduction) {
+    public User(String email, String nickname, String password, String image, Integer height, Integer weight, Integer footSize, String job, String introduction) {
+        this.email = email;
         this.nickname = nickname;
         this.password = password;
         this.image = image;
@@ -89,8 +95,8 @@ public class User implements UserDetails {
         this.introduction = introduction;
     }
 
-    public User updateNickName(String nickname) {
-        this.nickname = nickname;
+    public User updateEmail(String email) {
+        this.email = email;
         return this;
     }
 
