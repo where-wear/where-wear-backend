@@ -21,8 +21,8 @@ public class AccountService {
     }
 
     public User signUp(User user, SignupRequest signupRequest) {
-        User existingUser = userRepository.findByNickname(user.getNickname())
-                .orElseThrow(() -> new IllegalArgumentException("User not found: " + user.getNickname()));
+        User existingUser = userRepository.findByEmail(user.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + user.getEmail()));
 
         User updatedUser = existingUser.signUp(signupRequest);
         userRepository.save(updatedUser);
@@ -30,7 +30,7 @@ public class AccountService {
     }
 
     public User updateUserInfo(User user, UpdateRequest updateRequest) {
-        User existingUser = userRepository.findByNickname(user.getNickname())
+        User existingUser = userRepository.findByEmail(user.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + user.getNickname()));
 
         User updatedUser = existingUser.updateProfile(updateRequest);
@@ -38,10 +38,16 @@ public class AccountService {
         return updatedUser;
     }
 
-    public User getMyInfo(User user) {
-        User existingUser = userRepository.findById(user.getId())
-                .orElseThrow(() -> new IllegalArgumentException("User not found: " + user.getNickname()));
+    public User getMyInfo(String email) {
+        User existingUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + email));
 
         return existingUser;
+    }
+
+    public void withdraw(String email) {
+        User existingUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + email));
+        userRepository.delete(existingUser);
     }
 }

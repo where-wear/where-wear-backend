@@ -44,10 +44,10 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         // Kakao OAuth 사용자 정보에서 이름 추출
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
-        String name = (String) kakaoAccount.get("email");
+        String email = (String) kakaoAccount.get("email");
 
         // 사용자 닉네임으로 사용자 정보를 조회합니다.
-        User user = userService.findByNickname(name);
+        User user = userService.findByEmail(email);
 
         String refreshToken = tokenProvider.generateToken(user, REFRESH_TOKEN_DURATION);
         saveRefreshToken(user, refreshToken);

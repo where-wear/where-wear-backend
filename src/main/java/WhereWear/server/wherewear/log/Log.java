@@ -75,6 +75,11 @@ public class Log {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Builder
+    public Log(User user) {
+        this.user = user;
+    }
+
     public void updateText(String text){
         this.text = text;
     }

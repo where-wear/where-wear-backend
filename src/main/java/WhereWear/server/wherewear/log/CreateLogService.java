@@ -7,7 +7,6 @@ import WhereWear.server.wherewear.log.logImage.LogImageService;
 import WhereWear.server.wherewear.log.place.LogPlaceService;
 import WhereWear.server.wherewear.log.tag.LogTagService;
 import WhereWear.server.wherewear.log.text.LogTextService;
-import WhereWear.server.wherewear.log.user.LogUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,17 +14,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class CreateLogService {
     private final LogService logService;
-    private final LogUserService logUserService;
     private final LogFashionService logFashionService;
     private final LogPlaceService logPlaceService;
     private final LogTextService logTextService;
     private final LogImageService logImageService;
     private final LogTagService logTagService;
-    public Log create(String nickName, LogRequest request) {
+    public Log create(String email, LogRequest request) {
 
-        Log log = logService.startLog();
-
-        logUserService.addUserToLog(log.getId(), nickName);
+        Log log = logService.startLog(email);
 
         for (FashionItemRequest item : request.getItems()){
             logFashionService.addFashionItemToLog(log.getId(), item.getCategoryId(), item.getItemName());

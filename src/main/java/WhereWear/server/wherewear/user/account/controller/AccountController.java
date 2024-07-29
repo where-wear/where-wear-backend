@@ -59,9 +59,17 @@ public class AccountController {
             @RequestHeader("Authorization") String token) throws IOException {
 
         User user = userService.findByAccessToken(token);
-        User userInfo = accountService.getMyInfo(user);
+        User userInfo = accountService.getMyInfo(user.getEmail());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(new UserInfoResponse(userInfo)));
 
+    }
+
+    @DeleteMapping("/dropUser")
+    public ResponseEntity dropUser(@RequestHeader("Authorization") String token){
+        User user = userService.findByAccessToken(token);
+        accountService.withdraw(user.getEmail());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 }

@@ -24,7 +24,7 @@ public class LogController {
     @PostMapping("/createLog")
     public ResponseEntity<ApiUtils.ApiResult<LogResponse>> create(@RequestHeader("Authorization") String token, @RequestBody LogRequest request){
         User user = userService.findByAccessToken(token);
-        Log log = createLogService.create(user.getNickname(), request);
+        Log log = createLogService.create(user.getEmail(), request);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(new LogResponse(log)));
     }
