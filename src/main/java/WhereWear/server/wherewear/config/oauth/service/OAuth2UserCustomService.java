@@ -31,6 +31,8 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
             saveOrUpdateGoogleUser(oAuth2User);
         } else if ("kakao".equals(registrationId)) {
             saveOrUpdateKakaoUser(oAuth2User);
+        }else if ("naver".equals(registrationId)) {
+            saveOrUpdateNaverUser(oAuth2User);
         }
 
         return oAuth2User;
@@ -51,8 +53,6 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
         return userRepository.save(user);
     }
 
-
-    // ❷ 유저가 있으면 업데이트, 없으면 유저 생성
     private User saveOrUpdateKakaoUser(OAuth2User oAuth2User) {
         Map<String, Object> attributes = oAuth2User.getAttributes();
 
@@ -63,6 +63,22 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
 
         User user = userRepository.findByEmail(email)
                 .map(entity -> entity.updateEmail(email))
+                .orElse(User.builder()
+                        .email(email)
+                        .build());
+
+        return userRepository.save(user);
+    }
+
+    private User saveOrUpdateNaverUser(OAuth2User oAuth2User) {
+        Map<String, Object> attributes = oAuth2User.getAttributes();
+
+        // Naver OAuth 사용자 정보에서 필요한 정보 추출
+        Map<String, Object> response = (Map<String, Object>) attributes.get("response");
+        String email = (String) response.get("email");
+
+        User user = userRepository.findByEmail(email)
+                .map(entity -> entity.updateEmail(email)) // 필요한 경우 닉네임 업데이트
                 .orElse(User.builder()
                         .email(email)
                         .build());
