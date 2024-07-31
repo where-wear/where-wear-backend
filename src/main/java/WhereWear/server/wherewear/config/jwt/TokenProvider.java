@@ -69,7 +69,7 @@ public class TokenProvider {
         // Claims에서 사용자 정보를 추출하고 User 객체를 생성하거나 조회하는 로직 구현
         String email = claims.getSubject();
         // 예시: 사용자 정보를 데이터베이스에서 조회
-        return new User(email, email, "", email); // 이메일을 username으로 사용
+        return new User(email, "", email); // 이메일을 username으로 사용
     }
 
     private Claims getClaims(String token) {

@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -40,11 +41,17 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
 
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-        Map<String, Object> attributes = oAuth2User.getAttributes();
+        OAuth2AuthenticationToken oAuth2AuthenticationToken = (OAuth2AuthenticationToken) authentication;
+        String registrationId = oAuth2AuthenticationToken.getAuthorizedClientRegistrationId();
+        String email;
 
-        // Kakao OAuth 사용자 정보에서 이름 추출
-        Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
-        String email = (String) kakaoAccount.get("email");
+        if ("google".equals(registrationId)) {
+            email = getGoogleEmail(oAuth2User);
+        } else if ("kakao".equals(registrationId)) {
+            email = getKakaoEmail(oAuth2User);
+        } else {
+            throw new IllegalArgumentException("Unsupported OAuth2 provider: " + registrationId);
+        }
 
         // 사용자 닉네임으로 사용자 정보를 조회합니다.
         User user = userService.findByEmail(email);
@@ -61,6 +68,18 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
 
     }
+
+    private String getGoogleEmail(OAuth2User oAuth2User) {
+        Map<String, Object> attributes = oAuth2User.getAttributes();
+        return (String) attributes.get("email");
+    }
+
+    private String getKakaoEmail(OAuth2User oAuth2User) {
+        Map<String, Object> attributes = oAuth2User.getAttributes();
+        Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
+        return (String) kakaoAccount.get("email");
+    }
+
 
     @Transactional
     private void saveRefreshToken(User user, String newRefreshToken) {

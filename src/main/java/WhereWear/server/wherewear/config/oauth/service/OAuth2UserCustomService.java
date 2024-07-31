@@ -21,15 +21,39 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 
-        OAuth2User user = super.loadUser(userRequest); // ❶ 요청을 바탕으로 유저 정보를 담은 객체 반환
-        saveOrUpdate(user);
+        OAuth2User oAuth2User = super.loadUser(userRequest); // ❶ 요청을 바탕으로 유저 정보를 담은 객체 반환
 
-        return user;
+        // 클라이언트 ID를 통해 구글인지 카카오인지 확인
+        String registrationId = userRequest.getClientRegistration().getRegistrationId();
+
+        // 클라이언트 ID에 따라 다른 처리 로직 실행
+        if ("google".equals(registrationId)) {
+            saveOrUpdateGoogleUser(oAuth2User);
+        } else if ("kakao".equals(registrationId)) {
+            saveOrUpdateKakaoUser(oAuth2User);
+        }
+
+        return oAuth2User;
+    }
+
+    private User saveOrUpdateGoogleUser(OAuth2User oAuth2User) {
+        Map<String, Object> attributes = oAuth2User.getAttributes();
+
+        // Kakao OAuth 사용자 정보에서 필요한 정보 추출
+        String email = (String) attributes.get("email");
+
+        User user = userRepository.findByEmail(email)
+                .map(entity -> entity.updateEmail(email))
+                .orElse(User.builder()
+                        .email(email)
+                        .build());
+
+        return userRepository.save(user);
     }
 
 
     // ❷ 유저가 있으면 업데이트, 없으면 유저 생성
-    private User saveOrUpdate(OAuth2User oAuth2User) {
+    private User saveOrUpdateKakaoUser(OAuth2User oAuth2User) {
         Map<String, Object> attributes = oAuth2User.getAttributes();
 
         // Kakao OAuth 사용자 정보에서 필요한 정보 추출
@@ -45,4 +69,6 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
 
         return userRepository.save(user);
     }
+
+
 }
