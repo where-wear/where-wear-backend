@@ -22,18 +22,30 @@ spring:
           kakao:
             client-id: dc4b883de593360fff4b640fbd1a3a84
             client-secret: KKP6sbqYoJa1KSK9vh3sUPUXVNTxMEZg
-            redirect-uri: "http://localhost:8080/login/oauth2/code/{registrationId}"
+            redirect-uri: "http://localhost:8080/login/oauth2/code/kakao"
             authorization-grant-type: authorization_code
             client-name: Kakao
             scope:
-                - profile_nickname
-                - profile_image
-                - account_email
+              - profile_nickname
+              - profile_image
+              - account_email
             client-authentication-method: client_secret_post
 
           google:
             client-id: 342272538100-v6urhgemke4lk1ocnaudibdlrjg52vtd.apps.googleusercontent.com
             client-secret: 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
+            redirect-uri: "http://localhost:8080/login/oauth2/code/google"
+            authorization-grant-type: authorization_code
+            scope:
+              - email
+              - profile
+
+          naver:
+            client-id: DctJpMq4EIKnQRPvkQst
+            client-secret: ZU5t3qe5Rg
+            redirect-uri: "http://localhost:8080/login/oauth2/code/naver"
+            authorization-grant-type: authorization_code
+            client-name: Naver
             scope:
               - email
               - profile
@@ -44,6 +56,12 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
+
+          naver:
+            authorization-uri: https://nid.naver.com/oauth2.0/authorize
+            token-uri: https://nid.naver.com/oauth2.0/token
+            user-info-uri: https://openapi.naver.com/v1/nid/me
+            user-name-attribute: response
 
 jwt:
   issuer: joungeun0825@gmail.com

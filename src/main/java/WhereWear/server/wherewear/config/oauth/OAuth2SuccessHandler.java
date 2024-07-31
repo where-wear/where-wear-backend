@@ -49,6 +49,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             email = getGoogleEmail(oAuth2User);
         } else if ("kakao".equals(registrationId)) {
             email = getKakaoEmail(oAuth2User);
+        } else if ("naver".equals(registrationId)) {
+            email = getNaverEmail(oAuth2User);
         } else {
             throw new IllegalArgumentException("Unsupported OAuth2 provider: " + registrationId);
         }
@@ -78,6 +80,12 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         Map<String, Object> attributes = oAuth2User.getAttributes();
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
         return (String) kakaoAccount.get("email");
+    }
+
+    private String getNaverEmail(OAuth2User oAuth2User) {
+        Map<String, Object> attributes = oAuth2User.getAttributes();
+        Map<String, Object> naverAccount = (Map<String, Object>) attributes.get("response");
+        return (String) naverAccount.get("email");
     }
 
 
