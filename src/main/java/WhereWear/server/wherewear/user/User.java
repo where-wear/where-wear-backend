@@ -4,6 +4,7 @@ import WhereWear.server.wherewear.log.Log;
 import WhereWear.server.wherewear.log.likedLog.LikedLog;
 import WhereWear.server.wherewear.log.savedLog.SavedLog;
 import WhereWear.server.wherewear.refreshToken.RefreshToken;
+import WhereWear.server.wherewear.relationship.Relationship;
 import WhereWear.server.wherewear.user.account.dto.SignupRequest;
 import WhereWear.server.wherewear.user.account.dto.UpdateRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,9 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Table(name = "user")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -31,7 +30,6 @@ public class User implements UserDetails {
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
-
 
     @Column(name = "nickname", nullable = false, unique = true)
     private String nickname;
@@ -51,6 +49,12 @@ public class User implements UserDetails {
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<SavedLog> savedLogs = new ArrayList<>();
+
+    // 내가 팔로우하는 유저들
+    @OneToMany(mappedBy = "follower")
+    private List<Relationship> followings = new ArrayList<>();
+    @OneToMany(mappedBy = "following")
+    private List<Relationship> followers = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.PERSIST)//User를 저장할 때 관련된 RefreshToken도 함께 저장
     @JoinColumn(name = "refresh_token_id")
@@ -92,6 +96,13 @@ public class User implements UserDetails {
         this.footSize = footSize;
         this.job = job;
         this.introduction = introduction;
+    }
+    public List<User> getFollowers() {
+        List<User> followerList = new ArrayList<>();
+        for (Relationship relationship : followers) {
+            followerList.add(relationship.getFollower());
+        }
+        return followerList;
     }
 
     public User updateEmail(String email) {
