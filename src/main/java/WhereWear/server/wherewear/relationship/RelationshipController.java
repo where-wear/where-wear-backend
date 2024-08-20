@@ -30,10 +30,24 @@ public class RelationshipController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("/unfollow/{userId}")
+    public ResponseEntity unfollowUser(@RequestHeader("Authorization") String token, @PathVariable("userId") Long userId){
+        User fromUser = userService.findByAccessToken(token);
+        relationshipService.unfollowUser(fromUser.getEmail(), userId);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("{userId}/followers")
-    public ResponseEntity<ApiUtils.ApiResult<FollowerResponse>> getFollower(@PathVariable("userId") Long userId){
-        List<User> followerList = relationshipService.getFollower(userId);
+    public ResponseEntity<ApiUtils.ApiResult<FollowerResponse>> getFollowers(@PathVariable("userId") Long userId){
+        List<User> followerList = relationshipService.getFollowers(userId);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(new FollowerResponse(followerList)));
+    }
+
+    @GetMapping("{userId}/followings")
+    public ResponseEntity<ApiUtils.ApiResult<FollowingResponse>> getFollowings(@PathVariable("userId") Long userId){
+        List<User> followingList = relationshipService.getFollowings(userId);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(success(new FollowingResponse(followingList)));
     }
 }
