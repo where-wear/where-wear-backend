@@ -105,6 +105,14 @@ public class User implements UserDetails {
         return followerList;
     }
 
+    public List<User> getFollowings() {
+        List<User> followingList = new ArrayList<>();
+        for (Relationship relationship : followings) {
+            followingList.add(relationship.getFollowing());
+        }
+        return followingList;
+    }
+
     public User updateEmail(String email) {
         this.email = email;
         return this;

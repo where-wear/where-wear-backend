@@ -38,11 +38,38 @@ public class RelationshipService {
         return true;
     }
 
-    public List<User> getFollower(Long userId){
+    @Transactional
+    public boolean unfollowUser(String fromUserEmail, Long toUserId) {
+
+        User fromUser = userService.findByEmail(fromUserEmail);
+        User toUser = userService.findById(toUserId);
+
+        if (fromUser.equals(toUser)) {
+            throw new IllegalArgumentException("Cannot unfollow yourself.");
+        }
+
+        if (!relationshipRepository.existsByFollowerAndFollowing(fromUser, toUser)) {
+            throw new IllegalArgumentException("Cannot unfollowing this user.");
+        }
+
+        relationshipRepository.deleteByFollowerAndFollowing(fromUser,toUser);
+
+        return true;
+    }
+
+    public List<User> getFollowers(Long userId){
 
         User user = userService.findById(userId);
 
         return user.getFollowers();
+
+    }
+
+    public List<User> getFollowings(Long userId){
+
+        User user = userService.findById(userId);
+
+        return user.getFollowings();
 
     }
 
