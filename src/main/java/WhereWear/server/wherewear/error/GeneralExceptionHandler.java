@@ -21,11 +21,11 @@ public class GeneralExceptionHandler {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    private ResponseEntity<ApiUtils.ApiResult<?>> newResponse(Throwable throwable, HttpStatus status) {
+    private ResponseEntity<ApiUtils.ApiResultError> newResponse(Throwable throwable, HttpStatus status) {
         return newResponse(throwable.getMessage(), status);
     }
 
-    private ResponseEntity<ApiUtils.ApiResult<?>> newResponse(String message, HttpStatus status) {
+    private ResponseEntity<ApiUtils.ApiResultError> newResponse(String message, HttpStatus status) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
         return new ResponseEntity<>(error(message, status), headers, status);
