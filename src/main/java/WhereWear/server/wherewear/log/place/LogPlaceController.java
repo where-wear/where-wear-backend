@@ -18,7 +18,7 @@ import static WhereWear.server.wherewear.util.ApiUtils.success;
 public class LogPlaceController {
     private final LogPlaceService logPlaceService;
     @PostMapping("/{logId}/place/create")
-    public ResponseEntity<ApiUtils.ApiResult<LogResponse>> addFashionItemToLog(@PathVariable("logId") Long logId,
+    public ResponseEntity<?> addFashionItemToLog(@PathVariable("logId") Long logId,
                                                                                @RequestParam Double x,
                                                                                @RequestParam Double y,
                                                                                @RequestParam String roadAddress,
@@ -30,7 +30,7 @@ public class LogPlaceController {
     }
 
     @PutMapping("/{logId}/place/delete")
-    public ResponseEntity<ApiUtils.ApiResult<LogResponse>> deleteFashionItemToLog(@PathVariable("logId") Long logId){
+    public ResponseEntity<?> deleteFashionItemToLog(@PathVariable("logId") Long logId){
         Log log = logPlaceService.deletePlaceToLog(logId);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(new LogResponse(log)));
