@@ -29,7 +29,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     public static final String REFRESH_TOKEN_COOKIE_NAME = "refresh_token";
     public static final Duration REFRESH_TOKEN_DURATION = Duration.ofDays(14);
     public static final Duration ACCESS_TOKEN_DURATION = Duration.ofDays(1);
-    public static final String REDIRECT_PATH = "http://localhost:3000/user";
+    public static final String HOME_REDIRECT_PATH = "http://localhost:3000/home";
+    public static final String SIGNUP_REDIRECT_PATH = "http://localhost:3000/signin/userdata";
 
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
@@ -63,7 +64,14 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         addRefreshTokenToCookie(request, response, refreshToken);
 
         String accessToken = tokenProvider.generateToken(user, ACCESS_TOKEN_DURATION);
-        String targetUrl = getTargetUrl(accessToken);
+
+        String targetUrl = "";
+
+        if(user.getNickname() == null){
+            targetUrl = getTargetUrl(accessToken,false);
+        }else{
+            targetUrl = getTargetUrl(accessToken,true);
+        }
 
         clearAuthenticationAttributes(request, response);
 
@@ -113,11 +121,18 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         authorizationRequestRepository.removeAuthorizationRequestCookies(request, response);
     }
 
-    private String getTargetUrl(String token) {
-        return UriComponentsBuilder.fromUriString(REDIRECT_PATH)
-                .queryParam("token", token)
-                .build()
-                .toUriString();
+    private String getTargetUrl(String token, boolean nicknameExist) {
+        if(nicknameExist){
+            return UriComponentsBuilder.fromUriString(HOME_REDIRECT_PATH)
+                    .queryParam("token", token)
+                    .build()
+                    .toUriString();
+        }else{
+            return UriComponentsBuilder.fromUriString(SIGNUP_REDIRECT_PATH)
+                    .queryParam("token", token)
+                    .build()
+                    .toUriString();
+        }
     }
 }
 
