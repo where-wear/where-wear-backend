@@ -18,7 +18,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @RequiredArgsConstructor
 @Configuration
@@ -36,46 +40,64 @@ public class WebOAuthSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.csrf().disable()
-                .httpBasic().disable()
-                .formLogin().disable()
-                .logout().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        // CSRF 설정
+        http.csrf()
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) // CSRF 토큰을 쿠키에 저장
+                .and()
+                .authorizeRequests()
+                .requestMatchers("/api/token", "/api/accounts/signUp").permitAll()  // 특정 경로 허용
+                .requestMatchers("/api/**").authenticated()  // API 경로는 인증 필요
+                .anyRequest().permitAll();  // 나머지 요청은 허용
 
+        // 세션 관리
+        http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        // JWT 기반 인증 필터 추가
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
-        http.authorizeRequests()
-                .requestMatchers("/api/token","/api/accounts/signUp").permitAll()
-                .requestMatchers("/api/**").authenticated()
-                .anyRequest().permitAll();
-
+        // OAuth2 로그인 설정
         http.oauth2Login()
-                .loginPage("http://localhost:3000/")
+                .loginPage("http://localhost:3000/")  // 로그인 페이지 URL
                 .authorizationEndpoint()
                 .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
                 .and()
-                .successHandler(oAuth2SuccessHandler())
+                .successHandler(oAuth2SuccessHandler())  // 성공 핸들러
                 .failureHandler((request, response, exception) -> {
-                    // 실패 원인을 로그에 출력하거나 다른 작업을 수행할 수 있습니다.
                     System.out.println("OAuth 2.0 로그인 실패: " + exception.getMessage());
-                    // 실패 후에 사용자를 리디렉트하거나 다른 동작을 수행할 수 있습니다.
-                    response.sendRedirect("/login?error=oauth2");
+                    response.sendRedirect("/login?error=oauth2");  // 실패 시 리디렉션
                 })
                 .userInfoEndpoint()
-                .userService(oAuth2UserCustomService);
+                .userService(oAuth2UserCustomService);  // 사용자 서비스
 
+        // 로그아웃 설정
         http.logout()
-                .logoutUrl("/logout")  // 로그아웃 URL 설정
-                .logoutSuccessUrl("/")  // 로그아웃 성공 후 리디렉션할 URL 설정
+                .logoutUrl("/logout")  // 로그아웃 URL
+                .logoutSuccessUrl("/")  // 로그아웃 성공 후 리디렉션할 URL
                 .invalidateHttpSession(true)  // 세션 무효화
                 .deleteCookies("JSESSIONID")  // 쿠키 삭제
-                .permitAll();  // 로그아웃 URL은 모두 접근 가능하게 설정
+                .permitAll();  // 로그아웃 URL 접근 허용
 
+        // 예외 처리 설정: 인증되지 않은 사용자에 대해 401 UNAUTHORIZED 상태 반환
         http.exceptionHandling()
                 .defaultAuthenticationEntryPointFor(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED),
                         new AntPathRequestMatcher("/api/**"));
 
         return http.build();
+    }
+
+    // CORS 설정 추가
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("http://localhost:3000");  // 허용할 프론트엔드 URL
+        configuration.addAllowedMethod("*");  // 모든 HTTP 메서드 허용
+        configuration.addAllowedHeader("*");  // 모든 헤더 허용
+        configuration.setAllowCredentials(true);  // 인증 정보 포함 허용
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
     @Bean
