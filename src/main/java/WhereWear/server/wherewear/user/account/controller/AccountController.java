@@ -40,6 +40,7 @@ public class AccountController {
             @ApiResponse(responseCode = "400", description = "잘못된 요청",
                     content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class)))
     })
+
     @PostMapping("/nicknameCheck")
     public ResponseEntity<?> nicknameCheck(
             @Parameter(description = "유효한 인증 토큰") @RequestHeader("Authorization") String token,
