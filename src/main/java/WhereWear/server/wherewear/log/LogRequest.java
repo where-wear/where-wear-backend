@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 public class LogRequest {
     private String text;
 
-    private List<LogImageRequest> imageUrls = new ArrayList<>();
+    private List<MultipartFile> imageUrls = new ArrayList<>();
 
     private List<FashionItemRequest> items = new ArrayList<>();
 

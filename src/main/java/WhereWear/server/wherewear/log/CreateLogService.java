@@ -9,6 +9,9 @@ import WhereWear.server.wherewear.log.tag.LogTagService;
 import WhereWear.server.wherewear.log.text.LogTextService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @Service
@@ -19,7 +22,7 @@ public class CreateLogService {
     private final LogTextService logTextService;
     private final LogImageService logImageService;
     private final LogTagService logTagService;
-    public Log create(String email, LogRequest request) {
+    public Log create(String email, LogRequest request) throws IOException {
 
         Log log = logService.startLog(email);
 
@@ -30,8 +33,8 @@ public class CreateLogService {
         logPlaceService.addPlaceToLog(log.getId(),request.getX(),request.getY(),request.getAddress(),request.getRoadAddress(),request.getPlaceName());
         logTextService.addTextToLog(log.getId(),request.getText());
 
-        for (LogImageRequest image : request.getImageUrls()){
-            logImageService.addImageToLog(log.getId(),image.getImageData(),image.getItemName());
+        for (MultipartFile file : request.getImageUrls()){
+            logImageService.addImageToLog(log.getId(),file);
         }
 
         for (String tag : request.getTags()){

@@ -1,5 +1,7 @@
 package WhereWear.server.wherewear;
 
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,7 +22,10 @@ public class WherewearApplication {
 		SpringApplication.run(WherewearApplication.class, args);
 
 	}
-
+	@Bean
+	public Storage storage() {
+		return StorageOptions.getDefaultInstance().getService();
+	}
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {

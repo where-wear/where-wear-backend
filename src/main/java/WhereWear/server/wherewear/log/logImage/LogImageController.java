@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 import static WhereWear.server.wherewear.util.ApiUtils.success;
 
 @RequiredArgsConstructor
@@ -38,9 +40,9 @@ public class LogImageController {
     @PostMapping("/{logId}/image/create")
     public ResponseEntity<?> addImageToLog(
             @Parameter(description = "로그 ID") @PathVariable("logId") Long logId,
-            @Parameter(description = "이미지 요청 데이터") @RequestBody LogImageRequest request) {
+            @Parameter(description = "이미지 요청 데이터") @RequestBody LogImageRequest request) throws IOException {
 
-        Log log = logImageService.addImageToLog(logId, request.getImageData(), request.getItemName());
+        Log log = logImageService.addImageToLog(logId, request.getFile());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(new LogResponse(log)));
     }

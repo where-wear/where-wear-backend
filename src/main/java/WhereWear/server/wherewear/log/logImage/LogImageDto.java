@@ -9,21 +9,18 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 @Setter
 public class LogImageDto {
     private Long id;
-    private String imageName;
-    private String imageData;
+    private String publicUrl;
 
     public LogImageDto(LogImage logImage) {
         this.id = logImage.getId();
-        this.imageName = logImage.getImageName();
-        this.imageData = logImage.getImageData();
+        this.publicUrl = logImage.getPublicUrl();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
-                .append("imageName", imageName)
-                .append("imageData", imageData)
+                .append("publicUrl", publicUrl)
                 .toString();
     }
 }
