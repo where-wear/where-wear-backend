@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "wherewear-431106",
+  "private_key_id": "276e88fb812780ade278998c66532838fe1686c6",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCqpLCKXO226axU\nivpwivI1eqki0dtDGl0NYrX+5LgwdDRowgVkvqBlh5EtfMg6vkwM+XGrfNHq/Kfn\nyyG3hArBSwNK07sckL4qn9X/JE+urv4eFW0kahcgx4xx82Wk0b4sMVxSW0fubjR4\njXZSFY7ZY/Xzr8983+LH8/KdOgkggoDqUNR4OG/t6sqgVwHBzdTzU0edHIma2eb8\nN755YDyehbw17zkNL12QmKoKebjkCqrXc7A299BLo5GqJ7ObazkIukk8haMNNdPb\nQeWithnjyHB9KzEguVmkBK8BfYLznwgCRZvSc3fIZWnloW4HXtcxzpIGreJBVJLK\nUprxM+PXAgMBAAECggEAD8ebnP/g6j7g37nbqi0/HpuRfmsiN9Sn8YVE8nrbXtJa\nx6vWwdfa5JNND9lvzqGATjGBmxZiIbUWyxl+rFtlKeCyP5N6xGEiJLY+chHn3cMd\niVH5Php4DwuaPNisIo9UDal23GrH07rp1pKw9AA9rclPmibngf2rbqAWubFUh2aY\nY82AJiQsNE/dTSnJKBVZUxZDPaewLyiAzxDi/hKkhQqnHDI0+EOqAki+QnVFQN1F\nlp3g7cqohqWEychQjTUm2PNJIvLZE1Bk99rjeZbgjz+o/BOatP4adNkIjtBFFrmw\nACbbLXRUcnj7+QZpzaDjNMT0Uea/qwfKTVm8lteluQKBgQDtwiwGoTqTatHsI5om\nJe4JNr8XH7ZZiI+P0d0VEORwH9+Ab/wCURRfxLZUo/mL30wnyTGrP94M/58XVbVy\nW3lB9KSaxlOMszyLOLTE2KV7ZapcWsahZWsMeh3lhyk3bZ+j2DBmMHrDWd84MjAY\nqojVJbwy70n77rMw8P8fU1Sq+wKBgQC3vE4IwRUqD9SGIU75IJ6ANCtGXExw61QS\nVFAu7COLZjK1pcMtgZLZKSoqAmvbCQ8P7E3IJpyvbizbWMdfTdAkIdX6HwJPikdV\nuCvNids/ScU/hySdyX46HVlbq2EgaKKG6HkgN46Kfm5hCiYmbhykuJvr4CnAM6XR\nUcGRXGMT1QKBgB07tKIUDNm3VpxMPFXYcA4d9xzmv0r+6Xfre91tOEk5AggOvNOk\nGHc1/p0llDdIe1qg+ERwE+NRQsRhu2+WI7CiXeLR48/28cjEbiWN5broYyv71VRe\n3eyozyg7mCvChNBmcnz+FPoUAMguE4/U2AItI5i3p0ccsFeiKhw16MElAoGARnKE\n2QZvPvli2yraRNsk6rMWBJxPEtyoF38MX3FbD4/X0Z4E/+W2kF0gNYtIH2uRwuEv\n0ZY8bWco+9FGYFxNeg0fJg/NqwGx6EP9R4mb7uAyKPGAMJ+ZLl8ia+uCChMUffWU\nu62Rkbh4SezCQ+nkQaQm5IHGgFNNOLzIIxvxQSECgYAtVfU6NmznInvzXZ9p6lmL\n93wFVU3X0BCtF4KhDunVJMlqstb6pU9UfOt7Q0eZa86MT180YjqmYc3rHvyzRsWx\nVe/m8xyWQkPoO9qyarVDriaIfOYY92EGjaGLlEAAbRmHbtTv9ElRgleflQfGTQkS\nF+zBIUk7jobHIVevuUVxLA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "wherewear@wherewear-431106.iam.gserviceaccount.com",
+  "client_id": "100606564950198222346",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/wherewear%40wherewear-431106.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

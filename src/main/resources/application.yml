@@ -15,6 +15,14 @@ spring:
     init:
       encoding: UTF-8
 
+  cloud:
+    gcp:
+      storage:
+        credentials:
+          location: classpath:wherewear-431106-276e88fb8127.json
+    project-id: wherewear-431106
+    bucket: wherewear-image
+
   security:
     oauth2:
       client:
@@ -66,3 +74,5 @@ spring:
 jwt:
   issuer: joungeun0825@gmail.com
   secret_key: wherewear-springboot
+
+
