@@ -13,6 +13,7 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
@@ -119,7 +120,6 @@ public class User implements UserDetails {
     }
 
     public User updateProfile(UpdateRequest updateRequest) {
-        this.image = updateRequest.getImage();
         this.height = updateRequest.getHeight();
         this.weight = updateRequest.getWeight();
         this.footSize = updateRequest.getFootSize();
@@ -130,12 +130,16 @@ public class User implements UserDetails {
 
     public User signUp(SignupRequest signupRequest) {
         this.nickname = signupRequest.getNickname();
-        this.image = signupRequest.getImage();
         this.height = signupRequest.getHeight();
         this.weight = signupRequest.getWeight();
         this.footSize = signupRequest.getFootSize();
         this.job = signupRequest.getJob();
         this.introduction = signupRequest.getIntroduction();
+        return this;
+    }
+
+    public User updateProfileImage(String image){
+        this.image = image;
         return this;
     }
 
