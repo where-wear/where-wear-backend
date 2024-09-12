@@ -61,7 +61,7 @@ public class User implements UserDetails {
     @JoinColumn(name = "refresh_token_id")
     private RefreshToken refreshToken;
 
-    @Column(name = "image")
+    @Column(name = "image", columnDefinition = "LONGTEXT")
     private String image;
 
     @Column(name = "height")
@@ -128,13 +128,13 @@ public class User implements UserDetails {
         return this;
     }
 
-    public User signUp(SignupRequest signupRequest) {
-        this.nickname = signupRequest.getNickname();
-        this.height = signupRequest.getHeight();
-        this.weight = signupRequest.getWeight();
-        this.footSize = signupRequest.getFootSize();
-        this.job = signupRequest.getJob();
-        this.introduction = signupRequest.getIntroduction();
+    public User signUp(String nickname, int height, int weight, int footSize, String job, String introduction) {
+        this.nickname = nickname;
+        this.height = height;
+        this.weight = weight;
+        this.footSize = footSize;
+        this.job = job;
+        this.introduction = introduction;
         return this;
     }
 

@@ -4,17 +4,18 @@ import WhereWear.server.wherewear.user.account.dto.SignupRequest;
 import WhereWear.server.wherewear.user.User;
 import WhereWear.server.wherewear.user.UserRepository;
 import WhereWear.server.wherewear.user.account.dto.UpdateRequest;
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
+import java.io.InputStream;
 
 @RequiredArgsConstructor
 @Service
@@ -30,42 +31,53 @@ public class AccountService {
         }
     }
 
-    public User signUp(User user, SignupRequest signupRequest) throws IOException {
+    public User signUp(User user, String nickname, int height, int weight, int footSize, String job, String introduction, MultipartFile imageFile) throws IOException {
         User existingUser = userRepository.findByEmail(user.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + user.getEmail()));
 
-        setProfileImage(existingUser, signupRequest.getImage());
-        User updatedUser = existingUser.signUp(signupRequest);
+        setProfileImage(existingUser, imageFile);
+        User updatedUser = existingUser.signUp(nickname, height, weight, footSize, job, introduction);
         userRepository.save(updatedUser);
         return updatedUser;
     }
 
-    public void setProfileImage(User user, MultipartFile file) throws IOException {
+    public void setProfileImage(User user, MultipartFile imageFile) throws IOException {
+        ClassPathResource resource = new ClassPathResource("wherewear-431106-276e88fb8127.json");
+
+        // GoogleCredentials를 사용하여 인증 정보 로드
+        InputStream credentialsStream = resource.getInputStream();
+        // GoogleCredentials를 사용하여 인증 정보 로드
+        GoogleCredentials credentials = GoogleCredentials.fromStream(credentialsStream);
+
+        // 인증 정보를 포함하여 Storage 객체 생성
+        Storage storage = StorageOptions.newBuilder()
+                .setCredentials(credentials)
+                .build()
+                .getService();
+
         User existingUser = userRepository.findByEmail(user.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + user.getEmail()));
 
-        String fileName = file.getOriginalFilename();
+        String fileName = imageFile.getOriginalFilename();
+
         // BlobId: 버킷 이름과 파일 이름으로 구성된 고유 식별자
         BlobId blobId = BlobId.of(BUCKET_NAME, fileName);
 
         // BlobInfo: 파일의 메타데이터 (버킷과 파일 이름, MIME 타입 등)
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
-                .setContentType(file.getContentType()) // 파일의 MIME 타입
+                .setContentType(imageFile.getContentType()) // 파일의 MIME 타입
                 .build();
 
         // 파일 업로드
-        storage.create(blobInfo, file.getInputStream());
+        storage.create(blobInfo, imageFile.getInputStream());
         // 업로드된 파일의 공개 URL 생성
-        String publicUrl =  getPublicUrl(fileName);
+        String publicUrl =  getPublicUrl(storage, fileName);
         User updatedUser = existingUser.updateProfileImage(publicUrl);
         userRepository.save(updatedUser);
     }
 
-    public String getPublicUrl(String fileName) {
-        // 15분 동안 유효한 서명된 URL 생성
-        BlobId blobId = BlobId.of(BUCKET_NAME, fileName);
-        URL url = storage.signUrl(BlobInfo.newBuilder(blobId).build(), 15, TimeUnit.MINUTES);
-        return url.toString();
+    public String getPublicUrl(Storage storage, String fileName) {
+        return String.format("https://storage.googleapis.com/%s/%s", BUCKET_NAME, fileName);
     }
 
     public User updateUserInfo(User user, UpdateRequest updateRequest) {

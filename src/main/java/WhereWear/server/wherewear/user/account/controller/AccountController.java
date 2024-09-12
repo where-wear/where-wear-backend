@@ -19,9 +19,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -58,13 +60,19 @@ public class AccountController {
             @ApiResponse(responseCode = "400", description = "잘못된 요청",
                     content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class)))
     })
-    @PostMapping("/signUp")
+    @PostMapping(value = "/signUp", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> signUp(
             @Parameter(description = "유효한 인증 토큰") @RequestHeader("Authorization") String token,
-            @RequestBody SignupRequest signupRequest) throws IOException {
+            @RequestParam("nickname") String nickname,  // 닉네임
+            @RequestParam("height") int height,         // 키
+            @RequestParam("weight") int weight,         // 몸무게
+            @RequestParam("footSize") int footSize,     // 발사이즈
+            @RequestParam("job") String job,            // 직업
+            @RequestParam("introduction") String introduction,  // JSON 데이터를 받음
+            @RequestPart(value = "image", required = false) MultipartFile imageFile) throws IOException {
 
         User user = userService.findByAccessToken(token);
-        User updatedUser = accountService.signUp(user, signupRequest);
+        User updatedUser = accountService.signUp(user, nickname, height, weight, footSize, job, introduction, imageFile);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(new UserInfoResponse(updatedUser)));
     }
