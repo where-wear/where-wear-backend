@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -22,26 +24,36 @@ public class CreateLogService {
     private final LogTextService logTextService;
     private final LogImageService logImageService;
     private final LogTagService logTagService;
-    public Log create(String email, LogRequest request) throws IOException {
+    public Log create(String email,
+                      String text,
+                      List<MultipartFile> imageUrls,
+                      List<FashionItemRequest> items,
+                      Double x,
+                      Double y,
+                      String roadAddress,
+                      String address,
+                      String placeName,
+                      Boolean isShow,
+                      List<String> tags) throws IOException {
 
         Log log = logService.startLog(email);
 
-        for (FashionItemRequest item : request.getItems()){
+        for (FashionItemRequest item : items){
             logFashionService.addFashionItemToLog(log.getId(), item.getCategoryId(), item.getItemName());
         }
 
-        logPlaceService.addPlaceToLog(log.getId(),request.getX(),request.getY(),request.getAddress(),request.getRoadAddress(),request.getPlaceName());
-        logTextService.addTextToLog(log.getId(),request.getText());
+        logPlaceService.addPlaceToLog(log.getId(),x, y, roadAddress, address, placeName);
+        logTextService.addTextToLog(log.getId(), text);
 
-        for (MultipartFile file : request.getImageUrls()){
+        for (MultipartFile file : imageUrls){
             logImageService.addImageToLog(log.getId(),file);
         }
 
-        for (String tag : request.getTags()){
+        for (String tag : tags){
             logTagService.addTagToLog(log.getId(),tag);
         }
 
-        setIsShow(log, request.getIsShow());
+        setIsShow(log, isShow);
         return log;
     }
 
