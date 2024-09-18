@@ -71,12 +71,12 @@ public class AccountService {
         // 파일 업로드
         storage.create(blobInfo, imageFile.getInputStream());
         // 업로드된 파일의 공개 URL 생성
-        String publicUrl =  getPublicUrl(storage, fileName);
+        String publicUrl =  getPublicUrl(fileName);
         User updatedUser = existingUser.updateProfileImage(publicUrl);
         userRepository.save(updatedUser);
     }
 
-    public String getPublicUrl(Storage storage, String fileName) {
+    public String getPublicUrl(String fileName) {
         return String.format("https://storage.googleapis.com/%s/%s", BUCKET_NAME, fileName);
     }
 

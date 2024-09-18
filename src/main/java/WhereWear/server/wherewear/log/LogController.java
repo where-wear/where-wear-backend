@@ -1,5 +1,6 @@
 package WhereWear.server.wherewear.log;
 
+import WhereWear.server.wherewear.fashion.fashionItem.FashionItemRequest;
 import WhereWear.server.wherewear.user.User;
 import WhereWear.server.wherewear.user.UserService;
 import WhereWear.server.wherewear.util.ApiUtils;
@@ -13,6 +14,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -34,10 +39,20 @@ public class LogController {
                     content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class)))
     })
     @PostMapping("/createLog")
-    public ResponseEntity<?> create(@RequestHeader("Authorization") String token, @RequestBody LogRequest request) {
+    public ResponseEntity<?> create(@RequestHeader("Authorization") String token,
+                                    @RequestParam("text") String text,
+                                    @RequestParam("items") List<FashionItemRequest> items,
+                                    @RequestParam("x") Double x,
+                                    @RequestParam("y") Double y,
+                                    @RequestParam("roadAddress") String roadAddress,
+                                    @RequestParam("address") String address,
+                                    @RequestParam("placeName") String placeName,
+                                    @RequestParam("isShow") boolean isShow,
+                                    @RequestParam("tags") List<String> tags,
+                                    @RequestPart(value = "imageUrls", required = false) List<MultipartFile> imageUrls) throws IOException {
         try {
             User user = userService.findByAccessToken(token);
-            Log log = createLogService.create(user.getEmail(), request);
+            Log log = createLogService.create(user.getEmail(), text, imageUrls, items, x, y, roadAddress, address, placeName, isShow, tags);
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(ApiUtils.success(new LogResponse(log)));
         } catch (Exception e) {
