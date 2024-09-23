@@ -23,17 +23,14 @@ public class Place {
     @Column(name = "place_id", updatable = false)
     private Long id;
 
-    @Column(name = "road_address")
-    private String roadAddress;
-
     @Column(name = "address")
     private String address;
 
     @Column(name = "x")
-    private Double x;
+    private double x;
 
     @Column(name = "y")
-    private Double y;
+    private double y;
 
     @Column(name="place_name")
     private String placeName;
@@ -43,8 +40,7 @@ public class Place {
     private List<Log> logs = new ArrayList<>();
 
     @Builder
-    public Place(String roadAddress, String address, Double x, Double y, String placeName) {
-        this.roadAddress = roadAddress;
+    public Place(String address, Double x, Double y, String placeName) {
         this.address = address;
         this.x = x;
         this.y = y;

@@ -15,17 +15,14 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 @Getter
 @Setter
 public class PlaceDto {
-
     private Long id;
-    private String roadAddress;
     private String address;
-    private Double x;
-    private Double y;
+    private double x;
+    private double y;
     private String placeName;
 
     public PlaceDto(Place place) {
         this.id = place.getId();
-        this.roadAddress = place.getRoadAddress();
         this.address = place.getAddress();
         this.x = place.getX();
         this.y = place.getY();
@@ -36,7 +33,6 @@ public class PlaceDto {
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
-                .append("roadAddress", roadAddress)
                 .append("address", address)
                 .append("x", x)
                 .append("y", y)
