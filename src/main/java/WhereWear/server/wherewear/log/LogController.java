@@ -67,6 +67,27 @@ public class LogController {
         }
     }
 
+    @Operation(summary = "로그 조회", description = "로그를 가져옵니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "로그 조회 성공",
+                    content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultSuccess.class))),
+            @ApiResponse(responseCode = "400", description = "잘못된 요청",
+                    content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class))),
+            @ApiResponse(responseCode = "401", description = "인증 실패",
+                    content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class)))
+    })
+    @PostMapping("/getLog")
+    public ResponseEntity<?> getLog(@RequestParam Long id) {
+        try {
+            Log log = logService.findByLogId(id);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(ApiUtils.success(new LogResponse(log)));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(ApiUtils.error(e.getMessage(), HttpStatus.BAD_REQUEST));
+        }
+    }
+
     @Operation(summary = "로그 삭제", description = "기존 로그를 삭제합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "로그 삭제 성공",

@@ -5,12 +5,16 @@ import WhereWear.server.wherewear.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Service
 public class LogService {
 
     private final LogRepository logRepository;
     private final UserService userService;
+
 
     public Log startLog(String email) {
         User user = userService.findByEmail(email);
@@ -31,5 +35,7 @@ public class LogService {
         return logRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected log"));
     }
-
+    public Optional<List<Log>> findLogsByXYRange(double xMin, double xMax, double yMin, double yMax){
+        return logRepository.findLogsByXYRange(xMin, xMax, yMin, yMax);
+    }
 }
