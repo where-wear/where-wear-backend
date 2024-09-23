@@ -68,7 +68,7 @@ public class Log {
     private List<LogImage> logImages = new ArrayList<>();
 
     @CreatedDate
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @LastModifiedDate

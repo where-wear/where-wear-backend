@@ -17,13 +17,13 @@ import java.util.stream.Collectors;
 public class PlaceService {
     private final PlaceRepository placeRepository;
 
-    public Place addPlace(double x, double y, String roadAddress, String address, String placeName) {
-        Place place = new Place(roadAddress,address,x,y,placeName);
+    public Place addPlace(Double x, Double y, String address, String placeName) {
+        Place place = new Place(address,x,y,placeName);
         return place;
     }
 
-    public Place deletePlace(double x, double y, String roadAddress, String address, String placeName) {
-        Place place = new Place(roadAddress,address,x,y,placeName);
+    public Place deletePlace(Double x, Double y, String address, String placeName) {
+        Place place = new Place(address,x,y,placeName);
         return place;
     }
 

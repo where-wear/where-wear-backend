@@ -20,9 +20,9 @@ public class LogPlaceService {
     private final LogService logService;
     private final PlaceService placeService;
 
-    public Log addPlaceToLog(Long logId, Double x, Double y,String roadAddress,String address,String placeName ) {
+    public Log addPlaceToLog(Long logId, double x, double y, String address, String placeName ) {
         Log log = logService.findByLogId(logId);
-        Place place = placeService.addPlace(x,y,roadAddress,address,placeName);
+        Place place = placeService.addPlace(x,y,address,placeName);
 
         log.setPlace(place);
 

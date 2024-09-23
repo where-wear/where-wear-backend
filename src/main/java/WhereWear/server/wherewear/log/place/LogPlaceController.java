@@ -38,10 +38,9 @@ public class LogPlaceController {
     public ResponseEntity<?> addPlaceToLog(@PathVariable("logId") Long logId,
                                                                                @RequestParam Double x,
                                                                                @RequestParam Double y,
-                                                                               @RequestParam String roadAddress,
                                                                                @RequestParam String address,
                                                                                @RequestParam String placeName){
-        Log log = logPlaceService.addPlaceToLog(logId,x,y,roadAddress,address,placeName);
+        Log log = logPlaceService.addPlaceToLog(logId,x,y,address,placeName);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(new LogResponse(log)));
     }

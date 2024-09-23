@@ -2,7 +2,6 @@ package WhereWear.server.wherewear.log;
 
 import WhereWear.server.wherewear.fashion.fashionItem.FashionItemRequest;
 import WhereWear.server.wherewear.log.fashion.LogFashionService;
-import WhereWear.server.wherewear.log.logImage.LogImageRequest;
 import WhereWear.server.wherewear.log.logImage.LogImageService;
 import WhereWear.server.wherewear.log.place.LogPlaceService;
 import WhereWear.server.wherewear.log.tag.LogTagService;
@@ -28,9 +27,8 @@ public class CreateLogService {
                       String text,
                       List<MultipartFile> imageUrls,
                       List<FashionItemRequest> items,
-                      Double x,
-                      Double y,
-                      String roadAddress,
+                      double x,
+                      double y,
                       String address,
                       String placeName,
                       Boolean isShow,
@@ -42,7 +40,7 @@ public class CreateLogService {
             logFashionService.addFashionItemToLog(log.getId(), item.getCategoryId(), item.getItemName());
         }
 
-        logPlaceService.addPlaceToLog(log.getId(),x, y, roadAddress, address, placeName);
+        logPlaceService.addPlaceToLog(log.getId(),x, y, address, placeName);
         logTextService.addTextToLog(log.getId(), text);
 
         for (MultipartFile file : imageUrls){

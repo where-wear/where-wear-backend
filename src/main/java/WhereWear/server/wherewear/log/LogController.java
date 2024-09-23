@@ -4,6 +4,8 @@ import WhereWear.server.wherewear.fashion.fashionItem.FashionItemRequest;
 import WhereWear.server.wherewear.user.User;
 import WhereWear.server.wherewear.user.UserService;
 import WhereWear.server.wherewear.util.ApiUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -41,18 +44,21 @@ public class LogController {
     @PostMapping("/createLog")
     public ResponseEntity<?> create(@RequestHeader("Authorization") String token,
                                     @RequestParam("text") String text,
-                                    @RequestParam("items") List<FashionItemRequest> items,
-                                    @RequestParam("x") Double x,
-                                    @RequestParam("y") Double y,
-                                    @RequestParam("roadAddress") String roadAddress,
+                                    @RequestParam("items") String itemsJson,
+                                    @RequestParam("x") double x,
+                                    @RequestParam("y") double y,
                                     @RequestParam("address") String address,
                                     @RequestParam("placeName") String placeName,
                                     @RequestParam("isShow") boolean isShow,
-                                    @RequestParam("tags") List<String> tags,
-                                    @RequestPart(value = "imageUrls", required = false) List<MultipartFile> imageUrls) throws IOException {
+                                    @RequestParam("tags") String tagsJson,
+                                    @RequestPart(value = "images", required = false) List<MultipartFile> imageUrls) throws JsonProcessingException, IOException {
         try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            List<FashionItemRequest> items = Arrays.asList(objectMapper.readValue(itemsJson, FashionItemRequest[].class));
+            List<String> tags = objectMapper.readValue(tagsJson, List.class);
+
             User user = userService.findByAccessToken(token);
-            Log log = createLogService.create(user.getEmail(), text, imageUrls, items, x, y, roadAddress, address, placeName, isShow, tags);
+            Log log = createLogService.create(user.getEmail(), text, imageUrls, items, x, y, address, placeName, isShow, tags);
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(ApiUtils.success(new LogResponse(log)));
         } catch (Exception e) {
