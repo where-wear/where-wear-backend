@@ -35,7 +35,7 @@ public class PlaceController {
             @ApiResponse(responseCode = "404", description = "요청에 대한 응답을 찾을 수 없음",
                     content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class)))
     })
-    @GetMapping("/{logId}/place/create")
+    @GetMapping
     public ResponseEntity<?> getPlaceLogs(@RequestParam double x, @RequestParam double y){
         List<PlaceLogSummary> logSummaries = logPlaceService.processLogs(x,y);
         return ResponseEntity.status(HttpStatus.CREATED)
