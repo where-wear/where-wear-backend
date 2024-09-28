@@ -30,8 +30,6 @@ public class LogPlaceService {
         return logService.saveLog(log);
     }
 
-
-
     public List<PlaceLogSummary> processLogs(double x, double y) {
         // 1km 반경 내의 로그들을 그룹화
         Map<String, List<Log>> groupedLogs = getGroupedLogsByXY(x, y);
@@ -82,15 +80,4 @@ public class LogPlaceService {
         return summaries;
     }
 
-    public Log deletePlaceToLog(Long id) {
-        Log log = logService.findByLogId(id);
-        Place place = log.getPlace();
-
-        if (place != null) {
-            log.removePlace(place);
-            placeService.savePlace(place);
-        }
-
-        return logService.saveLog(log);
-    }
 }

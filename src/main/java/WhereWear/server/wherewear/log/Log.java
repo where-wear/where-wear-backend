@@ -39,9 +39,8 @@ public class Log {
     @JoinColumn(name="user_id")
     private User user;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="place_id")
+    @OneToOne(cascade = CascadeType.PERSIST)//User를 저장할 때 관련된 RefreshToken도 함께 저장
+    @JoinColumn(name = "place_id")
     private Place place;
 
     @Column(name = "is_show")
@@ -91,15 +90,9 @@ public class Log {
 
     public void setPlace(Place place) {
         this.place = place;
-        place.getLogs().add(this);
+        place.setLog(this);
     }
 
-    public void removePlace(Place place) {
-        if (this.place != null && this.place.equals(place)) {
-            place.getLogs().remove(this);
-            this.place = null;
-        }
-    }
     public void setIsShow(Boolean isShow) {
         this.isShow = isShow;
     }

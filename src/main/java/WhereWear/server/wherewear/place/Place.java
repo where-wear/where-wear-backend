@@ -4,16 +4,14 @@ import WhereWear.server.wherewear.log.Log;
 import WhereWear.server.wherewear.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "place")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -22,6 +20,9 @@ public class Place {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "place_id", updatable = false)
     private Long id;
+
+    @Column(name = "category")
+    private String category;
 
     @Column(name = "address")
     private String address;
@@ -35,13 +36,13 @@ public class Place {
     @Column(name="place_name")
     private String placeName;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "place")
-    private List<Log> logs = new ArrayList<>();
+    @OneToOne(mappedBy = "place", fetch = FetchType.LAZY)
+    private Log log;
 
     @Builder
-    public Place(String address, Double x, Double y, String placeName) {
+    public Place(String address, String category, Double x, Double y, String placeName) {
         this.address = address;
+        this.category = category;
         this.x = x;
         this.y = y;
         this.placeName = placeName;
