@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
@@ -21,5 +22,20 @@ public class PlaceRepository {
         em.persist(place);
         return place;
     }
+
+    public List<Place> findTopPlaceByCategory(String category) {
+        List<Place> result = em.createQuery(
+                        "SELECT p " +
+                                "FROM Place p " +
+                                "JOIN Log l ON p.id = l.place.id " +
+                                "WHERE p.category = :category " +
+                                "GROUP BY p.id, p.x, p.y " +
+                                "ORDER BY COUNT(l.id) DESC", Place.class)
+                .setParameter("category", category)
+                .setMaxResults(3)  // LIMIT 대신 setMaxResults 사용
+                .getResultList();
+        return result;
+    }
+
 
 }
