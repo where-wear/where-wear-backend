@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/where_wear
+    url: jdbc:mysql://34.22.72.26:3306/where_wear
     username: root
     password: hanbit
     driver-class-name: com.mysql.cj.jdbc.Driver
