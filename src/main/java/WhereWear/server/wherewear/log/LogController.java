@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -76,12 +77,36 @@ public class LogController {
             @ApiResponse(responseCode = "401", description = "인증 실패",
                     content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class)))
     })
-    @PostMapping("/getLog")
+    @GetMapping("/getLog")
     public ResponseEntity<?> getLog(@RequestParam Long id) {
         try {
             Log log = logService.findByLogId(id);
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(ApiUtils.success(new LogResponse(log)));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(ApiUtils.error(e.getMessage(), HttpStatus.BAD_REQUEST));
+        }
+    }
+
+    @Operation(summary = "사용자 아이디로 로그 조회", description = "특정 사용자의 로그를 가져옵니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "로그 조회 성공",
+                    content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultSuccess.class))),
+            @ApiResponse(responseCode = "400", description = "잘못된 요청",
+                    content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class))),
+            @ApiResponse(responseCode = "401", description = "인증 실패",
+                    content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class)))
+    })
+    @GetMapping("/getLogs/{userId}")
+    public ResponseEntity<?> getLogsByUserId(@PathVariable("userId") Long userId) {
+        try {
+            List<Log> logs = logService.findLogsByUserId(userId);
+            List<LogResponse> response = logs.stream()
+                    .map(log -> new LogResponse(log))
+                    .collect(Collectors.toList());
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(ApiUtils.success(response));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(ApiUtils.error(e.getMessage(), HttpStatus.BAD_REQUEST));

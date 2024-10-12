@@ -5,6 +5,7 @@ import WhereWear.server.wherewear.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +35,10 @@ public class LogService {
     public Log findByLogId(Long id){
         return logRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected log"));
+    }
+    public List<Log> findLogsByUserId(Long userId){
+        return logRepository.findByUserId(userId)
+                .orElse(Collections.emptyList());
     }
     public Optional<List<Object[]>> countLogsByXY(double xMin, double xMax, double yMin, double yMax){
         return logRepository.countLogsByXY(xMin, xMax, yMin, yMax);

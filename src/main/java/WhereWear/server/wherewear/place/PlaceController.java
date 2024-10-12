@@ -83,7 +83,7 @@ public class PlaceController {
                                            @RequestParam("y") double y){
         List<Log> logs = logPlaceService.nearPlaceLogsByXY(x,y);
         List<LogResponse> response = logs.stream()
-                .map(log -> new LogResponse(log)) // Log 객체를 기반으로 LogResponse 생성
+                .map(log -> new LogResponse(log))
                 .collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(response));
