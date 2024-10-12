@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor
 @Getter
 @Entity
 @Table(name = "log")

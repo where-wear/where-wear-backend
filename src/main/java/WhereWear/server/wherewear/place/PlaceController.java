@@ -36,7 +36,7 @@ public class PlaceController {
                     content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class)))
     })
     @GetMapping
-    public ResponseEntity<?> getPlaceLogs(@RequestParam double x, @RequestParam double y){
+    public ResponseEntity<?> getPlaceLogs(@RequestParam("x") double x, @RequestParam("y") double y){
         List<PlaceLogSummary> logSummaries = logPlaceService.processLogs(x,y);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(logSummaries));
