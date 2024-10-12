@@ -15,6 +15,10 @@ public class LogPlaceService {
     private final LogService logService;
     private final PlaceService placeService;
 
+    public List<Log> findLogsByXY(double x, double y){
+        return logService.findByXY(x,y).orElse(Collections.emptyList());
+    }
+
     public Log addPlaceToLog(Long logId, double x, double y, String address, String placeName ) {
         Log log = logService.findByLogId(logId);
         Place place = placeService.addPlace(x,y,address,placeName);

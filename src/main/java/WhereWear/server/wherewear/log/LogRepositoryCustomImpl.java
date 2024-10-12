@@ -31,4 +31,18 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
         return resultList.isEmpty() ? Optional.empty() : Optional.of(resultList);
     }
 
+    @Override
+    public Optional<List<Log>> findByXY(double x, double y) {
+        String queryStr = "SELECT l FROM Log l " +
+                "WHERE l.place.x = :x " +
+                "AND l.place.y = :y";
+
+        TypedQuery<Log> query = entityManager.createQuery(queryStr, Log.class);
+        query.setParameter("x", x);
+        query.setParameter("y", y);
+
+        List<Log> resultList = query.getResultList();
+        return resultList.isEmpty() ? Optional.empty() : Optional.of(resultList);
+    }
+
 }
