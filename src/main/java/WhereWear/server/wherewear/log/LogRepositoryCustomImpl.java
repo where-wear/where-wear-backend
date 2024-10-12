@@ -45,4 +45,22 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
         return resultList.isEmpty() ? Optional.empty() : Optional.of(resultList);
     }
 
+    @Override
+    public Optional<List<Log>> nearPlaceLogsByXY(double x, double y) {
+        String queryStr = "SELECT l FROM Log l " +
+                "WHERE SQRT(POWER(l.place.x - :x, 2) + POWER(l.place.y - :y, 2)) < :distanceThreshold " +
+                "ORDER BY SQRT(POWER(l.place.x - :x, 2) + POWER(l.place.y - :y, 2)) ASC";
+
+        TypedQuery<Log> query = entityManager.createQuery(queryStr, Log.class);
+        query.setParameter("x", x);
+        query.setParameter("y", y);
+        query.setParameter("distanceThreshold", 100.0);
+
+        query.setMaxResults(100);
+
+        List<Log> resultList = query.getResultList();
+        return resultList.isEmpty() ? Optional.empty() : Optional.of(resultList);
+    }
+
+
 }

@@ -69,4 +69,24 @@ public class PlaceController {
                 .body(success(response));
     }
 
+    @Operation(summary = "근처 장소 로그 조회", description = "근처 장소에 관련된 로그를 조회합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "근처 장소 로그 조회 성공",
+                    content = @Content(schema = @Schema(implementation = LogResponse.class))),
+            @ApiResponse(responseCode = "400", description = "잘못된 요청",
+                    content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class))),
+            @ApiResponse(responseCode = "404", description = "요청에 대한 응답을 찾을 수 없음",
+                    content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class)))
+    })
+    @GetMapping("/nearPlace")
+    public ResponseEntity<?> nearPlaceLogsByXY(@RequestParam("x") double x,
+                                           @RequestParam("y") double y){
+        List<Log> logs = logPlaceService.nearPlaceLogsByXY(x,y);
+        List<LogResponse> response = logs.stream()
+                .map(log -> new LogResponse(log)) // Log 객체를 기반으로 LogResponse 생성
+                .collect(Collectors.toList());
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(success(response));
+    }
+
 }
