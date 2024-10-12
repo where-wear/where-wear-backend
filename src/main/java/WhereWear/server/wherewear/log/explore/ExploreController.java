@@ -1,6 +1,7 @@
 package WhereWear.server.wherewear.log.explore;
 
 import WhereWear.server.wherewear.log.LogResponse;
+import WhereWear.server.wherewear.log.place.PlaceDto;
 import WhereWear.server.wherewear.place.Place;
 import WhereWear.server.wherewear.place.PlaceService;
 import WhereWear.server.wherewear.util.ApiUtils;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static WhereWear.server.wherewear.util.ApiUtils.success;
 
@@ -37,10 +39,13 @@ public class ExploreController {
             @ApiResponse(responseCode = "404", description = "요청에 대한 응답을 찾을 수 없음",
                     content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class)))
     })
-    @GetMapping
-    public ResponseEntity<?> getTopTaggedPlaces(@RequestParam String category){
+    @GetMapping("/topPlace")
+    public ResponseEntity<?> getTopTaggedPlaces(@RequestParam("category") String category){
         List<Place> places = placeService.getTopTaggedPlaces(category);
+        List<PlaceDto> response = places.stream()
+                .map(place -> new PlaceDto(place))
+                .collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(success(places));
+                .body(success(response));
     }
 }
