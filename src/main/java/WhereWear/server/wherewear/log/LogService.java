@@ -35,7 +35,11 @@ public class LogService {
         return logRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected log"));
     }
-    public Optional<List<Log>> findLogsByXYRange(double xMin, double xMax, double yMin, double yMax){
-        return logRepository.findLogsByXYRange(xMin, xMax, yMin, yMax);
+    public Optional<List<Object[]>> countLogsByXY(double xMin, double xMax, double yMin, double yMax){
+        return logRepository.countLogsByXY(xMin, xMax, yMin, yMax);
+    }
+
+    public Optional<List<Log>> findByXY(double x, double y){
+        return logRepository.findByXY(x,y);
     }
 }
