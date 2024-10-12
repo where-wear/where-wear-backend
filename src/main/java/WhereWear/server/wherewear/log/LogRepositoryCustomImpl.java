@@ -14,16 +14,20 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
     private EntityManager entityManager;
 
     @Override
-    public Optional<List<Log>> findLogsByXYRange(double xMin, double xMax, double yMin, double yMax) {
-        String queryStr = "SELECT l FROM Log l WHERE l.place.x BETWEEN :xMin AND :xMax AND l.place.y BETWEEN :yMin AND :yMax";
+    public Optional<List<Object[]>> countLogsByXY(double xMin, double xMax, double yMin, double yMax) {
+        String queryStr = "SELECT l.place.x, l.place.y, COUNT(l) " +
+                "FROM Log l " +
+                "WHERE l.place.x BETWEEN :xMin AND :xMax " +
+                "AND l.place.y BETWEEN :yMin AND :yMax " +
+                "GROUP BY l.place.x, l.place.y";
 
-        TypedQuery<Log> query = entityManager.createQuery(queryStr, Log.class);
+        TypedQuery<Object[]> query = entityManager.createQuery(queryStr, Object[].class);
         query.setParameter("xMin", xMin);
         query.setParameter("xMax", xMax);
         query.setParameter("yMin", yMin);
         query.setParameter("yMax", yMax);
 
-        List<Log> resultList = query.getResultList();
+        List<Object[]> resultList = query.getResultList();
         return resultList.isEmpty() ? Optional.empty() : Optional.of(resultList);
     }
 

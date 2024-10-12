@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static WhereWear.server.wherewear.util.ApiUtils.success;
 
@@ -36,9 +37,16 @@ public class PlaceController {
                     content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class)))
     })
     @GetMapping
-    public ResponseEntity<?> getPlaceLogs(@RequestParam("x") double x, @RequestParam("y") double y){
-        List<PlaceLogSummary> logSummaries = logPlaceService.processLogs(x,y);
+    public ResponseEntity<?> countLogsByXY(@RequestParam("minX") double minX,
+                                          @RequestParam("maxX") double maxX,
+                                          @RequestParam("minY") double minY,
+                                          @RequestParam("maxY") double maxY){
+        List<Object[]> logCounts = logPlaceService.countLogsByXY(minX, maxX, minY, maxY);
+        List<LogCountDto> response = logCounts.stream()
+                .map(arr -> new LogCountDto((Double) arr[0], (Double) arr[1], (Long) arr[2]))
+                .collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(success(logSummaries));
+                .body(success(response));
     }
+
 }

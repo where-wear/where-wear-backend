@@ -1,9 +1,7 @@
 package WhereWear.server.wherewear.log.explore;
 
 import WhereWear.server.wherewear.log.LogResponse;
-import WhereWear.server.wherewear.log.place.LogPlaceService;
 import WhereWear.server.wherewear.place.Place;
-import WhereWear.server.wherewear.place.PlaceLogSummary;
 import WhereWear.server.wherewear.place.PlaceService;
 import WhereWear.server.wherewear.util.ApiUtils;
 import io.swagger.v3.oas.annotations.Operation;
