@@ -62,5 +62,16 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
         return resultList.isEmpty() ? Optional.empty() : Optional.of(resultList);
     }
 
+    @Override
+    public Optional<List<Log>> findByUserId(Long userId) {
+        String queryStr = "SELECT l FROM Log l " +
+                "WHERE l.user.id = :userId ";
+
+        TypedQuery<Log> query = entityManager.createQuery(queryStr, Log.class);
+        query.setParameter("userId", userId);
+
+        List<Log> resultList = query.getResultList();
+        return resultList.isEmpty() ? Optional.empty() : Optional.of(resultList);
+    }
 
 }
