@@ -42,4 +42,8 @@ public class LogService {
     public Optional<List<Log>> findByXY(double x, double y){
         return logRepository.findByXY(x,y);
     }
+
+    public Optional<List<Log>> nearPlaceLogsByXY(double x, double y){
+        return logRepository.nearPlaceLogsByXY(x,y);
+    }
 }

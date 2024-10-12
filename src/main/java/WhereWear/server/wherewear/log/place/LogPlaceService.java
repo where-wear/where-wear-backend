@@ -19,6 +19,10 @@ public class LogPlaceService {
         return logService.findByXY(x,y).orElse(Collections.emptyList());
     }
 
+    public List<Log> nearPlaceLogsByXY(double x, double y){
+        return logService.nearPlaceLogsByXY(x,y).orElse(Collections.emptyList());
+    }
+
     public Log addPlaceToLog(Long logId, double x, double y, String address, String placeName ) {
         Log log = logService.findByLogId(logId);
         Place place = placeService.addPlace(x,y,address,placeName);
