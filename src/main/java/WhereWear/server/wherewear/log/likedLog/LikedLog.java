@@ -6,6 +6,7 @@ import WhereWear.server.wherewear.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -30,4 +31,10 @@ public class LikedLog {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
+
+    @Builder
+    public LikedLog(Log log, User user){
+        this.log = log;
+        this.user = user;
+    }
 }

@@ -2,6 +2,8 @@ package WhereWear.server.wherewear.log;
 
 import WhereWear.server.wherewear.fashion.fashionItem.FashionItemDto;
 import WhereWear.server.wherewear.log.fashion.LogFashion;
+import WhereWear.server.wherewear.log.likedLog.LikedLog;
+import WhereWear.server.wherewear.log.likedLog.LikedLogDto;
 import WhereWear.server.wherewear.log.logImage.LogImage;
 import WhereWear.server.wherewear.log.logImage.LogImageDto;
 import WhereWear.server.wherewear.log.place.PlaceDto;
@@ -26,6 +28,7 @@ public class LogResponse {
     private List<FashionItemDto> fashionItems = new ArrayList<>();
     private List<LogTagDto> tags = new ArrayList<>();
     private List<LogImageDto> logImages = new ArrayList<>();
+    private List<LikedLogDto> liked = new ArrayList<>();
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -50,6 +53,11 @@ public class LogResponse {
         if (log.getLogImages() != null){
             for(LogImage logImage : log.getLogImages()) {
                 this.logImages.add(new LogImageDto(logImage));
+            }
+        }
+        if(log.getLikedLogs() != null){
+            for(LikedLog likedLog : log.getLikedLogs()){
+                this.liked.add(new LikedLogDto(likedLog));
             }
         }
         this.createdAt = log.getCreatedAt();

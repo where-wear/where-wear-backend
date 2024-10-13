@@ -143,6 +143,10 @@ public class User implements UserDetails {
         return this;
     }
 
+    public void setLikedLogs(LikedLog likedLog){
+        this.likedLogs.add(likedLog);
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
