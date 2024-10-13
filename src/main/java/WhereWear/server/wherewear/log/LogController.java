@@ -78,7 +78,7 @@ public class LogController {
                     content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class)))
     })
     @GetMapping("/getLog")
-    public ResponseEntity<?> getLog(@RequestParam Long id) {
+    public ResponseEntity<?> getLog(@RequestParam("id") Long id) {
         try {
             Log log = logService.findByLogId(id);
             return ResponseEntity.status(HttpStatus.CREATED)

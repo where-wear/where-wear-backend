@@ -50,7 +50,7 @@ public class Log {
 
     @JsonIgnore
     @OneToMany(mappedBy = "log")
-    private List<Tag> Tags = new ArrayList<>();
+    private List<Tag> tags = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "log")
@@ -92,10 +92,13 @@ public class Log {
     }
 
     public void setTags(Tag tag) {
-        this.getTags().add(tag);
+        this.tags.add(tag);
         tag.setLog(this);
     }
 
+    public void setLikedLogs(LikedLog likedLog){
+        this.likedLogs.add(likedLog);
+    }
     public void setIsShow(Boolean isShow) {
         this.isShow = isShow;
     }
