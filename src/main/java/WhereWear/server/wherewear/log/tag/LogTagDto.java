@@ -11,9 +11,9 @@ public class LogTagDto {
     private Long id;
     private String tagName;
 
-    public LogTagDto(LogTag logTag) {
-        this.id = logTag.getTag().getId();
-        this.tagName = logTag.getTag().getTagName();
+    public LogTagDto(Tag tag) {
+        this.id = tag.getId();
+        this.tagName = tag.getTagName();
     }
 
     @Override

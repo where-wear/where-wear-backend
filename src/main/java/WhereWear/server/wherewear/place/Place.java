@@ -47,5 +47,14 @@ public class Place {
         this.y = y;
         this.placeName = placeName;
     }
+    @Builder
+    public Place(Long id, String address, String category, Double x, Double y, String placeName) {
+        this.id = id;
+        this.address = address;
+        this.category = category;
+        this.x = x;
+        this.y = y;
+        this.placeName = placeName;
+    }
 
 }

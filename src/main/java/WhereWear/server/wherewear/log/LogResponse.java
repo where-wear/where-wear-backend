@@ -5,8 +5,8 @@ import WhereWear.server.wherewear.log.fashion.LogFashion;
 import WhereWear.server.wherewear.log.logImage.LogImage;
 import WhereWear.server.wherewear.log.logImage.LogImageDto;
 import WhereWear.server.wherewear.log.place.PlaceDto;
-import WhereWear.server.wherewear.log.tag.LogTag;
 import WhereWear.server.wherewear.log.tag.LogTagDto;
+import WhereWear.server.wherewear.tag.Tag;
 import WhereWear.server.wherewear.user.UserDto;
 import lombok.Getter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -42,9 +42,9 @@ public class LogResponse {
                 this.fashionItems.add(new FashionItemDto(logFashion));
             }
         }
-        if (log.getLogTags() != null){
-            for(LogTag logTag : log.getLogTags()) {
-                this.tags.add(new LogTagDto(logTag));
+        if (log.getTags() != null){
+            for(Tag tag : log.getTags()) {
+                this.tags.add(new LogTagDto(tag));
             }
         }
         if (log.getLogImages() != null){

@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -37,6 +38,22 @@ public class TagRepository {
             // Handle non-unique result case if needed
             return Optional.empty();
         }
+    }
+
+    public List<String> findHotKeywords(String category){
+        List<String> result = em.createQuery(
+                "SELECT t.tagName " +
+                        "FROM Tag t " +
+                        "JOIN t.log l " +
+                        "JOIN l.place p " +
+                        "WHERE p.category = :category " +
+                        "GROUP BY t.tagName " +
+                        "ORDER BY COUNT(l.id) DESC", String.class)
+                .setParameter("category", category)
+                .setMaxResults(3)
+                .getResultList();
+
+        return result;
     }
 
 }

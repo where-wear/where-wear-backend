@@ -4,8 +4,6 @@ import WhereWear.server.wherewear.fashion.fashionItem.FashionItem;
 import WhereWear.server.wherewear.fashion.fashionItem.FashionItemService;
 import WhereWear.server.wherewear.log.Log;
 import WhereWear.server.wherewear.log.LogService;
-import WhereWear.server.wherewear.log.tag.LogTag;
-import WhereWear.server.wherewear.tag.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

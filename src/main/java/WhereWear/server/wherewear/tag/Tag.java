@@ -1,18 +1,12 @@
 package WhereWear.server.wherewear.tag;
 
 import WhereWear.server.wherewear.log.Log;
-import WhereWear.server.wherewear.log.tag.LogTag;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
+import lombok.*;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "tag")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -26,11 +20,14 @@ public class Tag {
     private String tagName;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "tag")
-    private List<LogTag> logTags = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name="log_id")
+    private Log log;
 
     @Builder
     public Tag(String tagName) {
         this.tagName = tagName;
     }
+
+
 }

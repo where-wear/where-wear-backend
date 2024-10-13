@@ -1,7 +1,5 @@
 package WhereWear.server.wherewear.log.logImage;
 
-import WhereWear.server.wherewear.log.tag.LogTag;
-import WhereWear.server.wherewear.place.Place;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.NonUniqueResultException;
