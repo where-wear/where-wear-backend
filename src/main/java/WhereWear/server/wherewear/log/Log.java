@@ -1,17 +1,14 @@
 package WhereWear.server.wherewear.log;
 
-import WhereWear.server.wherewear.fashion.fashionItem.FashionItem;
 import WhereWear.server.wherewear.log.fashion.LogFashion;
 import WhereWear.server.wherewear.log.likedLog.LikedLog;
 import WhereWear.server.wherewear.log.logImage.LogImage;
 import WhereWear.server.wherewear.log.savedLog.SavedLog;
-import WhereWear.server.wherewear.log.tag.LogTag;
 import WhereWear.server.wherewear.place.Place;
 import WhereWear.server.wherewear.tag.Tag;
 import WhereWear.server.wherewear.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -5,7 +5,6 @@ import WhereWear.server.wherewear.log.fashion.LogFashion;
 import WhereWear.server.wherewear.log.logImage.LogImage;
 import WhereWear.server.wherewear.log.logImage.LogImageDto;
 import WhereWear.server.wherewear.log.place.PlaceDto;
-import WhereWear.server.wherewear.log.tag.LogTag;
 import WhereWear.server.wherewear.log.tag.LogTagDto;
 import WhereWear.server.wherewear.tag.Tag;
 import WhereWear.server.wherewear.user.UserDto;

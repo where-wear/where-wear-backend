@@ -13,7 +13,6 @@ public class LogTagService {
 
     private final LogService logService;
     private final TagService tagService;
-    private final LogTagRepository logTagRepository;
 
     public Log addTagToLog(Long logId, String tagName) {
         Log log = logService.findByLogId(logId);

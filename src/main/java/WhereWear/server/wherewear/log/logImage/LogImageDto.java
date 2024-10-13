@@ -1,6 +1,5 @@
 package WhereWear.server.wherewear.log.logImage;
 
-import WhereWear.server.wherewear.log.tag.LogTag;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;

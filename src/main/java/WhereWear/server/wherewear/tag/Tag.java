@@ -1,13 +1,9 @@
 package WhereWear.server.wherewear.tag;
 
 import WhereWear.server.wherewear.log.Log;
-import WhereWear.server.wherewear.log.tag.LogTag;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
