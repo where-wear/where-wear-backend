@@ -83,3 +83,4 @@ spring:
 jwt:
   issuer: pje010825@gmail.com
   secret_key: wherewear-springboot
+
