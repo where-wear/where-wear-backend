@@ -42,7 +42,7 @@ public class AccountService {
     }
 
     public void setProfileImage(User user, MultipartFile imageFile) throws IOException {
-        ClassPathResource resource = new ClassPathResource("wherewear-437004-c271cd0386fd.json");
+        ClassPathResource resource = new ClassPathResource("wherewear-437004-4cee393ab731.json");
 
         // GoogleCredentials를 사용하여 인증 정보 로드
         InputStream credentialsStream = resource.getInputStream();
