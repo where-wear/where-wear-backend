@@ -25,7 +25,7 @@ public class LogImageService {
     private final LogService logService;
     private final LogImageRepository logImageRepository;
     private final Storage storage = StorageOptions.getDefaultInstance().getService();
-    private final String BUCKET_NAME = "wherewear-image"; // GCS 버킷 이름
+    private final String BUCKET_NAME = "where-wear-image"; // GCS 버킷 이름
 
     public Log addImageToLog(Long logId, MultipartFile imageFile) throws IOException {
         ClassPathResource resource = new ClassPathResource("wherewear-431106-276e88fb8127.json");

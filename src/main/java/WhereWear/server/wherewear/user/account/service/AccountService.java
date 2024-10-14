@@ -22,7 +22,7 @@ import java.io.InputStream;
 public class AccountService {
     private final UserRepository userRepository;
     private final Storage storage = StorageOptions.getDefaultInstance().getService();
-    private final String BUCKET_NAME = "wherewear-image"; // GCS 버킷 이름
+    private final String BUCKET_NAME = "where-wear-image"; // GCS 버킷 이름
     public String existNickname(String nickname) {
         if(userRepository.findByNickname(nickname).isPresent()){
             throw new IllegalArgumentException("계정명이 중복되었습니다.");

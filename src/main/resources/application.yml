@@ -22,8 +22,8 @@ spring:
       storage:
         credentials:
           location: C:\Users\82105\wherewear\src\main\resources\wherewear-431106-276e88fb8127.json
-    project-id: wherewear-431106
-    bucket: wherewear-image
+    project-id: where-wear-431106
+    bucket: where-wear-image
 
   servlet:
     multipart:
