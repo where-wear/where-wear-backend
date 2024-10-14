@@ -49,8 +49,8 @@ spring:
             client-authentication-method: client_secret_post
 
           google:
-            client-id: 342272538100-v6urhgemke4lk1ocnaudibdlrjg52vtd.apps.googleusercontent.com
-            client-secret: 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
+            client-id: 759880079247-utvevc161j1ng0cag69o0copdda0nuui.apps.googleusercontent.com
+            client-secret: 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
             redirect-uri: "http://34.64.39.254:8081/login/oauth2/code/google"
             authorization-grant-type: authorization_code
             scope:
@@ -81,5 +81,5 @@ spring:
             user-name-attribute: response
 
 jwt:
-  issuer: joungeun0825@gmail.com
+  issuer: pje010825@gmail.com
   secret_key: wherewear-springboot
