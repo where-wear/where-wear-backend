@@ -17,13 +17,6 @@ spring:
     init:
       encoding: UTF-8
 
-  cloud:
-    gcp:
-      storage:
-        credentials:
-          location: C:\Users\82105\wherewear\src\main\resources\wherewear-437004-c271cd0386fd.json
-    project-id: wherewear-437004
-    bucket: where-wear-image
 
   servlet:
     multipart:
