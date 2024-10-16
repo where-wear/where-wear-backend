@@ -28,7 +28,7 @@ public class LogImageService {
     private final String BUCKET_NAME = "where-wear-image"; // GCS 버킷 이름
 
     public Log addImageToLog(Long logId, MultipartFile imageFile) throws IOException {
-        ClassPathResource resource = new ClassPathResource("wherewear-437004-af63eda241c4.json");
+        ClassPathResource resource = new ClassPathResource("wherewear-437004-fdbb62ac26f1.json");
 
         // GoogleCredentials를 사용하여 인증 정보 로드
         InputStream credentialsStream = resource.getInputStream();
