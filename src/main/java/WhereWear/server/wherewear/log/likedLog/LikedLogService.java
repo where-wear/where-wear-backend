@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,13 +23,18 @@ public class LikedLogService {
     public void setLikedLog(String email, Long logId){
         Log log = logService.findByLogId(logId);
         User user = userService.findByEmail(email);
-        LikedLog likedLog = likedLogRepository.save(new LikedLog(log,user));
 
-        log.setLikedLogs(likedLog);
-        logService.saveLog(log);
+        Optional<LikedLog> existingLikedLog = likedLogRepository.findByLogAndUser(log, user);
 
-        user.setLikedLogs(likedLog);
-        userService.saveUser(user);
+        if (!existingLikedLog.isPresent()) {
+            LikedLog likedLog = likedLogRepository.save(new LikedLog(log,user));
+
+            log.setLikedLogs(likedLog);
+            logService.saveLog(log);
+
+            user.setLikedLogs(likedLog);
+            userService.saveUser(user);
+        }
     }
     public List<Log> getUserLikedLog(Long userId){
         User user = userService.findById(userId);
