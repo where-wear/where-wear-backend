@@ -14,6 +14,22 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
     private EntityManager entityManager;
 
     @Override
+    public Optional<List<Log>> findLogsByLikedCount() {
+        String queryStr = "SELECT l FROM Log l " +
+                "LEFT JOIN l.likedLogs likedLog " +
+                "GROUP BY l " +
+                "ORDER BY COUNT(likedLog) DESC";
+
+        TypedQuery<Log> query = entityManager.createQuery(queryStr, Log.class);
+        query.setMaxResults(20);
+
+        List<Log> resultList = query.getResultList();
+
+        return resultList.isEmpty() ? Optional.empty() : Optional.of(resultList);
+    }
+
+
+    @Override
     public Optional<List<Object[]>> countLogsByXY(double xMin, double xMax, double yMin, double yMax) {
         String queryStr = "SELECT l.place.x, l.place.y, COUNT(l) " +
                 "FROM Log l " +

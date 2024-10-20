@@ -8,4 +8,5 @@ public interface LogRepositoryCustom {
     Optional<List<Log>> findByXY(double x, double y);
     Optional<List<Log>> nearPlaceLogsByXY(double x, double y);
     Optional<List<Log>> findByUserId(Long userId);
+    Optional<List<Log>> findLogsByLikedCount();
 }
