@@ -65,6 +65,7 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
     public Optional<List<Log>> nearPlaceLogsByXY(double x, double y) {
         String queryStr = "SELECT l FROM Log l " +
                 "WHERE SQRT(POWER(l.place.x - :x, 2) + POWER(l.place.y - :y, 2)) < :distanceThreshold " +
+                "AND l.place.x != :x AND l.place.y != :y " +
                 "ORDER BY SQRT(POWER(l.place.x - :x, 2) + POWER(l.place.y - :y, 2)) ASC";
 
         TypedQuery<Log> query = entityManager.createQuery(queryStr, Log.class);
