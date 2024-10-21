@@ -32,7 +32,7 @@ spring:
           kakao:
             client-id: dc4b883de593360fff4b640fbd1a3a84
             client-secret: KKP6sbqYoJa1KSK9vh3sUPUXVNTxMEZg
-            redirect-uri: "http://34.64.39.254:8081/login/oauth2/code/kakao"
+            redirect-uri: "http://34.22.89.82:8081/login/oauth2/code/kakao"
             authorization-grant-type: authorization_code
             client-name: Kakao
             scope:
@@ -44,7 +44,7 @@ spring:
           google:
             client-id: 759880079247-utvevc161j1ng0cag69o0copdda0nuui.apps.googleusercontent.com
             client-secret: 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
-            redirect-uri: "http://34.64.39.254:8081/login/oauth2/code/google"
+            redirect-uri: "http://34.22.89.82:8081/login/oauth2/code/google"
             authorization-grant-type: authorization_code
             scope:
               - email
@@ -53,7 +53,7 @@ spring:
           naver:
             client-id: DctJpMq4EIKnQRPvkQst
             client-secret: ZU5t3qe5Rg
-            redirect-uri: "http://34.64.39.254:8081/login/oauth2/code/naver"
+            redirect-uri: "http://34.22.89.82:8081/login/oauth2/code/naver"
             authorization-grant-type: authorization_code
             client-name: Naver
             scope:
@@ -76,4 +76,3 @@ spring:
 jwt:
   issuer: pje010825@gmail.com
   secret_key: wherewear-springboot
-
