@@ -1,5 +1,6 @@
 package WhereWear.server.wherewear.log;
 
+import WhereWear.server.wherewear.place.Place;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -90,5 +91,4 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
         List<Log> resultList = query.getResultList();
         return resultList.isEmpty() ? Optional.empty() : Optional.of(resultList);
     }
-
 }
