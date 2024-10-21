@@ -1,5 +1,6 @@
 package WhereWear.server.wherewear.log;
 
+import WhereWear.server.wherewear.place.Place;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -65,6 +66,7 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
     public Optional<List<Log>> nearPlaceLogsByXY(double x, double y) {
         String queryStr = "SELECT l FROM Log l " +
                 "WHERE SQRT(POWER(l.place.x - :x, 2) + POWER(l.place.y - :y, 2)) < :distanceThreshold " +
+                "AND l.place.x != :x AND l.place.y != :y " +
                 "ORDER BY SQRT(POWER(l.place.x - :x, 2) + POWER(l.place.y - :y, 2)) ASC";
 
         TypedQuery<Log> query = entityManager.createQuery(queryStr, Log.class);
@@ -89,5 +91,4 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
         List<Log> resultList = query.getResultList();
         return resultList.isEmpty() ? Optional.empty() : Optional.of(resultList);
     }
-
 }

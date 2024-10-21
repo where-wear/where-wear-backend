@@ -1,5 +1,6 @@
 package WhereWear.server.wherewear.log;
 
+import WhereWear.server.wherewear.place.Place;
 import WhereWear.server.wherewear.user.User;
 import WhereWear.server.wherewear.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -50,5 +51,8 @@ public class LogService {
 
     public Optional<List<Log>> nearPlaceLogsByXY(double x, double y){
         return logRepository.nearPlaceLogsByXY(x,y);
+    }
+    public Log findByPlace(Place place){
+        return logRepository.findByPlace(place);
     }
 }

@@ -5,6 +5,8 @@ import WhereWear.server.wherewear.log.place.PlaceDto;
 import WhereWear.server.wherewear.place.Place;
 import WhereWear.server.wherewear.place.PlaceService;
 import WhereWear.server.wherewear.tag.TagService;
+import WhereWear.server.wherewear.user.User;
+import WhereWear.server.wherewear.user.UserService;
 import WhereWear.server.wherewear.util.ApiUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -15,10 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,6 +30,8 @@ import static WhereWear.server.wherewear.util.ApiUtils.success;
 @Tag(name = "둘러보기", description = "둘러보기 API")
 public class ExploreController {
     private final PlaceService placeService;
+    private final ExploreService exploreService;
+    private final UserService userService;
     private final TagService tagService;
     @Operation(summary = "태그 top 플레이스 조회", description = "일주일 간 로그에 많이 태그된 장소 조회합니다.")
     @ApiResponses(value = {
@@ -64,5 +65,13 @@ public class ExploreController {
         List<String> tags = tagService.getHotKeywords(category);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(tags));
+    }
+
+    @GetMapping
+    public ResponseEntity<?> explore(@RequestHeader(value = "Authorization", required = false) String token,
+                                     @RequestParam("category") String category){
+        ExploreDto response = exploreService.explore(token,category);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(success(response));
     }
 }
