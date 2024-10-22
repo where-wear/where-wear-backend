@@ -34,7 +34,9 @@ public class ExploreService {
         List<String> hotKeyWords = getHotKeywords(category);
         String nickname = "";
         if (token != null && !token.isEmpty()) {
-            nickname = userService.findByAccessToken(token).getNickname();
+            String userEmail = userService.findByAccessToken(token).getEmail();
+            User user = userService.findByEmail(userEmail);
+            nickname = user.getNickname();
         }
         return new ExploreDto(nickname, topFashionLogs, tagTopPlaces, hotKeyWords);
     }

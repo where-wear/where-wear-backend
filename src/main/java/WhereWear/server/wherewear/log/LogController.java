@@ -113,6 +113,22 @@ public class LogController {
         }
     }
 
+    @GetMapping("/getLogs")
+    public ResponseEntity<?> getMyLogs(@RequestHeader("Authorization") String token) {
+        try {
+            User user = userService.findByAccessToken(token);
+            List<Log> logs = logService.findLogsByUserEmail(user.getEmail());
+            List<LogResponse> response = logs.stream()
+                    .map(log -> new LogResponse(log))
+                    .collect(Collectors.toList());
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(ApiUtils.success(response));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(ApiUtils.error(e.getMessage(), HttpStatus.BAD_REQUEST));
+        }
+    }
+
     @Operation(summary = "로그 삭제", description = "기존 로그를 삭제합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "로그 삭제 성공",

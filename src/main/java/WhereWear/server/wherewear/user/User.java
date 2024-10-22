@@ -5,7 +5,6 @@ import WhereWear.server.wherewear.log.likedLog.LikedLog;
 import WhereWear.server.wherewear.log.savedLog.SavedLog;
 import WhereWear.server.wherewear.refreshToken.RefreshToken;
 import WhereWear.server.wherewear.relationship.Relationship;
-import WhereWear.server.wherewear.user.account.dto.SignupRequest;
 import WhereWear.server.wherewear.user.account.dto.UpdateRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -13,7 +12,6 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
@@ -40,6 +38,7 @@ public class User implements UserDetails {
 
     @Column(name = "password")
     private String password;
+
     @OneToMany(mappedBy = "user")
     private List<Log> logs = new ArrayList<>();
 
