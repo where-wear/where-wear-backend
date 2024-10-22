@@ -91,4 +91,16 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
         List<Log> resultList = query.getResultList();
         return resultList.isEmpty() ? Optional.empty() : Optional.of(resultList);
     }
+
+    @Override
+    public Optional<List<Log>> findByUserEmail(String userEmail) {
+        String queryStr = "SELECT l FROM Log l " +
+                "WHERE l.user.email = :userEmail ";
+
+        TypedQuery<Log> query = entityManager.createQuery(queryStr, Log.class);
+        query.setParameter("userEmail", userEmail);
+
+        List<Log> resultList = query.getResultList();
+        return resultList.isEmpty() ? Optional.empty() : Optional.of(resultList);
+    }
 }

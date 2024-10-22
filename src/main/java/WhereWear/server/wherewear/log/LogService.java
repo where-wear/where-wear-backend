@@ -41,6 +41,10 @@ public class LogService {
         return logRepository.findByUserId(userId)
                 .orElse(Collections.emptyList());
     }
+    public List<Log> findLogsByUserEmail(String userEmail){
+        return logRepository.findByUserEmail(userEmail)
+                .orElse(Collections.emptyList());
+    }
     public Optional<List<Object[]>> countLogsByXY(double xMin, double xMax, double yMin, double yMax){
         return logRepository.countLogsByXY(xMin, xMax, yMin, yMax);
     }
