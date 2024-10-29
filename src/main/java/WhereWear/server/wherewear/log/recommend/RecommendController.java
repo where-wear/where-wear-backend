@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -34,18 +35,22 @@ public class RecommendController {
     @Operation(summary = "추천 로그 조회", description = "추천 로그를 조회합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "추천 로그 조회 성공",
-                    content = @Content(schema = @Schema(implementation = LogResponse.class))),
+                    content = @Content(schema = @Schema(implementation = LogRecommendDto.class))),
             @ApiResponse(responseCode = "400", description = "잘못된 요청",
                     content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class))),
             @ApiResponse(responseCode = "404", description = "요청에 대한 응답을 찾을 수 없음",
                     content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class)))
     })
     @GetMapping
-    public ResponseEntity<?> recommendLogs(){
-        List<Log> logs = logRecommendService.getRecommendLogs();
+    public ResponseEntity<?> recommendLogs(@RequestParam("gu") String gu,
+                                           @RequestParam("height") int height,
+                                           @RequestParam("weight") int weight,
+                                           @RequestParam("footSize") int footSize,
+                                           @RequestParam("job") String job){
+        List<Log> logs = logRecommendService.getRecommendLogs(gu,height,weight,footSize,job);
 
-        List<LogResponse> response = logs.stream()
-                .map(log -> new LogResponse(log))
+        List<LogRecommendDto> response = logs.stream()
+                .map(log -> new LogRecommendDto(log))
                 .collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.CREATED)

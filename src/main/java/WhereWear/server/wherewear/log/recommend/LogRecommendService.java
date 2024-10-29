@@ -14,8 +14,8 @@ public class LogRecommendService {
 
     private final LogRepository logRepository;
 
-    public List<Log> getRecommendLogs(){
-        return logRepository.findLogsByLikedCount()
+    public List<Log> getRecommendLogs(String gu,int height,int weight,int footSize,String job){
+        return logRepository.findRecommendLogs(gu,height,weight,footSize,job)
                 .orElse(Collections.emptyList());
     }
 }

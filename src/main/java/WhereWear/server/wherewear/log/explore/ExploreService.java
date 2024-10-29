@@ -43,7 +43,7 @@ public class ExploreService {
 
     public List<TopFashionLog> getTopLogs(String token, String category) {
         List<TopFashionLog> topFashionLogs = new ArrayList<>();
-        List<Log> topLogs = likedLogService.getTopLogs();
+        List<Log> topLogs = likedLogService.getTopLogs(category);
 
         if (token != null && !token.isEmpty()) {
             User user = userService.findByAccessToken(token);
