@@ -14,16 +14,53 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
     @PersistenceContext
     private EntityManager entityManager;
 
+    public Optional<List<Log>> findRecommendLogs(String gu, int height, int weight, int footSize, String job) {
+        String queryStr = "SELECT l FROM Log l " +
+                "JOIN l.user user " +
+                "WHERE l.place.category = :gu " +
+                "AND user.height BETWEEN :minHeight AND :maxHeight " +
+                "AND user.weight BETWEEN :minWeight AND :maxWeight " +
+                "AND user.footSize BETWEEN :minFootSize AND :maxFootSize " +
+                "AND user.job LIKE :job ";
+
+        TypedQuery<Log> query = entityManager.createQuery(queryStr, Log.class);
+
+        // 범위 계산
+        int minHeight = height - 10;
+        int maxHeight = height + 10;
+        int minWeight = weight - 10;
+        int maxWeight = weight + 10;
+        int minFootSize = footSize - 10;
+        int maxFootSize = footSize + 10;
+
+        // 쿼리 파라미터 설정
+        query.setParameter("gu", gu);
+        query.setParameter("minHeight", minHeight);
+        query.setParameter("maxHeight", maxHeight);
+        query.setParameter("minWeight", minWeight);
+        query.setParameter("maxWeight", maxWeight);
+        query.setParameter("minFootSize", minFootSize);
+        query.setParameter("maxFootSize", maxFootSize);
+        query.setParameter("job", "%" + job + "%"); // 유사 직업 검색을 위한 LIKE 사용
+        query.setMaxResults(20);
+
+        List<Log> resultList = query.getResultList();
+
+        return resultList.isEmpty() ? Optional.empty() : Optional.of(resultList);
+    }
+
     @Override
-    public Optional<List<Log>> findLogsByLikedCount() {
+    public Optional<List<Log>> findLogsByLikedCount(String category) {
         String queryStr = "SELECT l FROM Log l " +
                 "LEFT JOIN l.likedLogs likedLog " +
+                "WHERE l.place.category = :category "+
                 "GROUP BY l " +
                 "ORDER BY COUNT(likedLog) DESC";
 
         TypedQuery<Log> query = entityManager.createQuery(queryStr, Log.class);
-        query.setMaxResults(20);
+        query.setMaxResults(3);
 
+        query.setParameter("category", category);
         List<Log> resultList = query.getResultList();
 
         return resultList.isEmpty() ? Optional.empty() : Optional.of(resultList);

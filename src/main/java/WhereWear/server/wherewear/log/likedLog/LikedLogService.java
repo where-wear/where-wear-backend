@@ -45,8 +45,8 @@ public class LikedLogService {
                 .map(LikedLog::getLog)
                 .collect(Collectors.toList());
     }
-    public List<Log> getTopLogs(){
-        return logRepository.findLogsByLikedCount()
+    public List<Log> getTopLogs(String category){
+        return logRepository.findLogsByLikedCount(category)
                 .orElse(Collections.emptyList());
     }
 }
