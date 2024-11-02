@@ -39,24 +39,23 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Log> logs = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<LikedLog> likedLogs = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<SavedLog> savedLogs = new ArrayList<>();
 
-    // 내가 팔로우하는 유저들
-    @OneToMany(mappedBy = "follower")
+    @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL)
     private List<Relationship> followings = new ArrayList<>();
-    @OneToMany(mappedBy = "following")
+    @OneToMany(mappedBy = "following", cascade = CascadeType.ALL)
     private List<Relationship> followers = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.PERSIST)//User를 저장할 때 관련된 RefreshToken도 함께 저장
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "refresh_token_id")
     private RefreshToken refreshToken;
 
@@ -97,6 +96,7 @@ public class User implements UserDetails {
         this.job = job;
         this.introduction = introduction;
     }
+
     public List<User> getFollowers() {
         List<User> followerList = new ArrayList<>();
         for (Relationship relationship : followers) {
