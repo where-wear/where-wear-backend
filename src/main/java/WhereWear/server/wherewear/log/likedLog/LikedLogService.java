@@ -23,14 +23,15 @@ public class LikedLogService {
     private final UserService userService;
     private final LikedLogRepository likedLogRepository;
     private final LogRepository logRepository;
-    public void setLikedLog(String email, Long logId){
+
+    public void setLikedLog(String email, Long logId) {
         Log log = logService.findByLogId(logId);
         User user = userService.findByEmail(email);
 
         Optional<LikedLog> existingLikedLog = likedLogRepository.findByLogAndUser(log, user);
 
         if (!existingLikedLog.isPresent()) {
-            LikedLog likedLog = likedLogRepository.save(new LikedLog(log,user));
+            LikedLog likedLog = likedLogRepository.save(new LikedLog(log, user));
 
             log.setLikedLogs(likedLog);
             logService.saveLog(log);
@@ -39,13 +40,15 @@ public class LikedLogService {
             userService.saveUser(user);
         }
     }
-    public List<Log> getUserLikedLog(Long userId){
-        User user = userService.findById(userId);
+
+    public List<Log> getUserLikedLog(String email) {
+        User user = userService.findByEmail(email);
         return user.getLikedLogs().stream()
                 .map(LikedLog::getLog)
                 .collect(Collectors.toList());
     }
-    public List<Log> getTopLogs(String category){
+
+    public List<Log> getTopLogs(String category) {
         return logRepository.findLogsByLikedCount(category)
                 .orElse(Collections.emptyList());
     }
