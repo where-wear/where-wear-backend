@@ -45,23 +45,23 @@ public class Log {
     private Boolean isShow;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "log", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "log", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LogFashion> logFashions = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "log", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "log", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tag> tags = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "log", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "log", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LikedLog> likedLogs = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "log", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "log", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SavedLog> savedLogs = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "log", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "log", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LogImage> logImages = new ArrayList<>();
 
     @CreatedDate
