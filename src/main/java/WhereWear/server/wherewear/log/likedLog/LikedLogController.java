@@ -36,11 +36,15 @@ public class LikedLogController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getUserLikedLog(@RequestParam("userId") Long userId){
-        List<Log> logs = likedLogService.getUserLikedLog(userId);
+    public ResponseEntity<?> getUserLikedLog(@RequestHeader("Authorization") String token){
+        User user = userService.findByAccessToken(token);
+
+        List<Log> logs = likedLogService.getUserLikedLog(user.getEmail());
+
         List<LogResponse> response = logs.stream()
                 .map(log -> new LogResponse(log))
                 .collect(Collectors.toList());
+
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiUtils.success(response));
     }
