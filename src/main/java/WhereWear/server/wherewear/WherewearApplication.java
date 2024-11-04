@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -32,7 +33,14 @@ public class WherewearApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("http://175.45.193.160:3000/","http://localhost:3000/");
+				registry.addMapping("/**")
+						.allowedOrigins("http://175.45.193.160:3000/","http://localhost:3000/")
+						.allowedMethods(
+								HttpMethod.GET.name(),
+								HttpMethod.HEAD.name(),
+								HttpMethod.POST.name(),
+								HttpMethod.PUT.name(),
+								HttpMethod.DELETE.name());
 			}
 		};
 	}
