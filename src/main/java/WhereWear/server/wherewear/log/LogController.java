@@ -78,11 +78,16 @@ public class LogController {
                     content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class)))
     })
     @GetMapping("/getLog")
-    public ResponseEntity<?> getLog(@RequestParam("id") Long id) {
+    public ResponseEntity<?> getLog(@RequestHeader(value = "Authorization", required = false) String token,
+                                    @RequestParam("id") Long id) {
         try {
-            Log log = logService.findByLogId(id);
+            String userEmail = null;
+            if(token != null) {
+                userEmail = userService.findByAccessToken(token).getEmail();
+            }
+            LogResponse logResponse = logService.findUserLog(id, userEmail);
             return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(ApiUtils.success(new LogResponse(log)));
+                    .body(ApiUtils.success(logResponse));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(ApiUtils.error(e.getMessage(), HttpStatus.BAD_REQUEST));
