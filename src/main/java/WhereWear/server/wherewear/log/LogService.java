@@ -1,5 +1,6 @@
 package WhereWear.server.wherewear.log;
 
+import WhereWear.server.wherewear.log.likedLog.LikedLog;
 import WhereWear.server.wherewear.place.Place;
 import WhereWear.server.wherewear.user.User;
 import WhereWear.server.wherewear.user.UserService;
@@ -17,6 +18,27 @@ public class LogService {
     private final LogRepository logRepository;
     private final UserService userService;
 
+
+    public LogResponse findUserLog(Long id, String userEmail){
+        Log log = findByLogId(id);
+        LogResponse logResponse = new LogResponse(log);
+
+        if(userEmail != null){
+            User user = userService.findByEmail(userEmail);
+
+            if(log.getUser().equals(user)){
+                logResponse.updateIsMyLog(true);
+            }
+
+            for(LikedLog likedLog : user.getLikedLogs()){
+                if(likedLog.getUser().equals(user)){
+                    logResponse.updateIsLike(true);
+                }
+            }
+        }
+
+        return logResponse;
+    }
 
     public Log startLog(String email) {
         User user = userService.findByEmail(email);
@@ -37,6 +59,7 @@ public class LogService {
         return logRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected log"));
     }
+
     public List<Log> findLogsByUserId(Long userId){
         return logRepository.findByUserId(userId)
                 .orElse(Collections.emptyList());

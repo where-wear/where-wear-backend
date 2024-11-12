@@ -32,6 +32,9 @@ public class LogResponse {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    private boolean isMyLog = false;
+    private boolean isLike = false;
+
     public LogResponse(Log log) {
         this.id = log.getId();
         this.isShow = log.getIsShow();
@@ -41,22 +44,22 @@ public class LogResponse {
             this.place = new PlaceDto(log.getPlace());
         }
         if (log.getLogFashions() != null) {
-            for(LogFashion logFashion : log.getLogFashions()) {
+            for (LogFashion logFashion : log.getLogFashions()) {
                 this.fashionItems.add(new FashionItemDto(logFashion));
             }
         }
-        if (log.getTags() != null){
-            for(Tag tag : log.getTags()) {
+        if (log.getTags() != null) {
+            for (Tag tag : log.getTags()) {
                 this.tags.add(new LogTagDto(tag));
             }
         }
-        if (log.getLogImages() != null){
-            for(LogImage logImage : log.getLogImages()) {
+        if (log.getLogImages() != null) {
+            for (LogImage logImage : log.getLogImages()) {
                 this.logImages.add(new LogImageDto(logImage));
             }
         }
-        if(log.getLikedLogs() != null){
-            for(LikedLog likedLog : log.getLikedLogs()){
+        if (log.getLikedLogs() != null) {
+            for (LikedLog likedLog : log.getLikedLogs()) {
                 this.liked.add(new LikedLogDto(likedLog));
             }
         }
@@ -64,17 +67,25 @@ public class LogResponse {
         this.updatedAt = log.getUpdatedAt();
     }
 
+    public void updateIsMyLog(boolean flag) {
+        this.isMyLog = flag;
+    }
+
+    public void updateIsLike(boolean flag) {
+        this.isLike = flag;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("id", id)
                 .append("text", text)
-                .append("imageUrls",logImages)
-                .append("items",fashionItems)
-                .append("isShow",isShow)
+                .append("imageUrls", logImages)
+                .append("items", fashionItems)
+                .append("isShow", isShow)
                 .append("user", user)
                 .append("place", place)
-                .append("tag",tags)
+                .append("tag", tags)
                 .append("createdAt", createdAt)
                 .append("updatedAt", updatedAt)
                 .toString();
