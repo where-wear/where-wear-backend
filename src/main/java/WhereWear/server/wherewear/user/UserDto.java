@@ -21,16 +21,8 @@ public class UserDto {
     private String job;
     private String introduction;
 
-    //private int loginCount;
-
-    //private LocalDateTime lastLoginAt;
-
-    //private LocalDateTime createAt;
-
     public UserDto(User source) {
         copyProperties(source, this);
-
-        //this.lastLoginAt = source.getLastLoginAt().orElse(null);
     }
 
     @Override
@@ -45,9 +37,6 @@ public class UserDto {
                 .append("footSize", footSize)
                 .append("job", job)
                 .append("introduction", introduction)
-                //.append("loginCount", loginCount)
-                //.append("lastLoginAt", lastLoginAt)
-                //.append("createAt", createAt)
                 .toString();
     }
 
