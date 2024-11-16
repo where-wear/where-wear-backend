@@ -1,5 +1,6 @@
 package WhereWear.server.wherewear.place;
 
+import WhereWear.server.wherewear.log.place.PlaceDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +11,17 @@ import java.util.*;
 public class PlaceService {
     private final PlaceRepository placeRepository;
 
+    public List<PlaceDto> searchPlaceByName(String placeName) {
+        return placeRepository.findPlaceByName(placeName)
+                .stream()
+                .map(PlaceDto::new)
+                .toList();
+    }
+
     public Place addPlace(Double x, Double y, String address, String placeName) {
         String[] addressParts = address.split(" ");
         String category = addressParts[1];
-        Place place = new Place(address,category,x,y,placeName);
+        Place place = new Place(address, category, x, y, placeName);
         return place;
     }
 

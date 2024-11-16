@@ -6,11 +6,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserRepositoryCustom userRepositoryCustom;
     private final TokenProvider tokenProvider;
 
     public User findByAccessToken(String token) {
@@ -26,6 +29,13 @@ public class UserService {
         Authentication authentication = tokenProvider.getAuthentication(token);
         return (User) authentication.getPrincipal();
 
+    }
+
+    public List<UserDto> searchUserByName(String userName) {
+        return userRepositoryCustom.findUserByName(userName)
+                .stream()
+                .map(UserDto::new)
+                .toList();
     }
 
     @Transactional

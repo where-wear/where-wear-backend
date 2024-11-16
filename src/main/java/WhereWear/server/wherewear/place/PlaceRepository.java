@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class PlaceRepository {
@@ -21,6 +22,19 @@ public class PlaceRepository {
     public Place save(Place place) {
         em.persist(place);
         return place;
+    }
+
+    public List<Place> findPlaceByName(String placeName) {
+        String searchKeyword = "%" + placeName.trim().toLowerCase() + "%";
+        List<Place> result = em.createQuery(
+                        "SELECT p " +
+                                "FROM Place p " +
+                                "WHERE LOWER(p.placeName) LIKE LOWER(CONCAT('%', :placeName, '%'))", Place.class)
+                .setParameter("placeName", searchKeyword)
+                .setMaxResults(20)
+                .getResultList();
+
+        return result;
     }
 
     public List<Place> findTopPlaceByCategory(String category) {
@@ -36,7 +50,6 @@ public class PlaceRepository {
                 .getResultList();
         return result;
     }
-
 
 
 }
