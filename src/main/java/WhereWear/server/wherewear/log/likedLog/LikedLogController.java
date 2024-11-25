@@ -26,13 +26,14 @@ import static WhereWear.server.wherewear.util.ApiUtils.success;
 public class LikedLogController {
     private final UserService userService;
     private final LikedLogService likedLogService;
+
     @PostMapping
     public ResponseEntity<?> setLikedLog(@RequestHeader("Authorization") String token,
                                          @RequestParam("logId") Long logId){
         User user = userService.findByAccessToken(token);
-        likedLogService.setLikedLog(user.getEmail(),logId);
+        LikedDto likedDto = likedLogService.setLikedLog(user.getEmail(),logId);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(success("좋아요를 눌렀습니다."));
+                .body(success(likedDto));
     }
 
     @GetMapping

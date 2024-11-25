@@ -24,21 +24,34 @@ public class LikedLogService {
     private final LikedLogRepository likedLogRepository;
     private final LogRepository logRepository;
 
-    public void setLikedLog(String email, Long logId) {
+    public LikedDto setLikedLog(String email, Long logId) {
         Log log = logService.findByLogId(logId);
         User user = userService.findByEmail(email);
 
         Optional<LikedLog> existingLikedLog = likedLogRepository.findByLogAndUser(log, user);
 
-        if (!existingLikedLog.isPresent()) {
-            LikedLog likedLog = likedLogRepository.save(new LikedLog(log, user));
+        if (existingLikedLog.isPresent()) {
+            LikedLog likedLog = existingLikedLog.get();
+            likedLogRepository.delete(likedLog);
 
-            log.setLikedLogs(likedLog);
+            log.removeLikedLog(likedLog);
             logService.saveLog(log);
 
-            user.setLikedLogs(likedLog);
+            user.removeLikedLog(likedLog);
             userService.saveUser(user);
+
+            return new LikedDto(log, false, user);
         }
+
+        LikedLog likedLog = likedLogRepository.save(new LikedLog(log, user));
+
+        log.setLikedLogs(likedLog);
+        logService.saveLog(log);
+
+        user.setLikedLogs(likedLog);
+        userService.saveUser(user);
+
+        return new LikedDto(log, true, user);
     }
 
     public List<Log> getUserLikedLog(String email) {

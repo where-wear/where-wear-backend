@@ -99,6 +99,13 @@ public class Log {
     public void setLikedLogs(LikedLog likedLog){
         this.likedLogs.add(likedLog);
     }
+
+    public void removeLikedLog(LikedLog likedLog) {
+        if (this.likedLogs != null && likedLog != null) {
+            this.likedLogs.remove(likedLog);
+        }
+    }
+
     public void setIsShow(Boolean isShow) {
         this.isShow = isShow;
     }

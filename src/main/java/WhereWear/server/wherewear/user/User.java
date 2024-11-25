@@ -52,6 +52,7 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL)
     private List<Relationship> followings = new ArrayList<>();
+
     @OneToMany(mappedBy = "following", cascade = CascadeType.ALL)
     private List<Relationship> followers = new ArrayList<>();
 
@@ -146,6 +147,11 @@ public class User implements UserDetails {
         this.likedLogs.add(likedLog);
     }
 
+    public void removeLikedLog(LikedLog likedLog) {
+        if (this.likedLogs != null && likedLog != null) {
+            this.likedLogs.remove(likedLog);
+        }
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
