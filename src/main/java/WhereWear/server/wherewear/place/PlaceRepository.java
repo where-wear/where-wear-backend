@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,16 +27,31 @@ public class PlaceRepository {
 
     public List<Place> findPlaceByName(String placeName) {
         String searchKeyword = "%" + placeName.trim().toLowerCase() + "%";
-        List<Place> result = em.createQuery(
-                        "SELECT p " +
+        List<Object[]> rawResults = em.createQuery(
+                        "SELECT p.x, p.y, GROUP_CONCAT(p.placeName) AS combinedNames " +
                                 "FROM Place p " +
-                                "WHERE LOWER(p.placeName) LIKE LOWER(CONCAT('%', :placeName, '%'))", Place.class)
+                                "WHERE LOWER(p.placeName) LIKE LOWER(CONCAT('%', :placeName, '%')) " +
+                                "GROUP BY p.x, p.y " +
+                                "ORDER BY COUNT(p) DESC", Object[].class)
                 .setParameter("placeName", searchKeyword)
                 .setMaxResults(20)
                 .getResultList();
 
+        List<Place> result = new ArrayList<>();
+        for (Object[] row : rawResults) {
+            Double x = (Double) row[0];
+            Double y = (Double) row[1];
+            String combinedNames = (String) row[2];
+            Place mergedPlace = new Place();
+            mergedPlace.setX(x);
+            mergedPlace.setY(y);
+            mergedPlace.setPlaceName(combinedNames); // 여러 이름을 하나로 합친 값
+            result.add(mergedPlace);
+        }
+
         return result;
     }
+
 
     public List<Place> findTopPlaceByCategory(String category) {
         List<Place> result = em.createQuery(
