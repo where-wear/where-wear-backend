@@ -19,9 +19,7 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
                 "JOIN l.user user " +
                 "WHERE l.place.category = :gu " +
                 "AND user.height BETWEEN :minHeight AND :maxHeight " +
-                "AND user.weight BETWEEN :minWeight AND :maxWeight " +
-                "AND user.footSize BETWEEN :minFootSize AND :maxFootSize " +
-                "AND user.job LIKE :job ";
+                "AND user.weight BETWEEN :minWeight AND :maxWeight ";
 
         TypedQuery<Log> query = entityManager.createQuery(queryStr, Log.class);
 
@@ -30,8 +28,6 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
         int maxHeight = height + 10;
         int minWeight = weight - 10;
         int maxWeight = weight + 10;
-        int minFootSize = footSize - 10;
-        int maxFootSize = footSize + 10;
 
         // 쿼리 파라미터 설정
         query.setParameter("gu", gu);
@@ -39,9 +35,7 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
         query.setParameter("maxHeight", maxHeight);
         query.setParameter("minWeight", minWeight);
         query.setParameter("maxWeight", maxWeight);
-        query.setParameter("minFootSize", minFootSize);
-        query.setParameter("maxFootSize", maxFootSize);
-        query.setParameter("job", "%" + job + "%"); // 유사 직업 검색을 위한 LIKE 사용
+        //query.setParameter("job", "%" + job + "%"); // 유사 직업 검색을 위한 LIKE 사용
         query.setMaxResults(20);
 
         List<Log> resultList = query.getResultList();
