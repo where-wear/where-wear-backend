@@ -30,7 +30,7 @@ public class LogService {
                 logResponse.updateIsMyLog(true);
             }
 
-            for(LikedLog likedLog : user.getLikedLogs()){
+            for(LikedLog likedLog : log.getLikedLogs()){
                 if(likedLog.getUser().equals(user)){
                     logResponse.updateIsLike(true);
                 }
