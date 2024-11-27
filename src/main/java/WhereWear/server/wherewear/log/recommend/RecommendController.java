@@ -46,8 +46,8 @@ public class RecommendController {
                                            @RequestParam("height") int height,
                                            @RequestParam("weight") int weight,
                                            @RequestParam("footSize") int footSize,
-                                           @RequestParam("job") String job){
-        List<Log> logs = logRecommendService.getRecommendLogs(gu,height,weight,footSize,job);
+                                           @RequestParam("job") String job) {
+        List<Log> logs = logRecommendService.getRecommendLogs(gu, height, weight, footSize, job);
 
         List<LogRecommendDto> response = logs.stream()
                 .map(log -> new LogRecommendDto(log))
