@@ -29,8 +29,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     public static final String REFRESH_TOKEN_COOKIE_NAME = "refresh_token";
     public static final Duration REFRESH_TOKEN_DURATION = Duration.ofDays(14);
     public static final Duration ACCESS_TOKEN_DURATION = Duration.ofDays(1);
-    public static final String HOME_REDIRECT_PATH = "http://34.22.89.82:3000/home";
-    public static final String SIGNUP_REDIRECT_PATH = "http://34.22.89.82:3000/userdata";
+    public static final String HOME_REDIRECT_PATH = "http://wherewear.co.kr/home";
+    public static final String SIGNUP_REDIRECT_PATH = "http://wherewear.co.kr/userdata";
 
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
