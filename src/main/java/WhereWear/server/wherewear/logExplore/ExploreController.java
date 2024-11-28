@@ -30,8 +30,8 @@ import static WhereWear.server.wherewear.util.ApiUtils.success;
 public class ExploreController {
     private final PlaceService placeService;
     private final ExploreService exploreService;
-    private final UserService userService;
     private final TagService tagService;
+
     @Operation(summary = "태그 top 플레이스 조회", description = "일주일 간 로그에 많이 태그된 장소 조회합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "장소 로그 수 조회 성공",
@@ -50,6 +50,7 @@ public class ExploreController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(response));
     }
+
     @Operation(summary = "핫키워드 조회", description = "일주일 간 인기 있었던 태그를 조회합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "태그 조회 성공",

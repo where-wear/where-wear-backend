@@ -54,10 +54,11 @@ public class CreateLogService {
         }
 
         setIsShow(log, isShow);
+
         return log;
     }
 
-    public void setIsShow(Log log, Boolean isShow) {
+    private void setIsShow(Log log, Boolean isShow) {
         log.setIsShow(isShow);
         logService.saveLog(log);
     }

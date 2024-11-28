@@ -7,6 +7,7 @@ import WhereWear.server.wherewear.log.dto.LogResponse;
 import WhereWear.server.wherewear.place.Place;
 import WhereWear.server.wherewear.user.User;
 import WhereWear.server.wherewear.user.UserService;
+import WhereWear.server.wherewear.util.ListUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -65,23 +66,34 @@ public class LogService {
 
     public List<Log> findLogsByUserId(Long userId){
         return logRepository.findByUserId(userId)
+                .map(ListUtils::reverseList)
                 .orElse(Collections.emptyList());
     }
+
     public List<Log> findLogsByUserEmail(String userEmail){
         return logRepository.findByUserEmail(userEmail)
+                .map(ListUtils::reverseList)
                 .orElse(Collections.emptyList());
     }
-    public Optional<List<Object[]>> countLogsByXY(double xMin, double xMax, double yMin, double yMax){
-        return logRepository.countLogsByXY(xMin, xMax, yMin, yMax);
+
+    public List<Object[]> countLogsByXY(double xMin, double xMax, double yMin, double yMax){
+        return logRepository.countLogsByXY(xMin, xMax, yMin, yMax)
+                .map(ListUtils::reverseList)
+                .orElse(Collections.emptyList());
     }
 
-    public Optional<List<Log>> findByXY(double x, double y){
-        return logRepository.findByXY(x,y);
+    public List<Log> findByXY(double x, double y){
+        return logRepository.findByXY(x,y)
+                .map(ListUtils::reverseList)
+                .orElse(Collections.emptyList());
     }
 
-    public Optional<List<Log>> nearPlaceLogsByXY(double x, double y){
-        return logRepository.nearPlaceLogsByXY(x,y);
+    public List<Log> nearPlaceLogsByXY(double x, double y){
+        return logRepository.nearPlaceLogsByXY(x,y)
+                .map(ListUtils::reverseList)
+                .orElse(Collections.emptyList());
     }
+
     public Log findByPlace(Place place){
         return logRepository.findByPlace(place);
     }
