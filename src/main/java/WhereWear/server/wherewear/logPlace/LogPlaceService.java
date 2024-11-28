@@ -1,0 +1,41 @@
+package WhereWear.server.wherewear.logPlace;
+
+import WhereWear.server.wherewear.log.domain.Log;
+import WhereWear.server.wherewear.log.service.LogService;
+import WhereWear.server.wherewear.place.Place;
+import WhereWear.server.wherewear.place.PlaceService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+
+@RequiredArgsConstructor
+@Service
+public class LogPlaceService {
+    private final LogService logService;
+    private final PlaceService placeService;
+
+    public List<Log> findLogsByXY(double x, double y){
+        return logService.findByXY(x,y).orElse(Collections.emptyList());
+    }
+
+    public List<Log> nearPlaceLogsByXY(double x, double y){
+        return logService.nearPlaceLogsByXY(x,y).orElse(Collections.emptyList());
+    }
+
+    public Log addPlaceToLog(Long logId, double x, double y, String address, String placeName ) {
+        Log log = logService.findByLogId(logId);
+        Place place = placeService.addPlace(x,y,address,placeName);
+
+        log.setPlace(place);
+
+        placeService.savePlace(place);
+        return logService.saveLog(log);
+    }
+
+    public List<Object[]> countLogsByXY(double minX, double maxX, double minY, double maxY){
+        return logService.countLogsByXY(minX, maxX, minY, maxY)
+                .orElse(Collections.emptyList());
+    }
+
+}

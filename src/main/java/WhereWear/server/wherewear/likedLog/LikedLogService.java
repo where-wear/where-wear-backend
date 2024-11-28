@@ -1,0 +1,67 @@
+package WhereWear.server.wherewear.likedLog;
+
+import WhereWear.server.wherewear.log.domain.Log;
+import WhereWear.server.wherewear.log.repository.LogRepository;
+import WhereWear.server.wherewear.log.service.LogService;
+import WhereWear.server.wherewear.user.User;
+import WhereWear.server.wherewear.user.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service
+@Transactional
+@RequiredArgsConstructor
+public class LikedLogService {
+    private final LogService logService;
+    private final UserService userService;
+    private final LikedLogRepository likedLogRepository;
+    private final LogRepository logRepository;
+
+    public LikedDto setLikedLog(String email, Long logId) {
+        Log log = logService.findByLogId(logId);
+        User user = userService.findByEmail(email);
+
+        Optional<LikedLog> existingLikedLog = likedLogRepository.findByLogAndUser(log, user);
+
+        if (existingLikedLog.isPresent()) {
+            LikedLog likedLog = existingLikedLog.get();
+            likedLogRepository.delete(likedLog);
+
+            log.removeLikedLog(likedLog);
+            logService.saveLog(log);
+
+            user.removeLikedLog(likedLog);
+            userService.saveUser(user);
+
+            return new LikedDto(log, false, user);
+        }
+
+        LikedLog likedLog = likedLogRepository.save(new LikedLog(log, user));
+
+        log.setLikedLogs(likedLog);
+        logService.saveLog(log);
+
+        user.setLikedLogs(likedLog);
+        userService.saveUser(user);
+
+        return new LikedDto(log, true, user);
+    }
+
+    public List<Log> getUserLikedLog(String email) {
+        User user = userService.findByEmail(email);
+        return user.getLikedLogs().stream()
+                .map(LikedLog::getLog)
+                .collect(Collectors.toList());
+    }
+
+    public List<Log> getTopLogs(String category) {
+        return logRepository.findLogsByLikedCount(category)
+                .orElse(Collections.emptyList());
+    }
+}

@@ -1,14 +1,8 @@
 package WhereWear.server.wherewear.place;
 
-import WhereWear.server.wherewear.log.Log;
-import WhereWear.server.wherewear.user.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import WhereWear.server.wherewear.log.domain.Log;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter

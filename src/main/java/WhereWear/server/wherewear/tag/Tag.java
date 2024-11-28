@@ -1,6 +1,6 @@
 package WhereWear.server.wherewear.tag;
 
-import WhereWear.server.wherewear.log.Log;
+import WhereWear.server.wherewear.log.domain.Log;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;

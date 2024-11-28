@@ -1,6 +1,6 @@
 package WhereWear.server.wherewear.place;
 
-import WhereWear.server.wherewear.log.place.PlaceDto;
+import WhereWear.server.wherewear.logPlace.PlaceDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
