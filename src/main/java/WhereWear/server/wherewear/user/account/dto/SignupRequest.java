@@ -13,12 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 @Getter
 @Setter
 public class SignupRequest {
-
     private String nickname;
     private int height;
     private int weight;
     private int footSize;
     private String job;
     private String introduction;
-
 }

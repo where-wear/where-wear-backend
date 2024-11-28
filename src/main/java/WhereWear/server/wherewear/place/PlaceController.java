@@ -1,8 +1,7 @@
 package WhereWear.server.wherewear.place;
 
-import WhereWear.server.wherewear.log.Log;
-import WhereWear.server.wherewear.log.LogResponse;
-import WhereWear.server.wherewear.log.place.LogPlaceService;
+import WhereWear.server.wherewear.log.dto.LogResponse;
+import WhereWear.server.wherewear.logPlace.LogPlaceService;
 import WhereWear.server.wherewear.util.ApiUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static WhereWear.server.wherewear.util.ApiUtils.success;
 
@@ -27,6 +25,7 @@ import static WhereWear.server.wherewear.util.ApiUtils.success;
 @Tag(name = "장소 카테고리", description = "장소 카테고리 관리 API")
 public class PlaceController {
     private final LogPlaceService logPlaceService;
+
     @Operation(summary = "장소 관련 로그 수 조회", description = "장소에 관련된 로그 수를 조회합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "장소 로그 수 조회 성공",
@@ -41,10 +40,7 @@ public class PlaceController {
                                           @RequestParam("maxX") double maxX,
                                           @RequestParam("minY") double minY,
                                           @RequestParam("maxY") double maxY){
-        List<Object[]> logCounts = logPlaceService.countLogsByXY(minX, maxX, minY, maxY);
-        List<LogCountDto> response = logCounts.stream()
-                .map(arr -> new LogCountDto((Double) arr[0], (Double) arr[1], (Long) arr[2]))
-                .collect(Collectors.toList());
+        List<LogCountDto> response = logPlaceService.countLogsByXY(minX, maxX, minY, maxY);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(response));
     }
@@ -59,12 +55,9 @@ public class PlaceController {
                     content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class)))
     })
     @GetMapping("/detail")
-    public ResponseEntity<?> countLogsByXY(@RequestParam("x") double x,
+    public ResponseEntity<?> countLogsByXYDetail(@RequestParam("x") double x,
                                            @RequestParam("y") double y){
-        List<Log> logs = logPlaceService.findLogsByXY(x,y);
-        List<LogResponse> response = logs.stream()
-                .map(log -> new LogResponse(log)) // Log 객체를 기반으로 LogResponse 생성
-                .collect(Collectors.toList());
+        List<LogResponse> response = logPlaceService.findLogsByXY(x,y);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(response));
     }
@@ -81,10 +74,7 @@ public class PlaceController {
     @GetMapping("/nearPlace")
     public ResponseEntity<?> nearPlaceLogsByXY(@RequestParam("x") double x,
                                            @RequestParam("y") double y){
-        List<Log> logs = logPlaceService.nearPlaceLogsByXY(x,y);
-        List<LogResponse> response = logs.stream()
-                .map(log -> new LogResponse(log))
-                .collect(Collectors.toList());
+        List<LogResponse> response = logPlaceService.nearPlaceLogsByXY(x,y);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(response));
     }

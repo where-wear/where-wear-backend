@@ -1,10 +1,7 @@
 package WhereWear.server.wherewear.fashion.fashionItem;
 
 import WhereWear.server.wherewear.fashion.category.dto.CategoryDto;
-import WhereWear.server.wherewear.fashion.category.entity.Category;
-import WhereWear.server.wherewear.log.fashion.LogFashion;
-import WhereWear.server.wherewear.user.User;
-import WhereWear.server.wherewear.user.UserDto;
+import WhereWear.server.wherewear.logFashion.LogFashion;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;

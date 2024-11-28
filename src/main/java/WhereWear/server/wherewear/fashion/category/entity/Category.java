@@ -1,14 +1,10 @@
 package WhereWear.server.wherewear.fashion.category.entity;
 
 import WhereWear.server.wherewear.fashion.fashionItem.FashionItem;
-import WhereWear.server.wherewear.log.Log;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;

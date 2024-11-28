@@ -1,7 +1,7 @@
 package WhereWear.server.wherewear.fashion.fashionItem;
 
 import WhereWear.server.wherewear.fashion.category.entity.Category;
-import WhereWear.server.wherewear.log.fashion.LogFashion;
+import WhereWear.server.wherewear.logFashion.LogFashion;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
