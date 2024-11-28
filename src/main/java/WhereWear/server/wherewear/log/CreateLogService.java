@@ -23,6 +23,7 @@ public class CreateLogService {
     private final LogTextService logTextService;
     private final LogImageService logImageService;
     private final LogTagService logTagService;
+
     public Log create(String email,
                       String text,
                       List<MultipartFile> imageUrls,
@@ -36,26 +37,26 @@ public class CreateLogService {
 
         Log log = logService.startLog(email);
 
-        for (FashionItemRequest item : items){
+        for (FashionItemRequest item : items) {
             logFashionService.addFashionItemToLog(log.getId(), item.getCategoryId(), item.getItemName());
         }
 
-        logPlaceService.addPlaceToLog(log.getId(),x, y, address, placeName);
+        logPlaceService.addPlaceToLog(log.getId(), x, y, address, placeName);
         logTextService.addTextToLog(log.getId(), text);
 
-        for (MultipartFile file : imageUrls){
-            logImageService.addImageToLog(log.getId(),file);
+        for (MultipartFile file : imageUrls) {
+            logImageService.addImageToLog(log.getId(), file);
         }
 
-        for (String tag : tags){
-            logTagService.addTagToLog(log.getId(),tag);
+        for (String tag : tags) {
+            logTagService.addTagToLog(log.getId(), tag);
         }
 
         setIsShow(log, isShow);
         return log;
     }
 
-    public void setIsShow(Log log, Boolean isShow){
+    public void setIsShow(Log log, Boolean isShow) {
         log.setIsShow(isShow);
         logService.saveLog(log);
     }

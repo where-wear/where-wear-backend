@@ -30,11 +30,13 @@ public class Log {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "log_id", updatable = false)
     private Long id;
+
     @Column(name = "text")
     private String text;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToOne(cascade = CascadeType.PERSIST)//User를 저장할 때 관련된 RefreshToken도 함께 저장
@@ -77,7 +79,7 @@ public class Log {
         this.user = user;
     }
 
-    public void updateText(String text){
+    public void updateText(String text) {
         this.text = text;
     }
 
@@ -96,7 +98,7 @@ public class Log {
         tag.setLog(this);
     }
 
-    public void setLikedLogs(LikedLog likedLog){
+    public void setLikedLogs(LikedLog likedLog) {
         this.likedLogs.add(likedLog);
     }
 

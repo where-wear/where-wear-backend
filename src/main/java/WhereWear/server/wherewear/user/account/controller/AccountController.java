@@ -1,13 +1,15 @@
 package WhereWear.server.wherewear.user.account.controller;
 
 import WhereWear.server.wherewear.user.account.dto.NicknameCheckResponse;
-import WhereWear.server.wherewear.user.account.dto.SignupRequest;
 import WhereWear.server.wherewear.user.User;
 import WhereWear.server.wherewear.user.UserService;
 import WhereWear.server.wherewear.user.account.dto.UpdateRequest;
 import WhereWear.server.wherewear.user.account.dto.UserInfoResponse;
 import WhereWear.server.wherewear.user.account.service.AccountService;
+import WhereWear.server.wherewear.user.account.service.SignUpService;
+import WhereWear.server.wherewear.user.account.service.WithdrawService;
 import WhereWear.server.wherewear.util.ApiUtils;
+
 import static WhereWear.server.wherewear.util.ApiUtils.success;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,8 +34,10 @@ import java.io.IOException;
 @RequestMapping("/api/accounts")
 @Tag(name = "계정", description = "계정 관리 API")
 public class AccountController {
-    private final AccountService accountService;
     private final UserService userService;
+    private final AccountService accountService;
+    private final SignUpService signUpService;
+    private final WithdrawService withdrawService;
 
     @Operation(summary = "닉네임 중복 확인", description = "닉네임 중복 여부를 확인합니다.")
     @ApiResponses(value = {
@@ -42,7 +46,6 @@ public class AccountController {
             @ApiResponse(responseCode = "400", description = "잘못된 요청",
                     content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class)))
     })
-
     @PostMapping("/nicknameCheck")
     public ResponseEntity<?> nicknameCheck(
             @Parameter(description = "유효한 인증 토큰") @RequestHeader("Authorization") String token,
@@ -63,16 +66,16 @@ public class AccountController {
     @PostMapping(value = "/signUp", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> signUp(
             @Parameter(description = "유효한 인증 토큰") @RequestHeader("Authorization") String token,
-            @RequestParam("nickname") String nickname,  // 닉네임
-            @RequestParam("height") int height,         // 키
-            @RequestParam("weight") int weight,         // 몸무게
-            @RequestParam("footSize") int footSize,     // 발사이즈
-            @RequestParam("job") String job,            // 직업
-            @RequestParam("introduction") String introduction,  // JSON 데이터를 받음
+            @RequestParam("nickname") String nickname,
+            @RequestParam("height") int height,
+            @RequestParam("weight") int weight,
+            @RequestParam("footSize") int footSize,
+            @RequestParam("job") String job,
+            @RequestParam("introduction") String introduction,
             @RequestPart(value = "image", required = false) MultipartFile imageFile) throws IOException {
 
         User user = userService.findByAccessToken(token);
-        User updatedUser = accountService.signUp(user, nickname, height, weight, footSize, job, introduction, imageFile);
+        User updatedUser = signUpService.signUp(user, nickname, height, weight, footSize, job, introduction, imageFile);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(new UserInfoResponse(updatedUser)));
     }
@@ -120,9 +123,9 @@ public class AccountController {
                     content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class)))
     })
     @DeleteMapping("/dropUser")
-    public ResponseEntity<?> dropUser(@RequestHeader("Authorization") String token){
+    public ResponseEntity<?> dropUser(@RequestHeader("Authorization") String token) {
         User user = userService.findByAccessToken(token);
-        accountService.withdraw(user.getEmail());
+        withdrawService.withdraw(user.getEmail());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(success(null));
     }
