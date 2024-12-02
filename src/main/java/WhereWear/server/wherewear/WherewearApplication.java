@@ -34,7 +34,8 @@ public class WherewearApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-						.allowedOrigins("http://wherewear.co.kr/","http://175.45.193.160:3000/","http://localhost:3000/")
+						.allowedOrigins("https://wherewear.co.kr/","http://175.45.193.160:3000/","http://localhost:3000/",
+								"https://wherewearbackend.store")
 						.allowedMethods(
 								HttpMethod.GET.name(),
 								HttpMethod.HEAD.name(),
