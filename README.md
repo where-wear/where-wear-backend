@@ -1,6 +1,4 @@
-# 👗어디에 뭐 입고 가지? 플레이스 기반 패션 앱, Where Wear
-![image1](https://github.com/user-attachments/assets/dd623958-c115-4818-8310-0fd9b73828e0)
-![image2](https://github.com/user-attachments/assets/9412c73f-2d20-4f23-87a0-b4e3f8e58822)
+# 👗어디에 뭐 입고 가지? 플레이스 기반 패션 앱, Where Wear👠 
 
 ## 👩‍💻 Developer
 |BE |
@@ -16,3 +14,7 @@
 
 ## 🛠️ CI/CD
 ![KakaoTalk_20241008_210354466](https://github.com/user-attachments/assets/bf889f1b-4135-4dbc-80e4-fbfdc787caae)
+
+## 👗서비스 소개
+![image1](https://github.com/user-attachments/assets/dd623958-c115-4818-8310-0fd9b73828e0)
+![image2](https://github.com/user-attachments/assets/9412c73f-2d20-4f23-87a0-b4e3f8e58822)
