@@ -1,4 +1,4 @@
-# 👗어디에 뭐 입고 가지? 플레이스 기반 패션 앱, Where Wear👠 
+# 👗어디에 뭐 입고 가지? 플레이스 기반 패션 앱, Where Wear
 
 ## 👩‍💻 Developer
 |BE |
