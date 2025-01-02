@@ -107,8 +107,8 @@ public class LogController {
             @ApiResponse(responseCode = "401", description = "인증 실패",
                     content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class)))
     })
-    @GetMapping("/getLogs/{userId}")
-    public ResponseEntity<?> getLogsByUserId(@PathVariable("userId") Long userId) {
+    @GetMapping("/getLogs")
+    public ResponseEntity<?> getLogsByUserId(@RequestParam("userId") Long userId) {
         try {
             List<Log> logs = logService.findLogsByUserId(userId);
             List<LogResponse> response = logs.stream()
