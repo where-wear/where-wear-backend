@@ -108,25 +108,24 @@ public class LogController {
                     content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class)))
     })
     @GetMapping("/getLogs")
-    public ResponseEntity<?> getLogsByUserId(@RequestParam("userId") Long userId) {
+    public ResponseEntity<?> getLogsByUserId(@RequestParam(value = "userId", required = false) Long userId,
+                                             @RequestHeader(value = "Authorization", required = false) String token) {
         try {
-            List<Log> logs = logService.findLogsByUserId(userId);
-            List<LogResponse> response = logs.stream()
-                    .map(log -> new LogResponse(log))
-                    .collect(Collectors.toList());
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(ApiUtils.success(response));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(ApiUtils.error(e.getMessage(), HttpStatus.BAD_REQUEST));
-        }
-    }
+            List<Log> logs;
+            // userId가 있을 경우, 해당 사용자로 로그 조회
+            if (userId != null) {
+                logs = logService.findLogsByUserId(userId);
+            }
+            // token이 있을 경우, 해당 토큰의 사용자로 로그 조회
+            else if (token != null) {
+                User user = userService.findByAccessToken(token);
+                logs = logService.findLogsByUserEmail(user.getEmail());
+            } else {
+                // userId 또는 token이 없으면 오류 반환
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(ApiUtils.error("userId 또는 Authorization 헤더가 필요합니다.", HttpStatus.BAD_REQUEST));
+            }
 
-    @GetMapping("/getLogs")
-    public ResponseEntity<?> getMyLogs(@RequestHeader("Authorization") String token) {
-        try {
-            User user = userService.findByAccessToken(token);
-            List<Log> logs = logService.findLogsByUserEmail(user.getEmail());
             List<LogResponse> response = logs.stream()
                     .map(log -> new LogResponse(log))
                     .collect(Collectors.toList());
