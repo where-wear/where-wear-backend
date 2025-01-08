@@ -1,8 +1,10 @@
 package WhereWear.server.wherewear;
 
+import WhereWear.server.wherewear.place.DataSyncService;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
@@ -51,6 +53,11 @@ public class WherewearApplication {
 		return args->{
 			Connection connection = dataSource.getConnection();
 		};
+	}
+
+	@Bean
+	public CommandLineRunner syncRunner(DataSyncService syncService) {
+		return args -> syncService.syncDataToElasticsearch();
 	}
 
 }
