@@ -1,7 +1,5 @@
-package WhereWear.server.wherewear.logPlace;
+package WhereWear.server.wherewear.place;
 
-import WhereWear.server.wherewear.place.Place;
-import WhereWear.server.wherewear.place.PlaceDocument;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -9,14 +7,13 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 @Getter
 @Setter
-public class PlaceDto {
-    private Long id;
+public class PlaceDocumentDto {private Long id;
     private String address;
     private double x;
     private double y;
     private String placeName;
 
-    public PlaceDto(Place place) {
+    public PlaceDocumentDto(PlaceDocument place) {
         this.id = place.getId();
         this.address = place.getAddress();
         this.x = place.getX();
