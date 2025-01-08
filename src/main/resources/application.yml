@@ -8,7 +8,7 @@ spring:
   data:
     elasticsearch:
       cluster-name: docker-cluster
-      cluster-nodes: localhost:9200
+      cluster-nodes: 35.216.32.213:9200
   jpa:
     hibernate:
       ddl-auto: update
