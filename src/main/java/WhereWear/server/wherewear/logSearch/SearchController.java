@@ -1,6 +1,7 @@
 package WhereWear.server.wherewear.logSearch;
 
 import WhereWear.server.wherewear.logPlace.PlaceDto;
+import WhereWear.server.wherewear.place.PlaceDocumentDto;
 import WhereWear.server.wherewear.place.PlaceService;
 import WhereWear.server.wherewear.user.UserDto;
 import WhereWear.server.wherewear.user.UserService;
@@ -27,7 +28,7 @@ public class SearchController {
     @GetMapping("/place")
     public ResponseEntity<?> searchPlace(@RequestParam("name") String placeName) {
         try {
-            List<PlaceDto> places = placeService.searchPlaceByName(placeName);
+            List<PlaceDocumentDto> places = placeService.searchPlaceByName(placeName);
             return ResponseEntity.status(HttpStatus.OK)
                     .body(ApiUtils.success(places));
         } catch (Exception e) {

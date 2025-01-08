@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Getter
 @Setter
@@ -14,14 +16,17 @@ public class PlaceDocument {
     @Id
     private Long id;
 
+    @Field(type = FieldType.Text)
     private String category;
 
+    @Field(type = FieldType.Text)
     private String address;
 
     private double x;
 
     private double y;
 
+    @Field(type = FieldType.Text)
     private String placeName;
 
     @Builder
