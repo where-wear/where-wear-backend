@@ -17,8 +17,9 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
 
     // PlaceName을 기준으로 장소 검색 (LIKE 검색)
     @Query("SELECT p FROM Place p WHERE LOWER(p.placeName) LIKE LOWER(CONCAT('%', :placeName, '%')) " +
-            "GROUP BY p.x, p.y ORDER BY COUNT(p.id) DESC")
+            "GROUP BY p.placeName, p.x, p.y, p.id ORDER BY COUNT(p.id) DESC")
     List<Place> findPlaceByName(@Param("placeName") String placeName, Pageable pageable);
+
 
     // Category를 기준으로 가장 인기 있는 장소 찾기
     @Query("SELECT p FROM Place p " +
