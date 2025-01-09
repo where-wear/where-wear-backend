@@ -8,7 +8,7 @@ spring:
   data:
     elasticsearch:
       rest:
-        uris: 34.64.75.40:9200
+        uris: localhost:9200
   jpa:
     hibernate:
       ddl-auto: update
