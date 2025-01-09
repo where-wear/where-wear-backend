@@ -14,15 +14,15 @@ public class PlaceService {
     private final PlaceRepository placeRepository;
     private final PlaceDocumentRepository placeDocumentRepository;
 
-    public List<PlaceDocumentDto> searchPlaceByName(String placeName) {
-        /*Pageable pageable = PageRequest.of(0, 20);
+    public List<PlaceDto> searchPlaceByName(String placeName) {
+        Pageable pageable = PageRequest.of(0, 20);
         return placeRepository.findPlaceByName(placeName, pageable)
                 .stream()
                 .map(PlaceDto::new)
-                .toList();*/
-        return placeDocumentRepository.findPlaceByName(placeName).stream()
-                .map(PlaceDocumentDto::new)
                 .toList();
+        /*return placeDocumentRepository.findPlaceByName(placeName).stream()
+                .map(PlaceDocumentDto::new)
+                .toList();*/
     }
 
     public Place addPlace(Double x, Double y, String address, String placeName) {
