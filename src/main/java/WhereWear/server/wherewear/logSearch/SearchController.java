@@ -28,7 +28,7 @@ public class SearchController {
     @GetMapping("/place")
     public ResponseEntity<?> searchPlace(@RequestParam("name") String placeName) {
         try {
-            List<PlaceDto> places = placeService.searchPlaceByName(placeName);
+            List<PlaceDocumentDto> places = placeService.searchPlaceByName(placeName);
             return ResponseEntity.status(HttpStatus.OK)
                     .body(ApiUtils.success(places));
         } catch (Exception e) {
