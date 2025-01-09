@@ -12,7 +12,7 @@ public class ElasticsearchConfig {
     public RestHighLevelClient restHighLevelClient() {
         return new RestHighLevelClient(
                 RestClient.builder(
-                        new HttpHost("http://35.216.32.213", 9200, "http") // Elasticsearch 호스트와 포트 설정
+                        new HttpHost("34.64.75.40", 9200, "http") // Elasticsearch 호스트와 포트 설정
                 )
         );
     }
