@@ -32,4 +32,15 @@ public class PlaceDocument {
     @Builder
     public PlaceDocument() {
     }
+
+    public static PlaceDocument from(Place place) {
+        PlaceDocument document = new PlaceDocument();
+        document.setId(place.getId());
+        document.setPlaceName(place.getPlaceName());
+        document.setAddress(place.getAddress());
+        document.setCategory(place.getCategory());
+        document.setX(place.getX());
+        document.setY(place.getY());
+        return document;
+    }
 }
