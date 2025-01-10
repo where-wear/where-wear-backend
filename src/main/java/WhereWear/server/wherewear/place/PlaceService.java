@@ -38,6 +38,7 @@ public class PlaceService {
     }
 
     public Place savePlace(Place place) {
+        placeDocumentRepository.save(PlaceDocument.from(place));
         return placeRepository.save(place);
     }
 }
