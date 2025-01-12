@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -86,7 +87,7 @@ public class LogController {
                                     @RequestParam("id") Long id) {
         try {
             String userEmail = null;
-            if(token != null) {
+            if (token != null) {
                 userEmail = userService.findByAccessToken(token).getEmail();
             }
             LogResponse logResponse = logService.findUserLog(id, userEmail);
@@ -108,29 +109,20 @@ public class LogController {
                     content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class)))
     })
     @GetMapping("/getLogs")
-    public ResponseEntity<?> getLogsByUserId(@RequestParam(value = "userId", required = false) Long userId,
-                                             @RequestHeader(value = "Authorization", required = false) String token) {
+    public ResponseEntity<?> getLogsByUserId(@RequestParam(value = "userId", required = false) Long userId) {
         try {
-            List<Log> logs;
-            // userId가 있을 경우, 해당 사용자로 로그 조회
             if (userId != null) {
-                logs = logService.findLogsByUserId(userId);
-            }
-            // token이 있을 경우, 해당 토큰의 사용자로 로그 조회
-            else if (token != null) {
-                User user = userService.findByAccessToken(token);
-                logs = logService.findLogsByUserEmail(user.getEmail());
-            } else {
-                // userId 또는 token이 없으면 오류 반환
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body(ApiUtils.error("userId 또는 Authorization 헤더가 필요합니다.", HttpStatus.BAD_REQUEST));
-            }
+                List<Log> logs = logService.findLogsByUserId(userId);
+                List<LogResponse> response = logs.stream()
+                        .map(log -> new LogResponse(log))
+                        .collect(Collectors.toList());
 
-            List<LogResponse> response = logs.stream()
-                    .map(log -> new LogResponse(log))
-                    .collect(Collectors.toList());
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(ApiUtils.success(response));
+                return ResponseEntity.status(HttpStatus.CREATED)
+                        .body(ApiUtils.success(response));
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(ApiUtils.error("userId가 필요합니다.", HttpStatus.BAD_REQUEST));
+            }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(ApiUtils.error(e.getMessage(), HttpStatus.BAD_REQUEST));
