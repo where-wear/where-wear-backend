@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -68,12 +67,7 @@ public class LogService {
 
     public List<Log> findLogsByUserId(Long userId){
         return logRepository.findByUserId(userId)
-                .map(logs -> {
-                    List<Log> last10Logs = logs.stream()
-                            .skip(Math.max(0, logs.size() - 5)) // 마지막 10개 선택
-                            .collect(Collectors.toList());
-                    return ListUtils.reverseList(last10Logs); // 뒤집기 적용
-                })
+                .map(ListUtils::reverseList)
                 .orElse(Collections.emptyList());
     }
 

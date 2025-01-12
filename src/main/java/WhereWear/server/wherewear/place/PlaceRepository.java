@@ -22,7 +22,7 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
 
 
     // Category를 기준으로 가장 인기 있는 장소 찾기
-    @Query("SELECT p FROM Place p " +
+    @Query("SELECT new Place(MAX(p.id), MAX(p.address), MAX(p.category), p.x, p.y, MAX(p.placeName)) FROM Place p " +
             "JOIN Log l ON p.id = l.place.id " +
             "WHERE p.category = :category " +
             "GROUP BY p.x, p.y " +
