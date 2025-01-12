@@ -9,6 +9,7 @@ import WhereWear.server.wherewear.user.User;
 import WhereWear.server.wherewear.user.UserService;
 import WhereWear.server.wherewear.util.ListUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -65,7 +66,7 @@ public class LogService {
     }
 
     public List<Log> findLogsByUserId(Long userId){
-        return logRepository.findByUserId(userId)
+        return logRepository.findByUserId(userId, PageRequest.of(0, 9))
                 .map(ListUtils::reverseList)
                 .orElse(Collections.emptyList());
     }
