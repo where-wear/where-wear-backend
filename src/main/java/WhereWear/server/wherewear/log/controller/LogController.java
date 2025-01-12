@@ -112,13 +112,12 @@ public class LogController {
                                              @RequestHeader(value = "Authorization", required = false) String token) {
         try {
             List<Log> logs;
-            // token이 있을 경우, 해당 토큰의 사용자로 로그 조회
-            if (token != null) {
+            if (userId != null) {// userId가 있을 경우, 해당 사용자로 로그 조회
+                logs = logService.findLogsByUserId(userId);
+            } else if (token != null) {// token이 있을 경우, 해당 토큰의 사용자로 로그 조회
                 User user = userService.findByAccessToken(token);
                 logs = logService.findLogsByUserEmail(user.getEmail());
-            } else if (userId != null) {// userId가 있을 경우, 해당 사용자로 로그 조회
-                logs = logService.findLogsByUserId(userId);
-            } else {
+            }else {
                 // userId 또는 token이 없으면 오류 반환
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(ApiUtils.error("userId 또는 Authorization 헤더가 필요합니다.", HttpStatus.BAD_REQUEST));
