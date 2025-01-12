@@ -70,7 +70,7 @@ public class LogService {
         return logRepository.findByUserId(userId)
                 .map(logs -> {
                     List<Log> last10Logs = logs.stream()
-                            .skip(Math.max(0, logs.size() - 10)) // 마지막 10개 선택
+                            .skip(Math.max(0, logs.size() - 5)) // 마지막 10개 선택
                             .collect(Collectors.toList());
                     return ListUtils.reverseList(last10Logs); // 뒤집기 적용
                 })
