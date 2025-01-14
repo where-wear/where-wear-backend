@@ -24,19 +24,19 @@ public class LogService {
     private final UserService userService;
 
 
-    public LogResponse findUserLog(Long id, String userEmail){
+    public LogResponse findUserLog(Long id, String userEmail) {
         Log log = findByLogId(id);
         LogResponse logResponse = new LogResponse(log);
 
-        if(userEmail != null){
+        if (userEmail != null) {
             User user = userService.findByEmail(userEmail);
 
-            if(log.getUser().equals(user)){
+            if (log.getUser().equals(user)) {
                 logResponse.updateIsMyLog(true);
             }
 
-            for(LikedLog likedLog : log.getLikedLogs()){
-                if(likedLog.getUser().equals(user)){
+            for (LikedLog likedLog : log.getLikedLogs()) {
+                if (likedLog.getUser().equals(user)) {
                     logResponse.updateIsLike(true);
                 }
             }
@@ -56,46 +56,45 @@ public class LogService {
         logRepository.delete(log);
     }
 
-    public Log saveLog(Log log){
+    public Log saveLog(Log log) {
         return logRepository.save(log);
     }
 
-    public Log findByLogId(Long id){
+    public Log findByLogId(Long id) {
         return logRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected log"));
     }
 
-    public List<Log> findLogsByUserId(Long userId){
+    public List<Log> findLogsByUserId(Long userId) {
         return logRepository.findByUserId(userId)
                 .map(ListUtils::reverseList)
                 .orElse(Collections.emptyList());
     }
 
-    public List<Log> findLogsByUserEmail(String userEmail){
+    public List<Log> findLogsByUserEmail(String userEmail) {
         return logRepository.findByUserEmail(userEmail)
                 .map(ListUtils::reverseList)
                 .orElse(Collections.emptyList());
     }
 
-    public List<Object[]> countLogsByXY(double xMin, double xMax, double yMin, double yMax){
+    public List<Object[]> countLogsByXY(double xMin, double xMax, double yMin, double yMax) {
         return logRepository.countLogsByXY(xMin, xMax, yMin, yMax)
                 .map(ListUtils::reverseList)
                 .orElse(Collections.emptyList());
     }
 
-    public List<Log> findByXY(double x, double y){
-        return logRepository.findByXY(x,y)
+    public List<Log> findByXY(double x, double y) {
+        return logRepository.findByXY(x, y)
                 .map(ListUtils::reverseList)
                 .orElse(Collections.emptyList());
     }
 
-    public List<Log> nearPlaceLogsByXY(double x, double y){
-        return logRepository.nearPlaceLogsByXY(x,y)
-                .map(ListUtils::reverseList)
+    public List<Log> nearPlaceLogsByXY(double x, double y) {
+        return logRepository.nearPlaceLogsByXY(x, y)
                 .orElse(Collections.emptyList());
     }
 
-    public Log findByPlace(Place place){
+    public Log findByPlace(Place place) {
         return logRepository.findByPlace(place);
     }
 }

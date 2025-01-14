@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PlaceRepository extends JpaRepository<Place, Long> {
@@ -28,4 +29,7 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
             "GROUP BY p.x, p.y " +
             "ORDER BY COUNT(l.id) DESC")
     List<Place> findTopPlaceByCategory(@Param("category") String category, Pageable pageable);
+
+    @Query("SELECT p FROM Place p WHERE p.category = :category")
+    Optional<Place> findPlaceByCategory(@Param("category") String category);
 }

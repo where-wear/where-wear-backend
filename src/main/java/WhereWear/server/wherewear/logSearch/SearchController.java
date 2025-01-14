@@ -27,25 +27,15 @@ public class SearchController {
 
     @GetMapping("/place")
     public ResponseEntity<?> searchPlace(@RequestParam("name") String placeName) {
-        try {
-            List<PlaceDocumentDto> places = placeService.searchPlaceByName(placeName);
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(ApiUtils.success(places));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(ApiUtils.error(e.getMessage(), HttpStatus.NOT_FOUND));
-        }
+        List<PlaceDocumentDto> places = placeService.searchPlaceByName(placeName);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(ApiUtils.success(places));
     }
 
     @GetMapping("/user")
     public ResponseEntity<?> searchUser(@RequestParam("name") String userName) {
-        try {
-            List<UserDto> users = userService.searchUserByName(userName);
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(ApiUtils.success(users));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(ApiUtils.error(e.getMessage(), HttpStatus.NOT_FOUND));
-        }
+        List<UserDto> users = userService.searchUserByName(userName);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(ApiUtils.success(users));
     }
 }

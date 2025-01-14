@@ -42,7 +42,7 @@ public class ExploreController {
                     content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class)))
     })
     @GetMapping("/topPlace")
-    public ResponseEntity<?> getTopTaggedPlaces(@RequestParam("category") String category){
+    public ResponseEntity<?> getTopTaggedPlaces(@RequestParam("category") String category) {
         List<Place> places = placeService.getTopTaggedPlaces(category);
         List<PlaceDto> response = places.stream()
                 .map(place -> new PlaceDto(place))
@@ -61,7 +61,7 @@ public class ExploreController {
                     content = @Content(schema = @Schema(implementation = ApiUtils.ApiResultError.class)))
     })
     @GetMapping("/HotKeywords")
-    public ResponseEntity<?> getHotKeywords(@RequestParam("category") String category){
+    public ResponseEntity<?> getHotKeywords(@RequestParam("category") String category) {
         List<String> tags = tagService.getHotKeywords(category);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(tags));
@@ -69,8 +69,8 @@ public class ExploreController {
 
     @GetMapping
     public ResponseEntity<?> explore(@RequestHeader(value = "Authorization", required = false) String token,
-                                     @RequestParam("category") String category){
-        ExploreDto response = exploreService.explore(token,category);
+                                     @RequestParam("category") String category) {
+        ExploreDto response = exploreService.explore(token, category);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(success(response));
     }

@@ -42,4 +42,9 @@ public class PlaceService {
         placeDocumentRepository.save(PlaceDocument.from(savedPlace));
         return savedPlace;
     }
+
+    public Place getPlaceByCategory(String category) {
+        return placeRepository.findPlaceByCategory(category)
+                .orElseThrow(() -> new IllegalArgumentException("Unexpected category"));
+    }
 }
