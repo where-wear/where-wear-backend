@@ -55,9 +55,9 @@ public class WherewearApplication {
 		};
 	}
 
-	@Bean
+	/*@Bean
 	public CommandLineRunner syncRunner(PlaceDataSyncService syncService) {
 		return args -> syncService.syncDataToElasticsearch();
-	}
+	}*/
 
 }

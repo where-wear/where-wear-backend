@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,19 +66,48 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
     @Override
     public Optional<List<Log>> nearPlaceLogsByXY(double x, double y) {
         String queryStr = "SELECT l FROM Log l " +
-                "WHERE SQRT(POWER(l.place.x - :x, 2) + POWER(l.place.y - :y, 2)) < :distanceThreshold " +
-                "AND l.place.x != :x AND l.place.y != :y " +
-                "ORDER BY SQRT(POWER(l.place.x - :x, 2) + POWER(l.place.y - :y, 2)) ASC";
+                "WHERE l.place.y != :y AND l.place.x != :x " +
+                "ORDER BY (6371 * ACOS(SIN(RADIANS(l.place.y)) * SIN(RADIANS(:y)) + " +
+                "COS(RADIANS(l.place.y)) * COS(RADIANS(:y)) * COS(RADIANS(l.place.x) - RADIANS(:x)))) ASC";
 
         TypedQuery<Log> query = entityManager.createQuery(queryStr, Log.class);
         query.setParameter("x", x);
         query.setParameter("y", y);
-        query.setParameter("distanceThreshold", 100.0);
-
-        query.setMaxResults(100);
+        query.setMaxResults(5);
 
         List<Log> resultList = query.getResultList();
+
+        if (!resultList.isEmpty()) {
+            // 거리 계산
+            resultList.sort(Comparator.comparingDouble(log -> calculateDistance(
+                    y, x, log.getPlace().getY(), log.getPlace().getX())));
+        }
+
         return resultList.isEmpty() ? Optional.empty() : Optional.of(resultList);
+    }
+
+    // 거리 계산 메서드 (Haversine formula)
+    private double calculateDistance(double startLat, double startLon, double endLat, double endLon) {
+        double theta = endLon - startLon;
+        double dist = Math.sin(deg2rad(startLat)) *
+                Math.sin(deg2rad(endLat)) +
+                Math.cos(deg2rad(startLat)) *
+                        Math.cos(deg2rad(endLat)) *
+                        Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515 * 1609.344; // 거리 계산 (미터)
+        return dist / 1000; // 킬로미터로 변환
+    }
+
+    // 10진수를 radian(라디안)으로 변환
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    // radian(라디안)을 10진수로 변환
+    private double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
     }
 
     @Override

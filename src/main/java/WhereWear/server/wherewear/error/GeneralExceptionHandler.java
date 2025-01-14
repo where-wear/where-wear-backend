@@ -31,8 +31,6 @@ public class GeneralExceptionHandler {
         return new ResponseEntity<>(error(message, status), headers, status);
     }
 
-    // 필요한 경우 적절한 예외타입을 선언하고 newResponse 메소드를 통해 응답을 생성하도록 합니다.
-
     @ExceptionHandler({Exception.class, RuntimeException.class})
     public ResponseEntity<?> handleException(Exception e) {
         log.error("Unexpected exception occurred: {}", e.getMessage(), e);
