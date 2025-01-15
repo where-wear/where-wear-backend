@@ -50,9 +50,11 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<SavedLog> savedLogs = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL)
     private List<Relationship> followings = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "following", cascade = CascadeType.ALL)
     private List<Relationship> followers = new ArrayList<>();
 
