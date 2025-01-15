@@ -3,6 +3,7 @@ package WhereWear.server.wherewear.log.controller;
 import WhereWear.server.wherewear.fashion.fashionItem.FashionItemRequest;
 import WhereWear.server.wherewear.log.domain.Log;
 import WhereWear.server.wherewear.log.dto.LogResponse;
+import WhereWear.server.wherewear.log.dto.MyPageLogResponse;
 import WhereWear.server.wherewear.log.service.CreateLogService;
 import WhereWear.server.wherewear.log.service.LogService;
 import WhereWear.server.wherewear.user.User;
@@ -112,8 +113,8 @@ public class LogController {
                     .body(ApiUtils.error("userId 또는 Authorization 헤더가 필요합니다.", HttpStatus.BAD_REQUEST));
         }
 
-        List<LogResponse> response = logs.stream()
-                .map(log -> new LogResponse(log))
+        List<MyPageLogResponse> response = logs.stream()
+                .map(log -> new MyPageLogResponse(log))
                 .collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiUtils.success(response));

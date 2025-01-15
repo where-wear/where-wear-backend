@@ -20,7 +20,7 @@ public class Tag {
     private String tagName;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="log_id")
     private Log log;
 

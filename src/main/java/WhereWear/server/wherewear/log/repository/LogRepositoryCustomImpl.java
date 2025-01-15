@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class LogRepositoryCustomImpl implements LogRepositoryCustom{
     @PersistenceContext
-    private EntityManager entityManager;
+    private EntityManager em;
 
     @Override
     public Optional<List<Log>> findLogsByLikedCount(String category) {
@@ -21,7 +21,7 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
                 "GROUP BY l " +
                 "ORDER BY COUNT(likedLog) DESC";
 
-        TypedQuery<Log> query = entityManager.createQuery(queryStr, Log.class);
+        TypedQuery<Log> query = em.createQuery(queryStr, Log.class);
         query.setMaxResults(3);
 
         query.setParameter("category", category);
@@ -39,7 +39,7 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
                 "AND l.place.y BETWEEN :yMin AND :yMax " +
                 "GROUP BY l.place.x, l.place.y";
 
-        TypedQuery<Object[]> query = entityManager.createQuery(queryStr, Object[].class);
+        TypedQuery<Object[]> query = em.createQuery(queryStr, Object[].class);
         query.setParameter("xMin", xMin);
         query.setParameter("xMax", xMax);
         query.setParameter("yMin", yMin);
@@ -55,7 +55,7 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
                 "WHERE l.place.x = :x " +
                 "AND l.place.y = :y";
 
-        TypedQuery<Log> query = entityManager.createQuery(queryStr, Log.class);
+        TypedQuery<Log> query = em.createQuery(queryStr, Log.class);
         query.setParameter("x", x);
         query.setParameter("y", y);
 
@@ -70,7 +70,7 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
                 "ORDER BY (6371 * ACOS(SIN(RADIANS(l.place.y)) * SIN(RADIANS(:y)) + " +
                 "COS(RADIANS(l.place.y)) * COS(RADIANS(:y)) * COS(RADIANS(l.place.x) - RADIANS(:x)))) ASC";
 
-        TypedQuery<Log> query = entityManager.createQuery(queryStr, Log.class);
+        TypedQuery<Log> query = em.createQuery(queryStr, Log.class);
         query.setParameter("x", x);
         query.setParameter("y", y);
         query.setMaxResults(5);
@@ -112,10 +112,13 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
 
     @Override
     public Optional<List<Log>> findByUserId(Long userId) {
-        String queryStr = "SELECT l FROM Log l " +
+        String queryStr = "SELECT DISTINCT l FROM Log l " +
+                "JOIN FETCH l.user u " +
+                "JOIN FETCH l.place p " +
+                "LEFT JOIN FETCH l.logImages li " +
                 "WHERE l.user.id = :userId ";
 
-        TypedQuery<Log> query = entityManager.createQuery(queryStr, Log.class);
+        TypedQuery<Log> query = em.createQuery(queryStr, Log.class);
         query.setParameter("userId", userId);
 
         List<Log> resultList = query.getResultList();
@@ -124,10 +127,13 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
 
     @Override
     public Optional<List<Log>> findByUserEmail(String userEmail) {
-        String queryStr = "SELECT l FROM Log l " +
-                "WHERE l.user.email = :userEmail ";
+        String queryStr = "SELECT DISTINCT l FROM Log l " +
+                "JOIN FETCH l.user u " +
+                "JOIN FETCH l.place p " +
+                "LEFT JOIN FETCH l.logImages li " +
+                "WHERE u.email = :userEmail";
 
-        TypedQuery<Log> query = entityManager.createQuery(queryStr, Log.class);
+        TypedQuery<Log> query = em.createQuery(queryStr, Log.class);
         query.setParameter("userEmail", userEmail);
 
         List<Log> resultList = query.getResultList();
