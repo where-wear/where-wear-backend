@@ -112,7 +112,10 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
 
     @Override
     public Optional<List<Log>> findByUserId(Long userId) {
-        String queryStr = "SELECT l FROM Log l " +
+        String queryStr = "SELECT DISTINCT l FROM Log l " +
+                "JOIN FETCH l.user u " +
+                "JOIN FETCH l.place p " +
+                "LEFT JOIN FETCH l.logImages li " +
                 "WHERE l.user.id = :userId ";
 
         TypedQuery<Log> query = em.createQuery(queryStr, Log.class);
@@ -124,8 +127,11 @@ public class LogRepositoryCustomImpl implements LogRepositoryCustom{
 
     @Override
     public Optional<List<Log>> findByUserEmail(String userEmail) {
-        String queryStr = "SELECT l FROM Log l " +
-                "WHERE l.user.email = :userEmail ";
+        String queryStr = "SELECT DISTINCT l FROM Log l " +
+                "JOIN FETCH l.user u " +
+                "JOIN FETCH l.place p " +
+                "LEFT JOIN FETCH l.logImages li " +
+                "WHERE u.email = :userEmail";
 
         TypedQuery<Log> query = em.createQuery(queryStr, Log.class);
         query.setParameter("userEmail", userEmail);
