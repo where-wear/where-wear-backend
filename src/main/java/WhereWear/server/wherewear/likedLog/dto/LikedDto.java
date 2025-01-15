@@ -1,4 +1,4 @@
-package WhereWear.server.wherewear.likedLog;
+package WhereWear.server.wherewear.likedLog.dto;
 
 import WhereWear.server.wherewear.log.domain.Log;
 import WhereWear.server.wherewear.user.User;

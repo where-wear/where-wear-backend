@@ -1,10 +1,12 @@
 package WhereWear.server.wherewear.likedLog;
 
+import WhereWear.server.wherewear.likedLog.dto.LikedDto;
 import WhereWear.server.wherewear.log.domain.Log;
 import WhereWear.server.wherewear.log.repository.LogRepository;
 import WhereWear.server.wherewear.log.service.LogService;
 import WhereWear.server.wherewear.user.User;
 import WhereWear.server.wherewear.user.UserService;
+import WhereWear.server.wherewear.util.ListUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -53,11 +54,10 @@ public class LikedLogService {
         return new LikedDto(log, true, user);
     }
 
-    public List<Log> getUserLikedLog(String email) {
-        User user = userService.findByEmail(email);
-        return user.getLikedLogs().stream()
-                .map(LikedLog::getLog)
-                .collect(Collectors.toList());
+    public List<LikedLog> getUserLikedLog(String email) {
+        return likedLogRepository.findLikedLogs(email)
+                .map(ListUtils::reverseList)
+                .orElse(Collections.emptyList());
     }
 
     public List<Log> getTopLogs(String category) {
