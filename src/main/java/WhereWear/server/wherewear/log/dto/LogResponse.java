@@ -4,7 +4,7 @@ import WhereWear.server.wherewear.fashion.fashionItem.FashionItemDto;
 import WhereWear.server.wherewear.log.domain.Log;
 import WhereWear.server.wherewear.logFashion.LogFashion;
 import WhereWear.server.wherewear.likedLog.LikedLog;
-import WhereWear.server.wherewear.likedLog.LikedLogDto;
+import WhereWear.server.wherewear.likedLog.dto.LikedLogDto;
 import WhereWear.server.wherewear.logImage.LogImage;
 import WhereWear.server.wherewear.logImage.LogImageDto;
 import WhereWear.server.wherewear.logPlace.PlaceDto;

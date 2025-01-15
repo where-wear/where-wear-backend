@@ -1,6 +1,7 @@
 package WhereWear.server.wherewear.likedLog;
 
-import WhereWear.server.wherewear.log.domain.Log;
+import WhereWear.server.wherewear.likedLog.dto.LikedDto;
+import WhereWear.server.wherewear.likedLog.dto.LikedLogResponse;
 import WhereWear.server.wherewear.log.dto.LogResponse;
 import WhereWear.server.wherewear.user.User;
 import WhereWear.server.wherewear.user.UserService;
@@ -38,10 +39,10 @@ public class LikedLogController {
     public ResponseEntity<?> getUserLikedLog(@RequestHeader("Authorization") String token){
         User user = userService.findByAccessToken(token);
 
-        List<Log> logs = likedLogService.getUserLikedLog(user.getEmail());
+        List<LikedLog> logs = likedLogService.getUserLikedLog(user.getEmail());
 
-        List<LogResponse> response = logs.stream()
-                .map(log -> new LogResponse(log))
+        List<LikedLogResponse> response = logs.stream()
+                .map(log -> new LikedLogResponse(log))
                 .collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.CREATED)
