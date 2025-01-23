@@ -1,11 +1,10 @@
 package WhereWear.server.wherewear.logExplore;
 
 import WhereWear.server.wherewear.log.dto.LogResponse;
-import WhereWear.server.wherewear.logPlace.PlaceDto;
-import WhereWear.server.wherewear.place.Place;
-import WhereWear.server.wherewear.place.PlaceService;
-import WhereWear.server.wherewear.tag.TagService;
-import WhereWear.server.wherewear.user.UserService;
+import WhereWear.server.wherewear.place.dto.PlaceDto;
+import WhereWear.server.wherewear.place.domain.Place;
+import WhereWear.server.wherewear.place.service.PlaceService;
+import WhereWear.server.wherewear.tag.service.TagService;
 import WhereWear.server.wherewear.util.ApiUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

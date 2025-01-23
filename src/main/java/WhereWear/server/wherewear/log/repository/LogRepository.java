@@ -1,7 +1,7 @@
 package WhereWear.server.wherewear.log.repository;
 
 import WhereWear.server.wherewear.log.domain.Log;
-import WhereWear.server.wherewear.place.Place;
+import WhereWear.server.wherewear.place.domain.Place;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

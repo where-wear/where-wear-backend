@@ -1,20 +1,20 @@
 package WhereWear.server.wherewear.logImage.domain;
 
+import WhereWear.server.wherewear.base.BaseEntity;
+import WhereWear.server.wherewear.fashion.fashionItem.domain.FashionItem;
+import WhereWear.server.wherewear.fashion.fashionItem.domain.LogFashion;
 import WhereWear.server.wherewear.log.domain.Log;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
-@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Entity
-@Table(name = "log_image")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class LogImage {
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder(access = AccessLevel.PRIVATE)
+public class LogImage extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "log_image_id", updatable = false)
@@ -28,9 +28,11 @@ public class LogImage {
     @JoinColumn(name="log_id")
     private Log log;
 
-    @Builder
-    public LogImage(String publicUrl) {
-        this.publicUrl = publicUrl;
+    public static LogImage of(@NotNull Log log, @NotNull String publicUrl) {
+        return LogImage.builder()
+                .log(log)
+                .publicUrl(publicUrl)
+                .build();
     }
 
     public void removeImageFromLog(Log log) {
@@ -38,10 +40,5 @@ public class LogImage {
             log.getLogImages().remove(this);
             this.log = null;
         }
-    }
-
-    public void setLog(Log log){
-        this.log = log;
-        this.log.getLogImages().add(this);
     }
 }

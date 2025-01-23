@@ -1,5 +1,6 @@
-package WhereWear.server.wherewear.place;
+package WhereWear.server.wherewear.place.repository;
 
+import WhereWear.server.wherewear.place.domain.PlaceDocument;
 import org.springframework.data.elasticsearch.annotations.Query;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 

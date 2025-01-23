@@ -1,5 +1,6 @@
-package WhereWear.server.wherewear.place;
+package WhereWear.server.wherewear.place.dto;
 
+import WhereWear.server.wherewear.place.domain.PlaceDocument;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;

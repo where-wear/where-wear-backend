@@ -1,6 +1,6 @@
-package WhereWear.server.wherewear.logFashion.repository;
+package WhereWear.server.wherewear.fashion.fashionItem.repository;
 
-import WhereWear.server.wherewear.logFashion.domain.LogFashion;
+import WhereWear.server.wherewear.fashion.fashionItem.domain.LogFashion;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.NonUniqueResultException;

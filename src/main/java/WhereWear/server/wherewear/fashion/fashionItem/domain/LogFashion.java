@@ -1,7 +1,6 @@
-package WhereWear.server.wherewear.logFashion.domain;
+package WhereWear.server.wherewear.fashion.fashionItem.domain;
 
 import WhereWear.server.wherewear.base.BaseEntity;
-import WhereWear.server.wherewear.fashion.fashionItem.domain.FashionItem;
 import WhereWear.server.wherewear.log.domain.Log;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

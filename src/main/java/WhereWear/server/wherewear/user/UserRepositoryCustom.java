@@ -1,6 +1,5 @@
 package WhereWear.server.wherewear.user;
 
-import WhereWear.server.wherewear.place.Place;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;

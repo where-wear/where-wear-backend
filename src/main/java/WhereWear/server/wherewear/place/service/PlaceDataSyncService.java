@@ -1,5 +1,9 @@
-package WhereWear.server.wherewear.place;
+package WhereWear.server.wherewear.place.service;
 
+import WhereWear.server.wherewear.place.domain.Place;
+import WhereWear.server.wherewear.place.domain.PlaceDocument;
+import WhereWear.server.wherewear.place.repository.PlaceDocumentRepository;
+import WhereWear.server.wherewear.place.repository.PlaceRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

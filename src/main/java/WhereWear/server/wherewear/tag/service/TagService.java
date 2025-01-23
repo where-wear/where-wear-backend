@@ -1,6 +1,8 @@
-package WhereWear.server.wherewear.tag;
+package WhereWear.server.wherewear.tag.service;
 
-import WhereWear.server.wherewear.place.PlaceService;
+import WhereWear.server.wherewear.place.service.PlaceService;
+import WhereWear.server.wherewear.tag.domain.Tag;
+import WhereWear.server.wherewear.tag.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,17 +15,8 @@ public class TagService {
     private final TagRepository tagRepository;
     private final PlaceService placeService;
 
-    public Tag addTag(String tagName) {
-        Tag tag = new Tag(tagName);
-        return tagRepository.save(tag);
-    }
-
     public List<String> getHotKeywords(String category) {
         placeService.getPlaceByCategory(category);
         return tagRepository.findHotKeywords(category);
-    }
-
-    public Tag findTagById(Long TagId) {
-        return tagRepository.findById(TagId).orElseThrow(() -> new IllegalArgumentException("Unexpected tag"));
     }
 }

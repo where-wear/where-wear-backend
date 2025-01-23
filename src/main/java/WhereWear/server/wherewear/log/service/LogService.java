@@ -4,7 +4,7 @@ import WhereWear.server.wherewear.likedLog.domain.LikedLog;
 import WhereWear.server.wherewear.log.domain.Log;
 import WhereWear.server.wherewear.log.repository.LogRepository;
 import WhereWear.server.wherewear.log.dto.LogResponse;
-import WhereWear.server.wherewear.place.Place;
+import WhereWear.server.wherewear.place.domain.Place;
 import WhereWear.server.wherewear.user.User;
 import WhereWear.server.wherewear.user.UserService;
 import WhereWear.server.wherewear.util.ListUtils;

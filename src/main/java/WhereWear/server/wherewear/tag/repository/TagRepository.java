@@ -1,7 +1,6 @@
-package WhereWear.server.wherewear.tag;
+package WhereWear.server.wherewear.tag.repository;
 
-import WhereWear.server.wherewear.fashion.category.entity.Category;
-import WhereWear.server.wherewear.place.Place;
+import WhereWear.server.wherewear.tag.domain.Tag;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.NonUniqueResultException;
@@ -24,20 +23,6 @@ public class TagRepository {
     public Tag save(Tag tag) {
         em.persist(tag);
         return tag;
-    }
-
-    public Optional<Tag> findById(Long tagId){
-        try {
-            Tag result = em.createQuery("select t from Tag t where t.id=:tagId", Tag.class)
-                    .setParameter("tagId", tagId)
-                    .getSingleResult();
-            return Optional.of(result);
-        } catch (NoResultException e) {
-            return Optional.empty();
-        } catch (NonUniqueResultException e) {
-            // Handle non-unique result case if needed
-            return Optional.empty();
-        }
     }
 
     public List<String> findHotKeywords(String category){

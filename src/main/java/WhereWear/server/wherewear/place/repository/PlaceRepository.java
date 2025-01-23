@@ -1,14 +1,11 @@
-package WhereWear.server.wherewear.place;
+package WhereWear.server.wherewear.place.repository;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import lombok.RequiredArgsConstructor;
+import WhereWear.server.wherewear.place.domain.Place;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;

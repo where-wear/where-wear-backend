@@ -1,6 +1,5 @@
-package WhereWear.server.wherewear.place;
+package WhereWear.server.wherewear.place.domain;
 
-import WhereWear.server.wherewear.log.domain.Log;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

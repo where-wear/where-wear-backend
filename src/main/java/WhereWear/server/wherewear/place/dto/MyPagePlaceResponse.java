@@ -1,5 +1,6 @@
-package WhereWear.server.wherewear.place;
+package WhereWear.server.wherewear.place.dto;
 
+import WhereWear.server.wherewear.place.domain.Place;
 import lombok.Getter;
 
 @Getter

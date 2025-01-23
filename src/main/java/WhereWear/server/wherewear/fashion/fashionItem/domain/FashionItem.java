@@ -2,7 +2,6 @@ package WhereWear.server.wherewear.fashion.fashionItem.domain;
 
 import WhereWear.server.wherewear.base.BaseEntity;
 import WhereWear.server.wherewear.fashion.category.entity.Category;
-import WhereWear.server.wherewear.logFashion.domain.LogFashion;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

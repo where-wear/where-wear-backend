@@ -1,4 +1,4 @@
-package WhereWear.server.wherewear.place;
+package WhereWear.server.wherewear.place.dto;
 
 import lombok.Getter;
 import lombok.Setter;

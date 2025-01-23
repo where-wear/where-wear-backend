@@ -1,6 +1,10 @@
-package WhereWear.server.wherewear.place;
+package WhereWear.server.wherewear.place.service;
 
-import WhereWear.server.wherewear.logPlace.PlaceDto;
+import WhereWear.server.wherewear.place.domain.Place;
+import WhereWear.server.wherewear.place.domain.PlaceDocument;
+import WhereWear.server.wherewear.place.dto.PlaceDocumentDto;
+import WhereWear.server.wherewear.place.repository.PlaceDocumentRepository;
+import WhereWear.server.wherewear.place.repository.PlaceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,22 +29,15 @@ public class PlaceService {
                 .toList();
     }
 
-    public Place addPlace(Double x, Double y, String address, String placeName) {
+    public Place createPlace(Double x, Double y, String address, String placeName) {
         String[] addressParts = address.split(" ");
         String category = addressParts[1];
-        Place place = new Place(address, category, x, y, placeName);
-        return place;
+        return placeRepository.save(Place.of(address, category, x, y, placeName));
     }
 
     public List<Place> getTopTaggedPlaces(String category) {
         Pageable pageableForCategory = PageRequest.of(0, 3);
         return placeRepository.findTopPlaceByCategory(category, pageableForCategory);
-    }
-
-    public Place savePlace(Place place) {
-        Place savedPlace = placeRepository.save(place);
-        placeDocumentRepository.save(PlaceDocument.from(savedPlace));
-        return savedPlace;
     }
 
     public Place getPlaceByCategory(String category) {
