@@ -1,6 +1,8 @@
 package WhereWear.server.wherewear.log.domain;
 
-import WhereWear.server.wherewear.logFashion.LogFashion;
+import WhereWear.server.wherewear.base.BaseEntity;
+import WhereWear.server.wherewear.fashion.fashionItem.FashionItem;
+import WhereWear.server.wherewear.logFashion.domain.LogFashion;
 import WhereWear.server.wherewear.likedLog.LikedLog;
 import WhereWear.server.wherewear.logImage.LogImage;
 import WhereWear.server.wherewear.savedLog.SavedLog;
@@ -9,23 +11,22 @@ import WhereWear.server.wherewear.tag.Tag;
 import WhereWear.server.wherewear.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@EntityListeners(AuditingEntityListener.class)
-@NoArgsConstructor
+
 @Getter
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder(access = AccessLevel.PRIVATE)
 @Table(name = "log")
-public class Log {
+public class Log extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "log_id", updatable = false)
@@ -66,17 +67,16 @@ public class Log {
     @OneToMany(mappedBy = "log", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LogImage> logImages = new ArrayList<>();
 
-    @CreatedDate
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
+    public static Log of(@NotNull User user, @NotNull List<FashionItem> fashionItems) {
+        Log log = Log.builder()
+                .user(user)
+                .build();
 
-    @LastModifiedDate
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+        log.logFashions = fashionItems.stream()
+                .map(fashionItem -> LogFashion.of(log, fashionItem))
+                .collect(Collectors.toList());
 
-    @Builder
-    public Log(User user) {
-        this.user = user;
+        return log;
     }
 
     public void updateText(String text) {

@@ -2,7 +2,7 @@ package WhereWear.server.wherewear.log.dto;
 
 import WhereWear.server.wherewear.fashion.fashionItem.FashionItemDto;
 import WhereWear.server.wherewear.log.domain.Log;
-import WhereWear.server.wherewear.logFashion.LogFashion;
+import WhereWear.server.wherewear.logFashion.domain.LogFashion;
 import WhereWear.server.wherewear.likedLog.LikedLog;
 import WhereWear.server.wherewear.likedLog.dto.LikedLogDto;
 import WhereWear.server.wherewear.logImage.LogImage;
@@ -64,8 +64,6 @@ public class LogResponse {
                 this.liked.add(new LikedLogDto(likedLog));
             }
         }
-        this.createdAt = log.getCreatedAt();
-        this.updatedAt = log.getUpdatedAt();
     }
 
     public void updateIsMyLog(boolean flag) {
