@@ -1,6 +1,6 @@
 package WhereWear.server.wherewear.fashion.category.entity;
 
-import WhereWear.server.wherewear.fashion.fashionItem.FashionItem;
+import WhereWear.server.wherewear.fashion.fashionItem.domain.FashionItem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;

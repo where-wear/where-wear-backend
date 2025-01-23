@@ -1,21 +1,18 @@
 package WhereWear.server.wherewear.log.service;
 
-import WhereWear.server.wherewear.fashion.fashionItem.FashionItem;
-import WhereWear.server.wherewear.likedLog.LikedLog;
+import WhereWear.server.wherewear.likedLog.domain.LikedLog;
 import WhereWear.server.wherewear.log.domain.Log;
 import WhereWear.server.wherewear.log.repository.LogRepository;
 import WhereWear.server.wherewear.log.dto.LogResponse;
-import WhereWear.server.wherewear.place.Place;
+import WhereWear.server.wherewear.place.domain.Place;
 import WhereWear.server.wherewear.user.User;
 import WhereWear.server.wherewear.user.UserService;
 import WhereWear.server.wherewear.util.ListUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -23,7 +20,6 @@ public class LogService {
 
     private final LogRepository logRepository;
     private final UserService userService;
-
 
     public LogResponse findUserLog(Long id, String userEmail) {
         Log log = findByLogId(id);

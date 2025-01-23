@@ -1,6 +1,6 @@
 package WhereWear.server.wherewear.log.controller;
 
-import WhereWear.server.wherewear.fashion.fashionItem.FashionItemRequest;
+import WhereWear.server.wherewear.fashion.fashionItem.dto.FashionItemRequest;
 import WhereWear.server.wherewear.log.domain.Log;
 import WhereWear.server.wherewear.log.dto.LogResponse;
 import WhereWear.server.wherewear.log.dto.MyPageLogResponse;

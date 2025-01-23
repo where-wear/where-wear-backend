@@ -20,7 +20,6 @@ spring:
     init:
       encoding: UTF-8
 
-
   servlet:
     multipart:
       enabled: true

@@ -1,8 +1,7 @@
 package WhereWear.server.wherewear.logSearch;
 
-import WhereWear.server.wherewear.logPlace.PlaceDto;
-import WhereWear.server.wherewear.place.PlaceDocumentDto;
-import WhereWear.server.wherewear.place.PlaceService;
+import WhereWear.server.wherewear.place.dto.PlaceDocumentDto;
+import WhereWear.server.wherewear.place.service.PlaceService;
 import WhereWear.server.wherewear.user.UserDto;
 import WhereWear.server.wherewear.user.UserService;
 import WhereWear.server.wherewear.util.ApiUtils;
