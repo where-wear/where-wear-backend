@@ -6,6 +6,10 @@ import WhereWear.server.wherewear.tag.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 @Service
 public class FashionItemService {
@@ -13,15 +17,15 @@ public class FashionItemService {
     private final FashionItemRepository fashionItemRepository;
     private final CategoryService categoryService;
 
-    public FashionItem addItem(Long categoryId, String itemName){
+    public List<FashionItem> createFashionItems(List<FashionItemRequest> requests) {
+        return requests.stream()
+                .map(request -> createItem(request.getCategoryId(), request.getItemName()))
+                .collect(Collectors.toList());
+    }
+
+    private FashionItem createItem(Long categoryId, String itemName){
         Category category = categoryService.searchById(categoryId);
-        FashionItem fashionItem = new FashionItem();
-
-        fashionItem.updateItemName(itemName);
-        fashionItem.setCategory(category);
-
-        categoryService.saveCategory(category);
-        return fashionItemRepository.save(fashionItem);
+        return fashionItemRepository.save(FashionItem.of(itemName, category));
     }
 
     public FashionItem findFashionItemById(Long fashionItemId){

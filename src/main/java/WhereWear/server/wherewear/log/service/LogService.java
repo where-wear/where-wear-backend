@@ -1,5 +1,6 @@
 package WhereWear.server.wherewear.log.service;
 
+import WhereWear.server.wherewear.fashion.fashionItem.FashionItem;
 import WhereWear.server.wherewear.likedLog.LikedLog;
 import WhereWear.server.wherewear.log.domain.Log;
 import WhereWear.server.wherewear.log.repository.LogRepository;
@@ -43,12 +44,6 @@ public class LogService {
         }
 
         return logResponse;
-    }
-
-    public Log startLog(String email) {
-        User user = userService.findByEmail(email);
-        Log log = new Log(user);
-        return saveLog(log);
     }
 
     public void deleteLog(Long logId) {

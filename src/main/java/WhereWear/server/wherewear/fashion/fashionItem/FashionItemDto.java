@@ -1,7 +1,7 @@
 package WhereWear.server.wherewear.fashion.fashionItem;
 
 import WhereWear.server.wherewear.fashion.category.dto.CategoryDto;
-import WhereWear.server.wherewear.logFashion.LogFashion;
+import WhereWear.server.wherewear.logFashion.domain.LogFashion;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.ToStringBuilder;

@@ -1,12 +1,15 @@
 package WhereWear.server.wherewear.log.service;
 
+import WhereWear.server.wherewear.fashion.fashionItem.FashionItem;
 import WhereWear.server.wherewear.fashion.fashionItem.FashionItemRequest;
+import WhereWear.server.wherewear.fashion.fashionItem.FashionItemService;
 import WhereWear.server.wherewear.log.domain.Log;
-import WhereWear.server.wherewear.logFashion.LogFashionService;
 import WhereWear.server.wherewear.logImage.LogImageService;
 import WhereWear.server.wherewear.logPlace.LogPlaceService;
 import WhereWear.server.wherewear.logTag.LogTagService;
 import WhereWear.server.wherewear.logText.LogTextService;
+import WhereWear.server.wherewear.user.User;
+import WhereWear.server.wherewear.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,8 +20,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class CreateLogService {
+    private final UserService userService;
     private final LogService logService;
-    private final LogFashionService logFashionService;
+    private final FashionItemService fashionItemService;
     private final LogPlaceService logPlaceService;
     private final LogTextService logTextService;
     private final LogImageService logImageService;
@@ -35,11 +39,11 @@ public class CreateLogService {
                       Boolean isShow,
                       List<String> tags) throws IOException {
 
-        Log log = logService.startLog(email);
+        User user = userService.findByEmail(email);
 
-        for (FashionItemRequest item : items) {
-            logFashionService.addFashionItemToLog(log.getId(), item.getCategoryId(), item.getItemName());
-        }
+        List<FashionItem> fashionItems = fashionItemService.createFashionItems(items);
+
+        Log log = Log.of(user, fashionItems);
 
         logPlaceService.addPlaceToLog(log.getId(), x, y, address, placeName);
 
