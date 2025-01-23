@@ -1,7 +1,7 @@
 package WhereWear.server.wherewear.user;
 
 import WhereWear.server.wherewear.log.domain.Log;
-import WhereWear.server.wherewear.likedLog.LikedLog;
+import WhereWear.server.wherewear.likedLog.domain.LikedLog;
 import WhereWear.server.wherewear.savedLog.SavedLog;
 import WhereWear.server.wherewear.refreshToken.RefreshToken;
 import WhereWear.server.wherewear.relationship.Relationship;

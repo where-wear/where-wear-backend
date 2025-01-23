@@ -1,8 +1,9 @@
-package WhereWear.server.wherewear.likedLog;
+package WhereWear.server.wherewear.likedLog.controller;
 
+import WhereWear.server.wherewear.likedLog.domain.LikedLog;
+import WhereWear.server.wherewear.likedLog.service.LikedLogService;
 import WhereWear.server.wherewear.likedLog.dto.LikedDto;
 import WhereWear.server.wherewear.likedLog.dto.LikedLogResponse;
-import WhereWear.server.wherewear.log.dto.LogResponse;
 import WhereWear.server.wherewear.user.User;
 import WhereWear.server.wherewear.user.UserService;
 import WhereWear.server.wherewear.util.ApiUtils;

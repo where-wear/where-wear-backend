@@ -1,5 +1,6 @@
-package WhereWear.server.wherewear.likedLog;
+package WhereWear.server.wherewear.likedLog.repository;
 
+import WhereWear.server.wherewear.likedLog.domain.LikedLog;
 import WhereWear.server.wherewear.log.domain.Log;
 import WhereWear.server.wherewear.user.User;
 

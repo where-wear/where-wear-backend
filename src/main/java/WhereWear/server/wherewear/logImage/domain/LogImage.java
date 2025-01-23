@@ -1,7 +1,6 @@
-package WhereWear.server.wherewear.likedLog;
+package WhereWear.server.wherewear.logImage.domain;
 
 import WhereWear.server.wherewear.log.domain.Log;
-import WhereWear.server.wherewear.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -13,27 +12,36 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Entity
-@Table(name = "liked_log")
+@Table(name = "log_image")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class LikedLog {
+public class LogImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "liked_log_id", updatable = false)
+    @Column(name = "log_image_id", updatable = false)
     private Long id;
+
+    @Column(name = "public_url")
+    private String publicUrl;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="log_id")
     private Log log;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
-    private User user;
-
     @Builder
-    public LikedLog(Log log, User user){
+    public LogImage(String publicUrl) {
+        this.publicUrl = publicUrl;
+    }
+
+    public void removeImageFromLog(Log log) {
+        if (this.log != null && this.log.equals(log)) {
+            log.getLogImages().remove(this);
+            this.log = null;
+        }
+    }
+
+    public void setLog(Log log){
         this.log = log;
-        this.user = user;
+        this.log.getLogImages().add(this);
     }
 }

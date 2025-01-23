@@ -1,12 +1,12 @@
 package WhereWear.server.wherewear.log.dto;
 
-import WhereWear.server.wherewear.fashion.fashionItem.FashionItemDto;
+import WhereWear.server.wherewear.fashion.fashionItem.dto.FashionItemDto;
 import WhereWear.server.wherewear.log.domain.Log;
 import WhereWear.server.wherewear.logFashion.domain.LogFashion;
-import WhereWear.server.wherewear.likedLog.LikedLog;
+import WhereWear.server.wherewear.likedLog.domain.LikedLog;
 import WhereWear.server.wherewear.likedLog.dto.LikedLogDto;
-import WhereWear.server.wherewear.logImage.LogImage;
-import WhereWear.server.wherewear.logImage.LogImageDto;
+import WhereWear.server.wherewear.logImage.domain.LogImage;
+import WhereWear.server.wherewear.logImage.dto.LogImageDto;
 import WhereWear.server.wherewear.logPlace.PlaceDto;
 import WhereWear.server.wherewear.logTag.LogTagDto;
 import WhereWear.server.wherewear.tag.Tag;

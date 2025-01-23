@@ -1,4 +1,4 @@
-package WhereWear.server.wherewear.fashion.fashionItem;
+package WhereWear.server.wherewear.fashion.fashionItem.domain;
 
 import WhereWear.server.wherewear.base.BaseEntity;
 import WhereWear.server.wherewear.fashion.category.entity.Category;

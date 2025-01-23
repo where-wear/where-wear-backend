@@ -1,6 +1,8 @@
-package WhereWear.server.wherewear.likedLog;
+package WhereWear.server.wherewear.likedLog.service;
 
+import WhereWear.server.wherewear.likedLog.domain.LikedLog;
 import WhereWear.server.wherewear.likedLog.dto.LikedDto;
+import WhereWear.server.wherewear.likedLog.repository.LikedLogRepository;
 import WhereWear.server.wherewear.log.domain.Log;
 import WhereWear.server.wherewear.log.repository.LogRepository;
 import WhereWear.server.wherewear.log.service.LogService;

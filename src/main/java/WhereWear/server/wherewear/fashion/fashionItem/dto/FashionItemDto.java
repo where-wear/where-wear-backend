@@ -1,4 +1,4 @@
-package WhereWear.server.wherewear.fashion.fashionItem;
+package WhereWear.server.wherewear.fashion.fashionItem.dto;
 
 import WhereWear.server.wherewear.fashion.category.dto.CategoryDto;
 import WhereWear.server.wherewear.logFashion.domain.LogFashion;

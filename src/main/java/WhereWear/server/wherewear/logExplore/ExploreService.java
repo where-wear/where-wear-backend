@@ -2,8 +2,8 @@ package WhereWear.server.wherewear.logExplore;
 
 import WhereWear.server.wherewear.log.domain.Log;
 import WhereWear.server.wherewear.log.service.LogService;
-import WhereWear.server.wherewear.likedLog.LikedLog;
-import WhereWear.server.wherewear.likedLog.LikedLogService;
+import WhereWear.server.wherewear.likedLog.domain.LikedLog;
+import WhereWear.server.wherewear.likedLog.service.LikedLogService;
 import WhereWear.server.wherewear.place.Place;
 import WhereWear.server.wherewear.place.PlaceService;
 import WhereWear.server.wherewear.tag.TagService;

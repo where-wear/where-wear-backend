@@ -1,6 +1,5 @@
-package WhereWear.server.wherewear.fashion.fashionItem;
+package WhereWear.server.wherewear.fashion.fashionItem.dto;
 
-import WhereWear.server.wherewear.fashion.category.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,6 @@
-package WhereWear.server.wherewear.likedLog;
+package WhereWear.server.wherewear.likedLog.repository;
 
-import WhereWear.server.wherewear.log.domain.Log;
+import WhereWear.server.wherewear.likedLog.domain.LikedLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -1,10 +1,11 @@
 package WhereWear.server.wherewear.log.service;
 
-import WhereWear.server.wherewear.fashion.fashionItem.FashionItem;
-import WhereWear.server.wherewear.fashion.fashionItem.FashionItemRequest;
-import WhereWear.server.wherewear.fashion.fashionItem.FashionItemService;
+import WhereWear.server.wherewear.fashion.fashionItem.domain.FashionItem;
+import WhereWear.server.wherewear.fashion.fashionItem.dto.FashionItemRequest;
+import WhereWear.server.wherewear.fashion.fashionItem.service.FashionItemService;
 import WhereWear.server.wherewear.log.domain.Log;
-import WhereWear.server.wherewear.logImage.LogImageService;
+import WhereWear.server.wherewear.log.repository.LogRepository;
+import WhereWear.server.wherewear.logImage.service.LogImageService;
 import WhereWear.server.wherewear.logPlace.LogPlaceService;
 import WhereWear.server.wherewear.logTag.LogTagService;
 import WhereWear.server.wherewear.logText.LogTextService;
@@ -20,6 +21,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class CreateLogService {
+
+    private final LogRepository logRepository;
     private final UserService userService;
     private final LogService logService;
     private final FashionItemService fashionItemService;
@@ -43,7 +46,7 @@ public class CreateLogService {
 
         List<FashionItem> fashionItems = fashionItemService.createFashionItems(items);
 
-        Log log = Log.of(user, fashionItems);
+        Log log = logRepository.save(Log.of(user, fashionItems));
 
         logPlaceService.addPlaceToLog(log.getId(), x, y, address, placeName);
 

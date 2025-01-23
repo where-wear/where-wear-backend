@@ -1,7 +1,7 @@
 package WhereWear.server.wherewear.logFashion.domain;
 
 import WhereWear.server.wherewear.base.BaseEntity;
-import WhereWear.server.wherewear.fashion.fashionItem.FashionItem;
+import WhereWear.server.wherewear.fashion.fashionItem.domain.FashionItem;
 import WhereWear.server.wherewear.log.domain.Log;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -35,16 +35,5 @@ public class LogFashion extends BaseEntity {
                 .log(log)
                 .fashionItem(fashionItem)
                 .build();
-    }
-
-    //==연관관계 메서드==//
-    public void setLog(Log log){
-        this.log = log;
-        this.log.getLogFashions().add(this);
-    }
-
-    public void setFashionItem(FashionItem fashionItem){
-        this.fashionItem = fashionItem;
-        this.fashionItem.getLogFashions().add(this);
     }
 }

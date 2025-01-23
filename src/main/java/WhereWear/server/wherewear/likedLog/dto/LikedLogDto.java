@@ -1,6 +1,6 @@
 package WhereWear.server.wherewear.likedLog.dto;
 
-import WhereWear.server.wherewear.likedLog.LikedLog;
+import WhereWear.server.wherewear.likedLog.domain.LikedLog;
 import lombok.Getter;
 import lombok.Setter;
 

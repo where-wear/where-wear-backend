@@ -1,6 +1,6 @@
 package WhereWear.server.wherewear.log.dto;
 
-import WhereWear.server.wherewear.fashion.fashionItem.FashionItemRequest;
+import WhereWear.server.wherewear.fashion.fashionItem.dto.FashionItemRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

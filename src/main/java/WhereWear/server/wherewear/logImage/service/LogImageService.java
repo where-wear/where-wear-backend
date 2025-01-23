@@ -1,7 +1,9 @@
-package WhereWear.server.wherewear.logImage;
+package WhereWear.server.wherewear.logImage.service;
 
 import WhereWear.server.wherewear.log.domain.Log;
 import WhereWear.server.wherewear.log.service.LogService;
+import WhereWear.server.wherewear.logImage.repository.LogImageRepository;
+import WhereWear.server.wherewear.logImage.domain.LogImage;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;

@@ -1,10 +1,10 @@
 package WhereWear.server.wherewear.log.domain;
 
 import WhereWear.server.wherewear.base.BaseEntity;
-import WhereWear.server.wherewear.fashion.fashionItem.FashionItem;
+import WhereWear.server.wherewear.fashion.fashionItem.domain.FashionItem;
 import WhereWear.server.wherewear.logFashion.domain.LogFashion;
-import WhereWear.server.wherewear.likedLog.LikedLog;
-import WhereWear.server.wherewear.logImage.LogImage;
+import WhereWear.server.wherewear.likedLog.domain.LikedLog;
+import WhereWear.server.wherewear.logImage.domain.LogImage;
 import WhereWear.server.wherewear.savedLog.SavedLog;
 import WhereWear.server.wherewear.place.Place;
 import WhereWear.server.wherewear.tag.Tag;
@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.ArrayList;
 import java.util.List;

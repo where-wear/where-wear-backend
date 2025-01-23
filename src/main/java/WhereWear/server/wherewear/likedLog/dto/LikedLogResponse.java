@@ -1,8 +1,8 @@
 package WhereWear.server.wherewear.likedLog.dto;
 
-import WhereWear.server.wherewear.likedLog.LikedLog;
+import WhereWear.server.wherewear.likedLog.domain.LikedLog;
 import WhereWear.server.wherewear.log.domain.Log;
-import WhereWear.server.wherewear.logImage.LogImageDto;
+import WhereWear.server.wherewear.logImage.dto.LogImageDto;
 import WhereWear.server.wherewear.place.MyPagePlaceResponse;
 import WhereWear.server.wherewear.user.UserPageResponse;
 import lombok.Getter;

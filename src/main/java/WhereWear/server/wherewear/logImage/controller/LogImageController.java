@@ -1,7 +1,9 @@
-package WhereWear.server.wherewear.logImage;
+package WhereWear.server.wherewear.logImage.controller;
 
 import WhereWear.server.wherewear.log.domain.Log;
 import WhereWear.server.wherewear.log.dto.LogResponse;
+import WhereWear.server.wherewear.logImage.dto.LogImageRequest;
+import WhereWear.server.wherewear.logImage.service.LogImageService;
 import WhereWear.server.wherewear.util.ApiUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

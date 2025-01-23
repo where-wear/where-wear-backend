@@ -1,12 +1,13 @@
-package WhereWear.server.wherewear.fashion.fashionItem;
+package WhereWear.server.wherewear.fashion.fashionItem.service;
 
 import WhereWear.server.wherewear.fashion.category.entity.Category;
 import WhereWear.server.wherewear.fashion.category.service.CategoryService;
-import WhereWear.server.wherewear.tag.Tag;
+import WhereWear.server.wherewear.fashion.fashionItem.repository.FashionItemRepository;
+import WhereWear.server.wherewear.fashion.fashionItem.domain.FashionItem;
+import WhereWear.server.wherewear.fashion.fashionItem.dto.FashionItemRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
